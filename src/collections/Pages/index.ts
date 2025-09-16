@@ -12,6 +12,7 @@ import { CTASectionBlock } from '../../blocks/CTASection/config'
 import { SolutionsBlock } from '../../blocks/SolutionsBlock/config'
 import { TestimonialsBlock } from '../../blocks/Testimonials/config'
 import { CaseStudiesBlock } from '../../blocks/CaseStudies/config'
+import { AboutTeaser } from '../../blocks/AboutTeaser/config'
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -91,6 +92,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 SolutionsBlock,
                 TestimonialsBlock,
                 CaseStudiesBlock,
+                AboutTeaser,
               ],
               required: true,
               admin: {

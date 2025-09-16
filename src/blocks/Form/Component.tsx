@@ -128,7 +128,7 @@ export const FormBlock: React.FC<
             heading={heading || 'Get in Touch'}
             subheading={
               subheading ||
-              "Ready to transform your business operations? We&apos;re here to help you achieve measurable results."
+              'Ready to transform your business operations? We&apos;re here to help you achieve measurable results.'
             }
             align="left"
             spacing="sm"
@@ -156,8 +156,8 @@ export const FormBlock: React.FC<
               <div>
                 <h3 className="">Free Consultation</h3>
                 <p className="">
-                  Your first consultation is completely free. We&apos;ll assess your needs and provide
-                  actionable insights.
+                  Your first consultation is completely free. We&apos;ll assess your needs and
+                  provide actionable insights.
                 </p>
               </div>
             </div>

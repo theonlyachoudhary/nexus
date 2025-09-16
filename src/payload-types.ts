@@ -217,6 +217,7 @@ export interface Page {
     | SolutionsBlock
     | TestimonialsBlock
     | CaseStudiesBlock
+    | AboutTeaserBlock
   )[];
   meta?: {
     title?: string | null;
@@ -944,6 +945,38 @@ export interface CaseStudiesBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutTeaserBlock".
+ */
+export interface AboutTeaserBlock {
+  heading: string;
+  subheading?: string | null;
+  mission?: {
+    heading?: string | null;
+    text?: string | null;
+  };
+  vision?: {
+    heading?: string | null;
+    text?: string | null;
+  };
+  coreValues?: {
+    heading?: string | null;
+    values?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  cta?: {
+    text?: string | null;
+    link?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'aboutTeaser';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "teamMembers".
  */
 export interface TeamMember {
@@ -1274,6 +1307,7 @@ export interface PagesSelect<T extends boolean = true> {
         solutions?: T | SolutionsBlockSelect<T>;
         testimonials?: T | TestimonialsBlockSelect<T>;
         caseStudies?: T | CaseStudiesBlockSelect<T>;
+        aboutTeaser?: T | AboutTeaserBlockSelect<T>;
       };
   meta?:
     | T
@@ -1507,6 +1541,45 @@ export interface CaseStudiesBlockSelect<T extends boolean = true> {
   displayStyle?: T;
   background?: T;
   ctaButton?:
+    | T
+    | {
+        text?: T;
+        link?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutTeaserBlock_select".
+ */
+export interface AboutTeaserBlockSelect<T extends boolean = true> {
+  heading?: T;
+  subheading?: T;
+  mission?:
+    | T
+    | {
+        heading?: T;
+        text?: T;
+      };
+  vision?:
+    | T
+    | {
+        heading?: T;
+        text?: T;
+      };
+  coreValues?:
+    | T
+    | {
+        heading?: T;
+        values?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+      };
+  cta?:
     | T
     | {
         text?: T;
