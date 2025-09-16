@@ -24,7 +24,7 @@ export const State: React.FC<
 > = ({ name, control, errors, label, required, width }) => {
   return (
     <Width width={width}>
-      <Label htmlFor={name}>
+      <Label htmlFor={name} className="text-base font-semibold text-body mb-2 block">
         {label}
         {required && (
           <span className="required">

@@ -16,7 +16,7 @@ export const Text: React.FC<
 > = ({ name, defaultValue, errors, label, register, required, width }) => {
   return (
     <Width width={width}>
-      <Label htmlFor={name}>
+      <Label htmlFor={name} className="text-base font-semibold text-body mb-2 block">
         {label}
 
         {required && (

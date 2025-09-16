@@ -10,6 +10,21 @@ export const Header: GlobalConfig = {
   },
   fields: [
     {
+      name: 'logo',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description: 'Optional logo image',
+      },
+    },
+    {
+      name: 'siteName',
+      type: 'text',
+      admin: {
+        description: 'Site name (used when no logo is provided)',
+      },
+    },
+    {
       name: 'navItems',
       type: 'array',
       fields: [
@@ -23,6 +38,27 @@ export const Header: GlobalConfig = {
         components: {
           RowLabel: '@/Header/RowLabel#RowLabel',
         },
+      },
+    },
+    {
+      name: 'ctaButton',
+      type: 'group',
+      fields: [
+        {
+          name: 'text',
+          type: 'text',
+        },
+        {
+          name: 'link',
+          type: 'text',
+        },
+        {
+          name: 'newTab',
+          type: 'checkbox',
+        },
+      ],
+      admin: {
+        description: 'Site-wide CTA button displayed in the header',
       },
     },
   ],

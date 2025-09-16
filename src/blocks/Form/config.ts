@@ -12,6 +12,19 @@ export const FormBlock: Block = {
   interfaceName: 'FormBlock',
   fields: [
     {
+      name: 'heading',
+      type: 'text',
+      label: 'Heading',
+      defaultValue: 'Get in Touch',
+    },
+    {
+      name: 'subheading',
+      type: 'text',
+      label: 'Subheading',
+      defaultValue:
+        "Ready to transform your business operations? We're here to help you achieve measurable results.",
+    },
+    {
       name: 'form',
       type: 'relationship',
       relationTo: 'forms',

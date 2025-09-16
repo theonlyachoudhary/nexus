@@ -4,29 +4,101 @@ import React from 'react'
 
 import type { Footer } from '@/payload-types'
 
-import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
-import { CMSLink } from '@/components/Link'
-import { Logo } from '@/components/Logo/Logo'
+// ...existing code...
 
 export async function Footer() {
   const footerData: Footer = await getCachedGlobal('footer', 1)()
 
-  const navItems = footerData?.navItems || []
+  const { footerNav, teamLinks, resourceLinks, copyrightText, companyInfo } = footerData || {}
 
   return (
-    <footer className="mt-auto border-t border-border bg-black dark:bg-card text-white">
-      <div className="container py-8 gap-8 flex flex-col md:flex-row md:justify-between">
-        <Link className="flex items-center" href="/">
-          <Logo />
-        </Link>
+    <footer className="bg-muted/50 border-t border-border">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid md:grid-cols-4 gap-8">
+          {/* Company Info */}
+          <div className="space-y-4">
+            <h3 className="text-2xl font-bold text-primary">{companyInfo?.name || 'Nexus'}</h3>
+            <p className="">{companyInfo?.tagline || 'Preparing for a Smarter Tomorrow'}</p>
+          </div>
 
-        <div className="flex flex-col-reverse items-start md:flex-row gap-4 md:items-center">
-          <ThemeSelector />
-          <nav className="flex flex-col md:flex-row gap-4">
-            {navItems.map(({ link }, i) => {
-              return <CMSLink className="text-white" key={i} {...link} />
-            })}
-          </nav>
+          {/* Navigation Links */}
+          <div className="space-y-4">
+            <h4 className="">Navigation</h4>
+            <div className="space-y-2">
+              {footerNav?.map((item, index) => {
+                const linkProps = item.newTab
+                  ? { target: '_blank', rel: 'noopener noreferrer' }
+                  : {}
+
+                return (
+                  <Link
+                    key={index}
+                    href={item.url || '#'}
+                    className="text-black/60 block hover:text-primary transition-colors"
+                    {...linkProps}
+                  >
+                    {item.label}
+                  </Link>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Resource Links */}
+          <div className="space-y-4">
+            <h4 className="">Resources</h4>
+            <div className="space-y-2">
+              {resourceLinks?.map((resource, index) => (
+                <Link
+                  key={index}
+                  href={resource.link || '#'}
+                  className="block text-black/60 hover:text-primary transition-colors"
+                >
+                  {resource.title}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Team Links */}
+          <div className="space-y-4">
+            <h4 className="">Team</h4>
+            <div className="space-y-2 text-black/60">
+              {teamLinks?.map((teamLink, index) => {
+                const member = teamLink.member
+                if (typeof member === 'object' && member !== null) {
+                  const displayName = teamLink.labelOverride || member.name
+                  const memberTitle = member.title
+                  const memberSlug = member.slug
+
+                  return (
+                    <div key={index}>
+                      {memberSlug ? (
+                        <Link
+                          href={`/team/${memberSlug}`}
+                          className="hover:text-primary transition-colors"
+                        >
+                          {displayName}
+                          {memberTitle && ` — ${memberTitle}`}
+                        </Link>
+                      ) : (
+                        <p>
+                          {displayName}
+                          {memberTitle && ` — ${memberTitle}`}
+                        </p>
+                      )}
+                    </div>
+                  )
+                }
+                return null
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* Copyright */}
+        <div className="border-t border-border mt-12 pt-8 text-center text-muted-foreground">
+          <p>{copyrightText || '© 2024 Nexus Consultancy. All rights reserved.'}</p>
         </div>
       </div>
     </footer>

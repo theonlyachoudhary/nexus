@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import IBM Plex Sans and IBM Plex Sans Condensed fonts */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@400;500;600&display=swap');
+
 @layer base {
   h1,
   h2,
@@ -10,39 +13,59 @@
   h5,
   h6 {
     font-size: unset;
-    font-weight: unset;
+    font-weight: 600; /* SemiBold for headings */
+    font-family: 'IBM Plex Sans', sans-serif;
   }
 
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* IBM Brand Colors - Raw Values */
+    --ibm-blue: #0530AD;
+    --ibm-cool-gray: #dde1e6;
+    --ibm-deep-blue: #001d6c;
+    --ibm-mid-blue: #4078a9;
+    
+    /* Semantic Color Mapping - Use these variables in your components */
+    --brand-primary: var(--ibm-deep-blue);
+    --brand-primary-light: var(--ibm-blue);
+    --brand-secondary: var(--ibm-mid-blue);
+    --brand-neutral: var(--ibm-cool-gray);
+    --text-body: rgba(0, 0, 0, 0.6); /* Light mode: Black with 60% opacity */
 
-    --card: 240 5% 96%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* HSL Values for Theme System */
+    --brand-primary-hsl: 224 100% 21%; /* Deep Blue */
+    --brand-primary-light-hsl: 222 96% 35%; /* IBM Blue */
+    --brand-secondary-hsl: 208 45% 46%; /* Mid Blue */
+    --brand-neutral-hsl: 216 13% 89%; /* Cool Gray */
+    
+    --background: 0 0% 100%;
+    --foreground: var(--deep-blue-hsl); /* Deep Blue for text */
+
+    --card: var(--cool-gray-hsl); /* Cool Gray */
+    --card-foreground: var(--deep-blue-hsl);
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 224 100% 21%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: var(--brand-primary-hsl);
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: var(--brand-secondary-hsl);
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: var(--brand-neutral-hsl);
+    --muted-foreground: var(--brand-primary-hsl);
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: var(--brand-primary-light-hsl);
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 240 6% 80%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 216 13% 80%;
+    --input: 216 13% 89%;
+    --ring: 222 96% 35%;
 
-    --radius: 0.2rem;
+    --radius: 0.5rem;
 
     --success: 196 52% 74%;
     --warning: 34 89% 85%;
@@ -52,6 +75,7 @@
   [data-theme='dark'] {
     --background: 0 0% 0%;
     --foreground: 210 40% 98%;
+    --text-body: rgba(255, 255, 255, 0.7); /* White with 70% opacity for dark mode */
 
     --card: 0 0% 4%;
     --card-foreground: 210 40% 98%;
@@ -85,11 +109,12 @@
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
   body {
     @apply bg-background text-foreground min-h-[100vh] flex flex-col;
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+  }
+  p {
+    color: var(--text-body); /* Uses text-body variable which adapts to theme */
   }
 }
 
@@ -101,3 +126,46 @@ html[data-theme='dark'],
 html[data-theme='light'] {
   opacity: initial;
 }
+
+/* Brand color utility classes */
+/* Primary */
+.text-brand-primary { color: var(--brand-primary); }
+.text-brand-primary-light { color: var(--brand-primary-light); }
+/* Secondary */
+.text-brand-secondary { color: var(--brand-secondary); }
+/* Neutral */
+.text-brand-neutral { color: var(--brand-neutral); }
+/* Text */
+.text-body { color: var(--text-body); }
+
+/* Background colors */
+.bg-brand-primary { background-color: var(--brand-primary); }
+.bg-brand-primary-light { background-color: var(--brand-primary-light); }
+.bg-brand-secondary { background-color: var(--brand-secondary); }
+.bg-brand-neutral { background-color: var(--brand-neutral); }
+
+/* Background colors with opacity */
+.bg-brand-primary-10 { background-color: rgba(0, 29, 108, 0.1); } /* --ibm-deep-blue with 10% */
+.bg-brand-primary-20 { background-color: rgba(0, 29, 108, 0.2); }
+.bg-brand-primary-50 { background-color: rgba(0, 29, 108, 0.5); }
+
+.bg-brand-primary-light-10 { background-color: rgba(5, 48, 173, 0.1); } /* --ibm-blue with 10% */
+.bg-brand-primary-light-20 { background-color: rgba(5, 48, 173, 0.2); }
+.bg-brand-primary-light-50 { background-color: rgba(5, 48, 173, 0.5); }
+
+/* Border colors */
+.border-brand-primary { border-color: var(--brand-primary); }
+.border-brand-primary-light { border-color: var(--brand-primary-light); }
+.border-brand-secondary { border-color: var(--brand-secondary); }
+.border-brand-neutral { border-color: var(--brand-neutral); }
+
+/* Maintain backward compatibility */
+.text-ibm-blue { color: var(--brand-primary-light); }
+.text-ibm-deep-blue { color: var(--brand-primary); }
+.text-ibm-mid-blue { color: var(--brand-secondary); }
+.text-ibm-cool-gray { color: var(--brand-neutral); }
+
+.bg-ibm-blue { background-color: var(--brand-primary-light); }
+.bg-ibm-deep-blue { background-color: var(--brand-primary); }
+.bg-ibm-mid-blue { background-color: var(--brand-secondary); }
+.bg-ibm-cool-gray { background-color: var(--brand-neutral); }

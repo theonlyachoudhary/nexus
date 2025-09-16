@@ -1,6 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
-import { link } from '@/fields/link'
+// ...existing code...
 import { revalidateFooter } from './hooks/revalidateFooter'
 
 export const Footer: GlobalConfig = {
@@ -10,20 +10,102 @@ export const Footer: GlobalConfig = {
   },
   fields: [
     {
-      name: 'navItems',
+      name: 'footerNav',
       type: 'array',
+      label: 'Footer Navigation',
       fields: [
-        link({
-          appearances: false,
-        }),
+        {
+          name: 'label',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'url',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'newTab',
+          type: 'checkbox',
+          label: 'Open in new tab',
+          defaultValue: false,
+        },
       ],
-      maxRows: 6,
+      maxRows: 10,
       admin: {
         initCollapsed: true,
-        components: {
-          RowLabel: '@/Footer/RowLabel#RowLabel',
-        },
       },
+    },
+    {
+      name: 'teamLinks',
+      type: 'array',
+      label: 'Team Links',
+      fields: [
+        {
+          name: 'member',
+          type: 'relationship',
+          relationTo: 'teamMembers',
+          required: true,
+        },
+        {
+          name: 'labelOverride',
+          type: 'text',
+          label: 'Label Override (optional)',
+          admin: {
+            description: 'Override the team member name with custom text',
+          },
+        },
+      ],
+      maxRows: 10,
+      admin: {
+        initCollapsed: true,
+      },
+    },
+    {
+      name: 'resourceLinks',
+      type: 'array',
+      label: 'Resource Links',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'link',
+          type: 'text',
+          required: true,
+        },
+      ],
+      maxRows: 10,
+      admin: {
+        initCollapsed: true,
+      },
+    },
+    {
+      name: 'copyrightText',
+      type: 'text',
+      label: 'Copyright Text',
+      defaultValue: '© 2024 Nexus Consultancy. All rights reserved.',
+    },
+    {
+      name: 'companyInfo',
+      type: 'group',
+      label: 'Company Information',
+      fields: [
+        {
+          name: 'name',
+          type: 'text',
+          label: 'Company Name',
+          defaultValue: 'Nexus',
+        },
+        {
+          name: 'tagline',
+          type: 'text',
+          label: 'Company Tagline',
+          defaultValue: 'Preparing for a Smarter Tomorrow',
+        },
+      ],
     },
   ],
   hooks: {

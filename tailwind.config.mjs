@@ -46,6 +46,9 @@ const config = {
       },
     },
     extend: {
+      borderColor: {
+        border: 'hsl(var(--border))',
+      },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
@@ -92,10 +95,27 @@ const config = {
         success: 'hsl(var(--success))',
         error: 'hsl(var(--error))',
         warning: 'hsl(var(--warning))',
+        // Brand colors (semantic naming with RGB values for opacity support)
+        brand: {
+          // Using RGB values directly enables opacity modifiers
+          primary: 'rgb(0 29 108)', // --ibm-deep-blue
+          'primary-light': 'rgb(5 48 173)', // --ibm-blue
+          secondary: 'rgb(64 120 169)', // --ibm-mid-blue
+          neutral: 'rgb(221 225 230)', // --ibm-cool-gray
+        },
+        // Keep for backward compatibility
+        ibm: {
+          blue: 'var(--brand-primary-light)',
+          gray: 'var(--brand-neutral)',
+          deepBlue: 'var(--brand-primary)',
+          midBlue: 'var(--brand-secondary)',
+        },
       },
       fontFamily: {
         mono: ['var(--font-geist-mono)'],
-        sans: ['var(--font-geist-sans)'],
+        sans: ['IBM Plex Sans', 'sans-serif'],
+        condensed: ['IBM Plex Sans Condensed', 'sans-serif'],
+        heading: ['IBM Plex Sans', 'sans-serif'],
       },
       keyframes: {
         'accordion-down': {
@@ -114,8 +134,35 @@ const config = {
               '--tw-prose-body': 'var(--text)',
               '--tw-prose-headings': 'var(--text)',
               h1: {
-                fontWeight: 'normal',
+                fontWeight: '600', // SemiBold
                 marginBottom: '0.25em',
+                fontFamily: 'IBM Plex Sans, sans-serif',
+              },
+              h2: {
+                fontWeight: '600', // SemiBold
+                fontFamily: 'IBM Plex Sans, sans-serif',
+              },
+              h3: {
+                fontWeight: '600', // SemiBold
+                fontFamily: 'IBM Plex Sans, sans-serif',
+              },
+              h4: {
+                fontWeight: '600', // SemiBold
+                fontFamily: 'IBM Plex Sans, sans-serif',
+              },
+              h5: {
+                fontWeight: '600', // SemiBold
+                fontFamily: 'IBM Plex Sans, sans-serif',
+              },
+              h6: {
+                fontWeight: '600', // SemiBold
+                fontFamily: 'IBM Plex Sans, sans-serif',
+              },
+              p: {
+                fontFamily: 'IBM Plex Sans Condensed, sans-serif',
+              },
+              li: {
+                fontFamily: 'IBM Plex Sans Condensed, sans-serif',
               },
             },
           ],
@@ -128,7 +175,10 @@ const config = {
               },
               h2: {
                 fontSize: '1.25rem',
-                fontWeight: 600,
+              },
+              '.subtitle': {
+                fontFamily: 'IBM Plex Sans Condensed, sans-serif',
+                fontWeight: '500', // Medium
               },
             },
           ],

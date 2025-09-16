@@ -24,7 +24,7 @@ export const Country: React.FC<
 > = ({ name, control, errors, label, required, width }) => {
   return (
     <Width width={width}>
-      <Label className="" htmlFor={name}>
+      <Label className="text-base font-semibold text-foreground mb-2 block" htmlFor={name}>
         {label}
 
         {required && (

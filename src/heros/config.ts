@@ -35,8 +35,69 @@ export const hero: Field = {
           label: 'Low Impact',
           value: 'lowImpact',
         },
+        {
+          label: 'Design Hero',
+          value: 'designHero',
+        },
       ],
       required: true,
+    },
+    {
+      name: 'title',
+      type: 'text',
+      admin: {
+        condition: (_, { type } = {}) => type === 'designHero',
+      },
+      label: 'Title (H1)',
+    },
+    {
+      name: 'highlightedWords',
+      type: 'array',
+      admin: {
+        condition: (_, { type } = {}) => type === 'designHero',
+      },
+      fields: [
+        {
+          name: 'word',
+          type: 'text',
+          required: true,
+        },
+      ],
+      label: 'Words to Highlight in Title',
+      maxRows: 10,
+    },
+    {
+      name: 'subtitle',
+      type: 'text',
+      admin: {
+        condition: (_, { type } = {}) => type === 'designHero',
+      },
+      label: 'Subtitle (H3)',
+    },
+    {
+      name: 'ctaButton',
+      type: 'group',
+      admin: {
+        condition: (_, { type } = {}) => type === 'designHero',
+      },
+      fields: [
+        {
+          name: 'text',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'url',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'newTab',
+          type: 'checkbox',
+          defaultValue: false,
+        },
+      ],
+      label: 'Call to Action Button',
     },
     {
       name: 'richText',
