@@ -15,7 +15,7 @@ type CaseStudy = {
   solution: string
   results?: Array<{ result?: string }>
   metrics?: Array<{ label?: string; value?: string }>
-  image?: any
+  image?: unknown
   tags?: Array<{ tag?: string }>
 }
 

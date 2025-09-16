@@ -105,7 +105,7 @@ export const DesignHero: React.FC<Page['hero']> = ({
               {/* Mobile & tablet contact note */}
               <div className="flex items-center justify-center gap-2 text-sm text-black/60 lg:hidden">
                 <Clock size={16} />
-                <span>We'll contact you within 24 hours</span>
+                <span>We&apos;ll contact you within 24 hours</span>
               </div>
             </div>
           )}

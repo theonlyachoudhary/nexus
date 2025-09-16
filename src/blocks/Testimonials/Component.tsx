@@ -63,7 +63,7 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
                 className="p-6 hover:shadow-lg transition-shadow bg-brand-neutral/25 flex flex-col"
               >
                 <CardContent className="flex flex-col h-full p-0">
-                  <p className="leading-relaxed italic flex-grow mb-4">"{testimonial.quote}"</p>
+                  <p className="leading-relaxed italic flex-grow mb-4">&quot;{testimonial.quote}&quot;</p>
                   <div className="border-t pt-4 mt-auto">
                     <p className="font-semibold text-foreground">{testimonial.author}</p>
                     <p className="text-sm">

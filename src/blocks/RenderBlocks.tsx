@@ -12,6 +12,7 @@ import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { SolutionsBlock } from '@/blocks/SolutionsBlock/Component'
 import { TestimonialsBlock } from '@/blocks/Testimonials/Component'
+import { BannerBlock } from '@/blocks/Banner/Component'
 
 const blockComponents = {
   aboutTeaser: AboutTeaserBlock,
@@ -24,6 +25,7 @@ const blockComponents = {
   mediaBlock: MediaBlock,
   solutions: SolutionsBlock,
   testimonials: TestimonialsBlock,
+  banner: BannerBlock,
 }
 
 export const RenderBlocks: React.FC<{
