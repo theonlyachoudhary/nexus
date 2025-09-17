@@ -96,7 +96,7 @@ export function ProcessBlock({
   }, [inViews.map(Boolean).join(',')])
 
   return (
-    <section className="py-20 bg-muted/20">
+    <section className="py-20 bg-muted/20 overflow-x-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">{heading}</h2>
@@ -126,19 +126,23 @@ export function ProcessBlock({
                 </motion.div>
                 {/* Line below node except last */}
                 {idx < steps.length - 1 && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={controls[idx]}
-                    variants={{
-                      visible: {
-                        height: 96,
-                        opacity: 1,
-                        transition: { delay: 0.2, duration: 0.4 },
-                      },
-                    }}
-                    className="w-1 bg-primary"
+                  <div
                     style={{ minHeight: 96, borderRadius: 9999 }}
-                  />
+                    className="w-1 bg-primary flex flex-col justify-start"
+                  >
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={controls[idx]}
+                      variants={{
+                        visible: {
+                          height: 96,
+                          opacity: 1,
+                          transition: { delay: 0.2, duration: 0.4 },
+                        },
+                      }}
+                      style={{ width: '100%' }}
+                    />
+                  </div>
                 )}
               </div>
               {/* Card appears to the right of node */}
@@ -152,8 +156,8 @@ export function ProcessBlock({
               >
                 <div className="ml-2 mb-8">
                   <div className="bg-background rounded-lg p-6 shadow-sm border">
-                    <h3 className="text-lg font-semibold mb-2 text-foreground">{step.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed">{step.description}</p>
+                    <h3 className="text-lg font-semibold mb-2`">{step.title}</h3>
+                    <p className="leading-relaxed">{step.description}</p>
                   </div>
                 </div>
               </motion.div>

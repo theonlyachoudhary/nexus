@@ -236,6 +236,30 @@ export interface Page {
         blockName?: string | null;
         blockType: 'process';
       }
+    | {
+        heading?: string | null;
+        subheading?: string | null;
+        message?: {
+          heading?: string | null;
+          text?: string | null;
+        };
+        checklist?: {
+          heading?: string | null;
+          items?:
+            | {
+                text: string;
+                id?: string | null;
+              }[]
+            | null;
+        };
+        cta?: {
+          text?: string | null;
+          link?: string | null;
+        };
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'underConstruction';
+      }
   )[];
   meta?: {
     title?: string | null;
@@ -1342,6 +1366,37 @@ export interface PagesSelect<T extends boolean = true> {
               ctaText?: T;
               ctaButton?: T;
               ctaLink?: T;
+              id?: T;
+              blockName?: T;
+            };
+        underConstruction?:
+          | T
+          | {
+              heading?: T;
+              subheading?: T;
+              message?:
+                | T
+                | {
+                    heading?: T;
+                    text?: T;
+                  };
+              checklist?:
+                | T
+                | {
+                    heading?: T;
+                    items?:
+                      | T
+                      | {
+                          text?: T;
+                          id?: T;
+                        };
+                  };
+              cta?:
+                | T
+                | {
+                    text?: T;
+                    link?: T;
+                  };
               id?: T;
               blockName?: T;
             };

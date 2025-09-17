@@ -39,13 +39,17 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
       className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border"
       {...(theme ? { 'data-theme': theme } : {})}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between" style={{ height: '6.25rem' }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-lg">
+        <div className="flex items-center justify-between" style={{ height: '7rem' }}>
           <div className="flex items-center">
             <Link href="/" className="text-2xl font-bold text-primary">
               {/* Use Logo component if available, otherwise site name */}
               <span className="sr-only">Home</span>
-              <Logo loading="eager" priority="high" className="h-8 md:h-10 lg:h-12 max-w-[9rem]" />
+              <Logo
+                loading="eager"
+                priority="high"
+                className="h-[50%] max-h-[50%] w-auto max-w-[9rem]"
+              />
             </Link>
           </div>
 

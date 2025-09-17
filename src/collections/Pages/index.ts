@@ -14,6 +14,7 @@ import { TestimonialsBlock } from '../../blocks/Testimonials/config'
 import { CaseStudiesBlock } from '../../blocks/CaseStudies/config'
 import { AboutTeaser } from '../../blocks/AboutTeaser/config'
 import { Process } from '../../blocks/Process/config'
+import { UnderConstruction } from '../../blocks/UnderConstruction/config'
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -95,6 +96,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 CaseStudiesBlock,
                 AboutTeaser,
                 Process,
+                UnderConstruction,
               ],
               required: true,
               admin: {

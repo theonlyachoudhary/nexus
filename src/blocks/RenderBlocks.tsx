@@ -15,6 +15,7 @@ import { TestimonialsBlock } from '@/blocks/Testimonials/Component'
 import { BannerBlock } from '@/blocks/Banner/Component'
 
 import { ProcessBlock } from '@/blocks/Process/Component'
+import { UnderConstructionBlock } from '@/blocks/UnderConstruction/Component'
 
 const blockComponents = {
   aboutTeaser: AboutTeaserBlock,
@@ -29,6 +30,7 @@ const blockComponents = {
   testimonials: TestimonialsBlock,
   banner: BannerBlock, // This line is retained as it is not a duplicate
   process: ProcessBlock,
+  underConstruction: UnderConstructionBlock,
 }
 
 export const RenderBlocks: React.FC<{
