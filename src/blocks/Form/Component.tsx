@@ -3,6 +3,7 @@ import type { FormFieldBlock, Form as FormType } from '@payloadcms/plugin-form-b
 
 import { useRouter } from 'next/navigation'
 import React, { useCallback, useState } from 'react'
+import { motion } from 'framer-motion'
 import { useForm, FormProvider } from 'react-hook-form'
 import RichText from '@/components/RichText'
 import { Button } from '@/components/ui/button'
@@ -123,7 +124,13 @@ export const FormBlock: React.FC<
     <div className="container">
       <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
         {/* Left Column - Outreach Information */}
-        <div className="space-y-4">
+        <motion.div
+          className="space-y-4"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.7 }}
+        >
           <SectionHeader
             heading={heading || 'Get in Touch'}
             subheading={
@@ -136,68 +143,82 @@ export const FormBlock: React.FC<
             headingClassName="text-4xl md:text-5xl font-semibold"
             subheadingClassName="text-xl subtitle text-brand-text-secondary"
           />
-          <div className="space-y-6">
-            <div className="flex items-start space-x-3">
-              <div className="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mt-1">
-                <Clock className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <h3 className="">Quick Response Time</h3>
-                <p className="">
-                  We typically respond to all inquiries within 2-4 business hours during weekdays.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-3">
-              <div className="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mt-1">
-                <Gift className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <h3 className="">Free Consultation</h3>
-                <p className="">
-                  Your first consultation is completely free. We&apos;ll assess your needs and
-                  provide actionable insights.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-3">
-              <div className="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mt-1">
-                <Target className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <h3 className="">Personalized Approach</h3>
-                <p className="">
-                  Every business is unique. We tailor our solutions to your specific challenges and
-                  goals.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-3">
-              <div className="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mt-1">
-                <TrendingUp className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <h3 className="">Proven Results</h3>
-                <p className="">
-                  Join our satisfied clients who have achieved 30-150% improvements in efficiency
-                  and growth.
-                </p>
-              </div>
-            </div>
-          </div>
+          <motion.div
+            className="space-y-6"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={{
+              hidden: {},
+              visible: {
+                transition: {
+                  staggerChildren: 0.13,
+                },
+              },
+            }}
+          >
+            {[
+              {
+                icon: Clock,
+                title: 'Quick Response Time',
+                desc: 'We typically respond to all inquiries within 2-4 business hours during weekdays.',
+              },
+              {
+                icon: Gift,
+                title: 'Free Consultation',
+                desc: "Your first consultation is completely free. We'll assess your needs and provide actionable insights.",
+              },
+              {
+                icon: Target,
+                title: 'Personalized Approach',
+                desc: 'Every business is unique. We tailor our solutions to your specific challenges and goals.',
+              },
+              {
+                icon: TrendingUp,
+                title: 'Proven Results',
+                desc: 'Join our satisfied clients who have achieved 30-150% improvements in efficiency and growth.',
+              },
+            ].map((item, idx) => (
+              <motion.div
+                key={item.title}
+                className="flex items-start space-x-3"
+                variants={{
+                  hidden: { opacity: 0, y: 30 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+                }}
+              >
+                <div className="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mt-1">
+                  <item.icon className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <h3 className="">{item.title}</h3>
+                  <p className="">{item.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
 
           {enableIntro && introContent && !hasSubmitted && (
-            <div className="max-w-lg ml-4 pt-4 border-t border-border">
+            <motion.div
+              className="max-w-lg ml-4 pt-4 border-t border-border"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
               <RichText data={introContent} enableGutter={false} />
-            </div>
+            </motion.div>
           )}
-        </div>
+        </motion.div>
 
         {/* Right Column - Form */}
-        <div className="lg:sticky lg:top-8">
+        <motion.div
+          className="lg:sticky lg:top-8"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.7, delay: 0.15 }}
+        >
           <div className="p-8 lg:p-10 border border-border rounded-lg bg-background shadow-lg">
             <h3 className="text-2xl font-semibold mb-4">Send us a message</h3>
 
@@ -273,7 +294,7 @@ export const FormBlock: React.FC<
               )}
             </FormProvider>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   )
