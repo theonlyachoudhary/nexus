@@ -14,6 +14,8 @@ import { SolutionsBlock } from '@/blocks/SolutionsBlock/Component'
 import { TestimonialsBlock } from '@/blocks/Testimonials/Component'
 import { BannerBlock } from '@/blocks/Banner/Component'
 
+import { ProcessBlock } from '@/blocks/Process/Component'
+
 const blockComponents = {
   aboutTeaser: AboutTeaserBlock,
   archive: ArchiveBlock,
@@ -25,7 +27,8 @@ const blockComponents = {
   mediaBlock: MediaBlock,
   solutions: SolutionsBlock,
   testimonials: TestimonialsBlock,
-  banner: BannerBlock,
+  banner: BannerBlock, // This line is retained as it is not a duplicate
+  process: ProcessBlock,
 }
 
 export const RenderBlocks: React.FC<{
@@ -47,7 +50,6 @@ export const RenderBlocks: React.FC<{
             if (Block) {
               return (
                 <div className="" key={index}>
-                  {/* @ts-expect-error there may be some mismatch between the expected types here */}
                   <Block {...block} disableInnerContainer />
                 </div>
               )

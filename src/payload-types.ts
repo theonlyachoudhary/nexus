@@ -218,6 +218,24 @@ export interface Page {
     | TestimonialsBlock
     | CaseStudiesBlock
     | AboutTeaserBlock
+    | {
+        heading: string;
+        intro: string;
+        steps?:
+          | {
+              title: string;
+              description?: string | null;
+              position: string;
+              id?: string | null;
+            }[]
+          | null;
+        ctaText: string;
+        ctaButton: string;
+        ctaLink: string;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'process';
+      }
   )[];
   meta?: {
     title?: string | null;
@@ -1308,6 +1326,25 @@ export interface PagesSelect<T extends boolean = true> {
         testimonials?: T | TestimonialsBlockSelect<T>;
         caseStudies?: T | CaseStudiesBlockSelect<T>;
         aboutTeaser?: T | AboutTeaserBlockSelect<T>;
+        process?:
+          | T
+          | {
+              heading?: T;
+              intro?: T;
+              steps?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    position?: T;
+                    id?: T;
+                  };
+              ctaText?: T;
+              ctaButton?: T;
+              ctaLink?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   meta?:
     | T

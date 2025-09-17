@@ -1,4 +1,6 @@
+"use client"
 import React from 'react'
+import { motion } from 'framer-motion'
 import { cn } from '@/utilities/ui'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -45,7 +47,7 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
     light: 'bg-brand-neutral/25',
     neutral: 'bg-brand-neutral/25',
     'primary-light': 'bg-brand-primary-light/10',
-    muted: 'bg-brand-neutral/20',
+    muted: 'bg-white',
   }[background]
 
   return (
@@ -58,24 +60,29 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
         <div className="flex justify-center">
           <div className="grid md:grid-cols-3 gap-y-8 gap-x-16 mb-12">
             {testimonials.map((testimonial, index) => (
-              <Card
+              <motion.div
                 key={index}
-                className="p-6 hover:shadow-lg transition-shadow bg-brand-neutral/25 flex flex-col"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <CardContent className="flex flex-col h-full p-0">
-                  <p className="leading-relaxed italic flex-grow mb-4">
-                    &quot;{testimonial.quote}&quot;
-                  </p>
-                  <div className="border-t pt-4 mt-auto">
-                    <p className="font-semibold text-foreground">{testimonial.author}</p>
-                    <p className="text-sm">
-                      {testimonial.role}
-                      {testimonial.role && testimonial.company ? ', ' : ''}
-                      {testimonial.company}
+                <Card className="p-6 hover:shadow-lg transition-shadow bg-brand-neutral/25 flex flex-col">
+                  <CardContent className="flex flex-col h-full p-0">
+                    <p className="leading-relaxed italic flex-grow mb-4">
+                      &quot;{testimonial.quote}&quot;
                     </p>
-                  </div>
-                </CardContent>
-              </Card>
+                    <div className="border-t pt-4 mt-auto">
+                      <p className="font-semibold text-foreground">{testimonial.author}</p>
+                      <p className="text-sm">
+                        {testimonial.role}
+                        {testimonial.role && testimonial.company ? ', ' : ''}
+                        {testimonial.company}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
           </div>
         </div>

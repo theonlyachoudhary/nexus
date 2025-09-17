@@ -1,4 +1,6 @@
+"use client"
 import React from 'react'
+import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -70,22 +72,35 @@ export const AboutTeaserBlock: React.FC<AboutTeaserBlockProps> = (props) => {
         {/* Removed the header section since it's now in SectionHeader */}
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <Card className="p-8 bg-brand-neutral/25">
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="text-2xl font-semibold mb-4 text-brand-primary">
-                  {mission.heading}
-                </h3>
-                <p className="leading-relaxed">{mission.text}</p>
-              </div>
-              <div>
-                <h3 className="text-2xl font-semibold mb-4 text-brand-primary">{vision.heading}</h3>
-                <p className="leading-relaxed">{vision.text}</p>
-              </div>
-            </CardContent>
-          </Card>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Card className="p-8 bg-brand-neutral/25">
+              <CardContent className="space-y-6">
+                <div>
+                  <h3 className="text-2xl font-semibold mb-4 text-brand-primary">
+                    {mission.heading}
+                  </h3>
+                  <p className="leading-relaxed">{mission.text}</p>
+                </div>
+                <div>
+                  <h3 className="text-2xl font-semibold mb-4 text-brand-primary">{vision.heading}</h3>
+                  <p className="leading-relaxed">{vision.text}</p>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
 
-          <div className="space-y-6">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="space-y-6"
+          >
             <h3 className="text-2xl font-semibold text-brand-primary">{coreValues.heading}</h3>
             <ul className="space-y-4">
               {coreValues.values.map((value, index) => (
@@ -99,7 +114,7 @@ export const AboutTeaserBlock: React.FC<AboutTeaserBlockProps> = (props) => {
             <Button className="mt-8" asChild>
               <Link href={cta.link || '/about'}>{cta.text}</Link>
             </Button>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
