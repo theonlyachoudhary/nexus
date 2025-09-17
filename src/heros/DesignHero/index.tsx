@@ -90,7 +90,6 @@ export const DesignHero: React.FC<Page['hero']> = ({
 
       {/* Content */}
       <div className="relative z-20 h-[32rem] lg:h-[40rem] flex items-center">
-
         <div className="px-[10%] lg:pl-[5%] lg:pr-[15%] lg:w-[70rem] space-y-6 text-center lg:text-left">
           {/* Title */}
           {title && (

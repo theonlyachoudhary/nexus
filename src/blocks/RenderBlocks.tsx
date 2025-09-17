@@ -42,15 +42,25 @@ export const RenderBlocks: React.FC<{
     return (
       <Fragment>
         {blocks.map((block, index) => {
-          const { blockType } = block
+          const { blockType } = block as { blockType?: string }
 
           if (blockType && blockType in blockComponents) {
+            // @ts-expect-error: blockType is a string but keys are typed
             const Block = blockComponents[blockType]
 
             if (Block) {
+              // Type guard for mediaBlock
+              if (blockType === 'mediaBlock') {
+                return (
+                  <div className="" key={index}>
+                    <Block {...(block as any)} disableInnerContainer />
+                  </div>
+                )
+              }
+              // Fallback for all other blocks
               return (
                 <div className="" key={index}>
-                  <Block {...block} disableInnerContainer />
+                  <Block {...(block as any)} />
                 </div>
               )
             }

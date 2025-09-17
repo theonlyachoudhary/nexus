@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import React from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
@@ -87,7 +87,9 @@ export const AboutTeaserBlock: React.FC<AboutTeaserBlockProps> = (props) => {
                   <p className="leading-relaxed">{mission.text}</p>
                 </div>
                 <div>
-                  <h3 className="text-2xl font-semibold mb-4 text-brand-primary">{vision.heading}</h3>
+                  <h3 className="text-2xl font-semibold mb-4 text-brand-primary">
+                    {vision.heading}
+                  </h3>
                   <p className="leading-relaxed">{vision.text}</p>
                 </div>
               </CardContent>
