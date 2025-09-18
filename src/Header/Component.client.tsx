@@ -40,7 +40,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
       {...(theme ? { 'data-theme': theme } : {})}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-lg">
-        <div className="flex items-center justify-between" style={{ height: '7rem' }}>
+        <div className="flex items-center justify-between" style={{ height: '5rem' }}>
           <div className="flex items-center">
             <Link href="/" className="text-2xl font-bold text-primary">
               {/* Use Logo component if available, otherwise site name */}
@@ -48,7 +48,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
               <Logo
                 loading="eager"
                 priority="high"
-                className="h-[50%] max-h-[50%] w-auto max-w-[9rem]"
+                className="h-[50%] max-h-[50%] w-auto max-w-[5rem]"
               />
             </Link>
           </div>

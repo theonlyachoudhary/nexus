@@ -22,7 +22,7 @@ export const HeaderNav: React.FC<{ data: HeaderType; className?: string }> = ({
             key={i}
             {...link}
             appearance="link"
-            className="mx-[1rem] md:mx-[6.25rem] text-center text-black hover:text-primary transition-colors text-xl"
+            className="mx-[1rem] text-center text-black hover:text-primary transition-colors text-base"
           />
         )
       })}

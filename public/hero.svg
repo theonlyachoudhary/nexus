@@ -1,1 +1,72 @@
-<svg width="696.103" xmlns="http://www.w3.org/2000/svg" height="651.677" id="screenshot-9695d23a-b816-8013-8006-ce119e3cf58e" viewBox="0 -76 696.103 651.677" xmlns:xlink="http://www.w3.org/1999/xlink" fill="none" version="1.1"><g id="shape-9695d23a-b816-8013-8006-ce119e3cf58e"><g class="frame-container-wrapper"><g class="frame-container-blur"><g class="frame-container-shadows"><g fill="none"><g class="fills" id="fills-9695d23a-b816-8013-8006-ce119e3cf58e"><rect rx="0" ry="0" x="0" y="0" width="696.102540378444" height="575.6774200971543" transform="matrix(1.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000)" class="frame-background"/></g><g class="frame-children"><g id="shape-eb70a945-e9dd-8007-8006-aedbc72f6ced"><g class="fills" id="fills-eb70a945-e9dd-8007-8006-aedbc72f6ced"><rect rx="0" ry="0" x="313.1240103484558" y="-56.94237886466829" transform="matrix(0.866025, 0.500000, -0.500000, 0.866025, 179.355463, -183.248459)" width="236.99999999999994" height="599.9999999999999" style="fill: rgb(255, 255, 255); fill-opacity: 1;"/></g></g><g id="shape-eb70a945-e9dd-8007-8006-aed96088d568"><defs><clipPath id="frame-clip-eb70a945-e9dd-8007-8006-aed96088d568-render-3" class="frame-clip frame-clip-def"><rect rx="0" ry="0" x="0" y="72" width="424.9999999999999" height="450" transform="matrix(1.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000)"/></clipPath></defs><g class="frame-container-wrapper"><g class="frame-container-blur"><g class="frame-container-shadows"><g clip-path="url(#frame-clip-eb70a945-e9dd-8007-8006-aed96088d568-render-3)" fill="none"><g class="fills" id="fills-eb70a945-e9dd-8007-8006-aed96088d568"><rect width="424.9999999999999" height="450" class="frame-background" x="0" transform="matrix(1.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000)" style="fill: rgb(255, 255, 255); fill-opacity: 1;" ry="0" rx="0" y="72"/></g><g class="frame-children"><g id="shape-eb70a945-e9dd-8007-8006-aedc573eb443"><g class="fills" id="fills-eb70a945-e9dd-8007-8006-aedc573eb443"><path d="M192,44.88189697265625L288.59259033203125,19L424.47265625,526.1110229492188L327.8800048828125,551.992919921875L192,44.88189697265625" style="fill: rgb(5, 48, 173); fill-opacity: 0.05;"/></g></g><g id="shape-eb70a945-e9dd-8007-8006-aedcb80560d4"><g class="fills" id="fills-eb70a945-e9dd-8007-8006-aedcb80560d4"><rect rx="0" ry="0" x="69.55127018922195" y="12.491922531259547" transform="matrix(0.866025, 0.500000, -0.500000, 0.866025, 158.512794, -21.593957)" width="100" height="544.9999999999997" style="fill: rgb(5, 48, 173); fill-opacity: 0.05;"/></g></g></g></g></g></g></g></g><g id="shape-eb70a945-e9dd-8007-8006-aedb36dbc9dd" rx="0" ry="0"><g id="shape-eb70a945-e9dd-8007-8006-aedaf7a8e73d"><g class="fills" id="fills-eb70a945-e9dd-8007-8006-aedaf7a8e73d"><path d="M609.5,0L674.451904296875,37.5L581.2142333984375,198.99237060546875L370.951904296875,563.1773681640625L306,525.6773681640625L609.5,0" style="fill: rgb(5, 48, 173); fill-opacity: 0.05;"/></g></g><g id="shape-eb70a945-e9dd-8007-8006-aedb13a6d77f"><g class="fills" id="fills-eb70a945-e9dd-8007-8006-aedb13a6d77f"><rect rx="0" ry="0" x="526.0272228311386" y="4.4284560107327025" transform="matrix(0.866025, 0.500000, -0.500000, 0.866025, 221.113195, -229.348767)" width="25" height="587" style="fill: rgb(5, 48, 173); fill-opacity: 1;"/></g></g></g></g></g></g></g></g></g></svg>
+<svg width="686.103" height="410.677" xmlns="http://www.w3.org/2000/svg" version="1.1" fill="none">
+    <defs>
+        <clipPath id="crop-bottom-10px">
+            <rect x="0" y="0" width="686.103" height="410.677" />
+        </clipPath>
+    </defs>
+ <g clip-path="url(#crop-bottom-10px)">
+  <title>Layer 1</title>
+  <g id="shape-9695d23a-b816-8013-8006-ce119e3cf58e">
+   <g id="svg_1" class="frame-container-wrapper">
+    <g id="svg_2" class="frame-container-blur">
+     <g id="svg_3" class="frame-container-shadows">
+      <g id="svg_4" fill="none">
+       <g id="fills-9695d23a-b816-8013-8006-ce119e3cf58e" class="fills">
+   <rect id="svg_5" class="frame-background" height="575.67742" width="696.10254" y="-79" x="-6"/>
+       </g>
+       <g id="svg_6" class="frame-children">
+        <g id="shape-eb70a945-e9dd-8007-8006-aedbc72f6ced">
+         <g id="fills-eb70a945-e9dd-8007-8006-aedbc72f6ced" class="fills">
+          <rect id="svg_7" fill=" rgb(255, 255, 255)" height="600" width="237" transform="matrix(0.866025, 0.5, -0.5, 0.866025, 179.355, -183.248)" y="-118.69815" x="282.08809"/>
+         </g>
+        </g>
+        <g id="shape-eb70a945-e9dd-8007-8006-aed96088d568">
+         <defs transform="translate(4, -69)">
+          <clipPath class="frame-clip frame-clip-def" id="frame-clip-eb70a945-e9dd-8007-8006-aed96088d568-render-3">
+           <rect id="svg_8" height="420" width="425" y="-7" x="-6"/>
+          </clipPath>
+         </defs>
+         <g id="svg_9" class="frame-container-wrapper">
+          <g id="svg_10" class="frame-container-blur">
+           <g id="svg_11" class="frame-container-shadows">
+            <g id="svg_12" fill="none" clip-path="url(#frame-clip-eb70a945-e9dd-8007-8006-aed96088d568-render-3)">
+             <g id="fills-eb70a945-e9dd-8007-8006-aed96088d568" class="fills">
+              <rect id="svg_13" fill=" rgb(255, 255, 255)" y="-7" x="-6" class="frame-background" height="420" width="425"/>
+             </g>
+             <g id="svg_14" class="frame-children">
+              <g id="shape-eb70a945-e9dd-8007-8006-aedc573eb443">
+               <g id="fills-eb70a945-e9dd-8007-8006-aedc573eb443" class="fills">
+                <path id="svg_15" fill-opacity="0.05" fill=" rgb(5, 48, 173)" d="m196,-24.1181l96.59259,-25.8819l135.88007,507.11102l-96.59266,25.8819l-135.88,-507.11102"/>
+               </g>
+              </g>
+              <g id="shape-eb70a945-e9dd-8007-8006-aedcb80560d4">
+               <g id="fills-eb70a945-e9dd-8007-8006-aedcb80560d4" class="fills">
+                <rect id="svg_16" fill-opacity="0.05" fill=" rgb(5, 48, 173)" height="545" width="100" transform="matrix(0.866025, 0.5, -0.5, 0.866025, 158.513, -21.594)" y="-49.26385" x="38.51535"/>
+               </g>
+              </g>
+             </g>
+            </g>
+           </g>
+          </g>
+         </g>
+        </g>
+        <g id="shape-eb70a945-e9dd-8007-8006-aedb36dbc9dd">
+         <g id="shape-eb70a945-e9dd-8007-8006-aedaf7a8e73d">
+          <g id="fills-eb70a945-e9dd-8007-8006-aedaf7a8e73d" class="fills">
+           <path id="svg_17" fill-opacity="0.05" fill=" rgb(5, 48, 173)" d="m613.5,-69l64.9519,37.5l-93.23767,161.49237l-210.26233,364.185l-64.9519,-37.5l303.5,-525.67737"/>
+          </g>
+         </g>
+         <g id="shape-eb70a945-e9dd-8007-8006-aedb13a6d77f">
+          <g id="fills-eb70a945-e9dd-8007-8006-aedb13a6d77f" class="fills">
+           <rect id="svg_18" fill=" rgb(5, 48, 173)" height="587" width="25" transform="matrix(0.866025, 0.5, -0.5, 0.866025, 221.113, -229.349)" y="-57.32731" x="494.9913"/>
+          </g>
+         </g>
+        </g>
+       </g>
+      </g>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+</svg>

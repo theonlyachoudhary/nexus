@@ -70,9 +70,9 @@ export const DesignHero: React.FC<Page['hero']> = ({
           />
         </motion.div>
 
-        {/* Background SVG - constrained to 60% of viewport width on large screens */}
+        {/* Background SVG - constrained to 80% of viewport width on large screens */}
         <motion.div
-          className="hidden lg:block absolute left-0 top-0 bottom-0 w-[60vw]"
+          className="hidden lg:block absolute left-0 top-0 bottom-0 w-[80vw]"
           initial={{ x: -80, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 1.1, delay: 0.4 }}
@@ -81,7 +81,7 @@ export const DesignHero: React.FC<Page['hero']> = ({
             src="/hero.svg"
             alt=""
             fill
-            className="object-cover object-left [object-position:50%_60%]"
+            className="w-full h-full"
             draggable={false}
             priority
           />
@@ -90,7 +90,7 @@ export const DesignHero: React.FC<Page['hero']> = ({
 
       {/* Content */}
       <div className="relative z-20 h-[32rem] lg:h-[40rem] flex items-center">
-        <div className="px-[10%] lg:pl-[5%] lg:pr-[15%] lg:w-[70rem] space-y-6 text-center lg:text-left">
+  <div className="w-[70%] max-w-[70vw] px-[10%] lg:pl-[5%] lg:pr-[15%] lg:w-[70rem] space-y-6 text-left">
           {/* Title */}
           {title && (
             <motion.h1
