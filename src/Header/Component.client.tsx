@@ -45,7 +45,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
             <Link href="/" className="text-2xl font-bold text-primary">
               {/* Use Logo component if available, otherwise site name */}
               <span className="sr-only">Home</span>
-              <Logo loading="eager" priority="high" className="w-[5rem]" />
+              <Logo loading="eager" priority="high" className="w-[80px]" />
             </Link>
           </div>
 
