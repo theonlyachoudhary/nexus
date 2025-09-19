@@ -61,7 +61,7 @@ export const DesignHero: React.FC<Page['hero']> = ({
           transition={{ duration: 1.2, delay: 0.2 }}
         >
           <Image
-            src="/image.png"
+            src="/image.webp"
             alt=""
             fill
             className="hidden lg:block object-cover object-right"
