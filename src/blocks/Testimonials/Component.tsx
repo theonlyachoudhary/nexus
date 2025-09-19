@@ -58,7 +58,7 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
         {/* Removed the header section since it's now in SectionHeader */}
 
         <div className="flex justify-center">
-          <div className="grid md:grid-cols-3 gap-y-8 gap-x-16 mb-12">
+          <div className="grid md:grid-cols-3 gap-y-8 gap-x-16 mb-12 items-stretch">
             {testimonials.map((testimonial, index) => (
               <motion.div
                 key={index}
@@ -67,7 +67,7 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Card className="p-6 hover:shadow-lg transition-shadow bg-brand-neutral/25 flex flex-col">
+                <Card className="p-6 hover:shadow-lg transition-shadow bg-brand-neutral/25 flex flex-col h-full">
                   <CardContent className="flex flex-col h-full p-0">
                     <p className="leading-relaxed italic flex-grow mb-4">
                       &quot;{testimonial.quote}&quot;

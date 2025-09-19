@@ -2,6 +2,7 @@
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import React, { useRef, useEffect } from 'react'
+import { SectionHeader } from '@/components/SectionHeader'
 import { motion, useAnimation, useInView } from 'framer-motion'
 // Predeclare hooks for up to 10 steps (safe for most use cases)
 function useStepAnimations(stepCount: number) {
@@ -98,10 +99,7 @@ export function ProcessBlock({
   return (
     <section className="py-20 bg-muted/20 overflow-x-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">{heading}</h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">{intro}</p>
-        </div>
+        <SectionHeader heading={heading} subheading={intro} />
 
         {/* Mobile vertical process animation */}
         <div className="md:hidden flex flex-col items-center relative">
@@ -166,25 +164,39 @@ export function ProcessBlock({
         </div>
 
         {/* Desktop grid with framer-motion animation */}
-        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {steps.map((step, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="bg-background rounded-lg p-8 shadow-sm border"
-            >
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">
-                  {idx + 1}
-                </div>
-                <h3 className="text-xl font-semibold text-foreground">{step.title}</h3>
+        {/* Desktop: 3 cards per row, always 3 per row (pad with empty divs if needed) */}
+        <div className="hidden md:block md:mb-12">
+          {Array.from({ length: Math.ceil(steps.length / 3) }).map((_, rowIdx, arr) => {
+            const rowSteps = steps.slice(rowIdx * 3, rowIdx * 3 + 3)
+            const isLastRow = rowIdx === arr.length - 1
+            return (
+              <div key={rowIdx} className="flex gap-8 mb-8 justify-center">
+                {rowSteps.map((step, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.5, delay: (rowIdx * 3 + idx) * 0.1 }}
+                    className="bg-background rounded-lg p-8 shadow-sm border basis-1/3 max-w-[32%] flex flex-col"
+                  >
+                    <div className="flex items-center mb-4">
+                      <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">
+                        {rowIdx * 3 + idx + 1}
+                      </div>
+                      <h3 className="text-xl font-semibold text-foreground">{step.title}</h3>
+                    </div>
+                    <p className="leading-relaxed">{step.description}</p>
+                  </motion.div>
+                ))}
+                {/* Only pad non-final rows */}
+                {!isLastRow &&
+                  Array.from({ length: 3 - rowSteps.length }).map((_, padIdx) => (
+                    <div key={padIdx + 'pad'} className="basis-1/3 max-w-[32%]" />
+                  ))}
               </div>
-              <p className="text-muted-foreground leading-relaxed">{step.description}</p>
-            </motion.div>
-          ))}
+            )
+          })}
         </div>
 
         {/* CTA */}
