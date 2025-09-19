@@ -25,6 +25,29 @@ const solutionItemFields: Field[] = [
       description: 'Icon name from Lucide Icons (e.g., "workflow", "settings", "users")',
     },
   },
+  {
+    name: 'cardColor',
+    type: 'text',
+    label: 'Card Color',
+    admin: {
+      description: 'CSS color value (e.g., #f5f5f5 or #ffffff)',
+      placeholder: '#f5f5f5',
+    },
+    defaultValue: '#f5f5f5',
+  },
+  {
+    name: 'features',
+    type: 'array',
+    label: 'Features',
+    minRows: 0,
+    fields: [
+      {
+        name: 'feature',
+        type: 'text',
+        required: true,
+      },
+    ],
+  },
 ]
 
 export const SolutionsBlock: Block = {

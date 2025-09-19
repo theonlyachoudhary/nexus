@@ -883,6 +883,16 @@ export interface SolutionsBlock {
          * Icon name from Lucide Icons (e.g., "workflow", "settings", "users")
          */
         icon?: string | null;
+        /**
+         * CSS color value (e.g., #f5f5f5 or #ffffff)
+         */
+        cardColor?: string | null;
+        features?:
+          | {
+              feature: string;
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
@@ -1550,6 +1560,13 @@ export interface SolutionsBlockSelect<T extends boolean = true> {
         subtitle?: T;
         description?: T;
         icon?: T;
+        cardColor?: T;
+        features?:
+          | T
+          | {
+              feature?: T;
+              id?: T;
+            };
         id?: T;
       };
   cta?:
