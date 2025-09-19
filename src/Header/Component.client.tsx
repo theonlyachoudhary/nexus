@@ -45,16 +45,12 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
             <Link href="/" className="text-2xl font-bold text-primary">
               {/* Use Logo component if available, otherwise site name */}
               <span className="sr-only">Home</span>
-              <Logo
-                loading="eager"
-                priority="high"
-                className="h-[50%] max-h-[50%] w-auto max-w-[5rem]"
-              />
+              <Logo loading="eager" priority="high" className="w-[5rem]" />
             </Link>
           </div>
 
-          <div className="hidden md:flex md:ml-10 md:flex-1 md:items-center">
-            <div className="w-full">
+          <div className="hidden md:flex md:flex-1 md:items-center">
+            <div className="w-auto mx-auto">
               <HeaderNav data={data} className="w-full justify-between" />
             </div>
           </div>

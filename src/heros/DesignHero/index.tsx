@@ -77,20 +77,13 @@ export const DesignHero: React.FC<Page['hero']> = ({
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 1.1, delay: 0.4 }}
         >
-          <Image
-            src="/hero.svg"
-            alt=""
-            fill
-            className="w-full h-full"
-            draggable={false}
-            priority
-          />
+          <Image src="/hero.svg" alt="" fill className="w-full h-full" draggable={false} priority />
         </motion.div>
       </motion.div>
 
       {/* Content */}
       <div className="relative z-20 h-[32rem] lg:h-[40rem] flex items-center">
-  <div className="w-[70%] max-w-[70vw] px-[10%] lg:pl-[5%] lg:pr-[15%] lg:w-[70rem] space-y-6 text-left">
+        <div className="mx-auto md:mx-0 md:w-[70%] md:max-w-[70vw] px-[10%] lg:pl-[5%] lg:pr-[15%] lg:w-[70rem] space-y-6 text-center md:text-left">
           {/* Title */}
           {title && (
             <motion.h1
