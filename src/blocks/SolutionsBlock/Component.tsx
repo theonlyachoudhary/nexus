@@ -33,6 +33,8 @@ type SolutionItem = {
   icon?: string
   cardColor?: string
   features?: SolutionFeature[]
+  readMoreText?: string
+  readMoreLink?: string
 }
 
 export type SolutionsBlockProps = {
@@ -42,6 +44,7 @@ export type SolutionsBlockProps = {
   cta?: {
     text?: string
     link?: string
+    showCTA?: boolean
   }
 }
 
@@ -205,15 +208,20 @@ export const SolutionsBlock: React.FC<SolutionsBlockProps> = ({
                         </div>
                       )}
                     </CardContent>
-                    <CardFooter className="py-1">
-                      <Button
-                        variant="link"
-                        className="p-0 font-medium hover:text-brand-primary-light"
-                        style={{ color: solution.cardColor }}
-                      >
-                        Learn more &rarr;
-                      </Button>
-                    </CardFooter>
+                    {solution.readMoreLink && (
+                      <CardFooter className="py-1">
+                        <Button
+                          asChild
+                          variant="link"
+                          className="p-0 font-medium hover:text-brand-primary-light"
+                          style={{ color: solution.cardColor }}
+                        >
+                          <Link href={solution.readMoreLink}>
+                            {solution.readMoreText || 'Learn more'} &rarr;
+                          </Link>
+                        </Button>
+                      </CardFooter>
+                    )}
                   </div>
                   {/* Mobile: AnimatePresence for expand/collapse */}
                   <AnimatePresence initial={false}>
@@ -275,15 +283,20 @@ export const SolutionsBlock: React.FC<SolutionsBlockProps> = ({
                           transition={{ duration: 0.3, ease: 'easeInOut' }}
                           className={cn('py-1', 'sm:hidden', showDetails ? 'block' : 'hidden')}
                         >
-                          <CardFooter className="py-1">
-                            <Button
-                              variant="link"
-                              className="p-0 font-medium hover:text-brand-primary-light"
-                              style={{ color: solution.cardColor }}
-                            >
-                              Learn more &rarr;
-                            </Button>
-                          </CardFooter>
+                          {solution.readMoreLink && (
+                            <CardFooter className="py-1">
+                              <Button
+                                asChild
+                                variant="link"
+                                className="p-0 font-medium hover:text-brand-primary-light"
+                                style={{ color: solution.cardColor }}
+                              >
+                                <Link href={solution.readMoreLink}>
+                                  {solution.readMoreText || 'Learn more'} &rarr;
+                                </Link>
+                              </Button>
+                            </CardFooter>
+                          )}
                         </motion.div>
                       </>
                     )}
@@ -294,7 +307,7 @@ export const SolutionsBlock: React.FC<SolutionsBlockProps> = ({
           })}
         </motion.div>
 
-        {cta?.text && cta?.link && (
+        {cta?.showCTA !== false && cta?.text && cta?.link && (
           <motion.div
             className="mt-12 text-center"
             initial={{ opacity: 0, y: 20 }}

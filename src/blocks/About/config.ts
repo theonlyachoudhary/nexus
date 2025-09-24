@@ -14,6 +14,14 @@ const AboutBlockFields: Field[] = [
       'The gold standard in professional change management consulting — disciplined, adaptable, and relentlessly committed to excellence.',
   },
   {
+    name: 'coreValuesHeading',
+    type: 'text',
+    defaultValue: 'Our Core Values',
+    admin: {
+      description: 'Heading for the core values section.',
+    },
+  },
+  {
     name: 'missionCards',
     type: 'array',
     minRows: 1,
@@ -30,6 +38,14 @@ const AboutBlockFields: Field[] = [
         required: true,
       },
       {
+        name: 'color',
+        type: 'text',
+        defaultValue: 'var(--brand-primary)',
+        admin: {
+          description: 'CSS color value for card accent (e.g., #4078a9 or var(--brand-primary))',
+        },
+      },
+      {
         name: 'id',
         type: 'text',
         admin: {
@@ -41,10 +57,12 @@ const AboutBlockFields: Field[] = [
       {
         heading: 'Our Mission',
         text: 'Help good businesses become great by equipping them with tools and thinking that deliver real value to customers, teams, and communities.',
+        color: 'var(--brand-primary)',
       },
       {
         heading: 'Our Vision',
         text: 'Elevate leaders to build a smarter tomorrow by redefining how work is done and how value is created.',
+        color: 'var(--brand-primary)',
       },
     ],
   },
@@ -60,6 +78,14 @@ const AboutBlockFields: Field[] = [
         required: true,
       },
       {
+        name: 'color',
+        type: 'text',
+        defaultValue: 'var(--brand-primary)',
+        admin: {
+          description: 'CSS color value for value accent (e.g., #4078a9 or var(--brand-primary))',
+        },
+      },
+      {
         name: 'id',
         type: 'text',
         admin: {
@@ -68,11 +94,11 @@ const AboutBlockFields: Field[] = [
       },
     ],
     defaultValue: [
-      { text: 'Clarity over Complexity' },
-      { text: 'Discipline in Execution' },
-      { text: 'Purpose in Decision' },
-      { text: 'Partnership with Integrity' },
-      { text: 'Commitment to Improvement' },
+      { text: 'Clarity over Complexity', color: 'var(--brand-primary)' },
+      { text: 'Discipline in Execution', color: 'var(--brand-primary)' },
+      { text: 'Purpose in Decision', color: 'var(--brand-primary)' },
+      { text: 'Partnership with Integrity', color: 'var(--brand-primary)' },
+      { text: 'Commitment to Improvement', color: 'var(--brand-primary)' },
     ],
   },
 ]

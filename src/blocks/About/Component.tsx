@@ -3,8 +3,7 @@ import React from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 
 interface AboutBlockProps {
-  title?: string
-  description?: string
+  coreValuesHeading?: string
   missionCards?: Array<{
     heading: string
     text: string
@@ -19,7 +18,7 @@ interface AboutBlockProps {
 // ...existing code...
 
 export const AboutBlock: React.FC<AboutBlockProps> = ({
-  // ...existing code...
+  coreValuesHeading,
   missionCards,
   coreValues,
 }) => {
@@ -51,39 +50,44 @@ export const AboutBlock: React.FC<AboutBlockProps> = ({
     Array.isArray(missionCards) && missionCards.length > 0 ? missionCards : defaultMissionCards
   const coreValuesToRender =
     Array.isArray(coreValues) && coreValues.length > 0 ? coreValues : defaultCoreValues
+  const coreValuesHeadingToRender = coreValuesHeading || 'Our Core Values'
 
   return (
     <section className="py-20 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 mb-16">
-          {missionCardsToRender.map((card, idx) => (
-            <Card key={idx} className="p-8 bg-white border-gray-200">
-              <CardContent className="space-y-6">
-                <div className="flex items-center gap-4 mb-6">
-                  <div
-                    className="w-12 h-12 rounded-lg flex items-center justify-center"
-                    style={{ backgroundColor: brandPrimary }}
-                  >
-                    <div className="w-6 h-6 bg-white rounded-sm"></div>
+          {missionCardsToRender.map(
+            (card: { heading: string; text: string; color?: string }, idx: number) => (
+              <Card key={idx} className="p-8 bg-white border-gray-200">
+                <CardContent className="space-y-6">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div
+                      className="w-12 h-12 rounded-lg flex items-center justify-center"
+                      style={{ backgroundColor: brandPrimary }}
+                    >
+                      <div className="w-6 h-6 bg-white rounded-sm"></div>
+                    </div>
+                    <h2 className="text-3xl font-bold" style={{ color: brandPrimary }}>
+                      {card.heading}
+                    </h2>
                   </div>
-                  <h2 className="text-3xl font-bold" style={{ color: brandPrimary }}>
-                    {card.heading}
-                  </h2>
-                </div>
-                <p className="leading-relaxed">{card.text}</p>
-              </CardContent>
-            </Card>
-          ))}
+                  <p className="leading-relaxed">{card.text}</p>
+                </CardContent>
+              </Card>
+            ),
+          )}
         </div>
 
         <div className="bg-gray-50 rounded-lg p-8">
-          <h3 className="text-2xl font-bold text-center text-foreground mb-8">Our Core Values</h3>
+          <h3 className="text-2xl font-bold text-center text-foreground mb-8">
+            {coreValuesHeadingToRender}
+          </h3>
           <div className="grid md:grid-cols-5 gap-6">
-            {coreValuesToRender.map((value, idx) => (
+            {coreValuesToRender.map((value: { text: string; color?: string }, idx: number) => (
               <div key={idx} className="text-center space-y-3">
                 <div
                   className="w-16 h-16 rounded-full flex items-center justify-center mx-auto"
-                  style={{ backgroundColor: brandPrimary }}
+                  style={{ backgroundColor: value.color || brandPrimary }}
                 >
                   <div className="w-8 h-8 bg-white rounded-full"></div>
                 </div>

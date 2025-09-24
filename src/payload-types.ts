@@ -902,6 +902,10 @@ export interface SolutionsBlock {
   cta?: {
     text?: string | null;
     link?: string | null;
+    /**
+     * Uncheck to hide the CTA button even if a link is entered.
+     */
+    showCTA?: boolean | null;
   };
   id?: string | null;
   blockName?: string | null;
@@ -1037,16 +1041,28 @@ export interface AboutTeaserBlock {
 export interface AboutBlock {
   title: string;
   description?: string | null;
+  /**
+   * Heading for the core values section.
+   */
+  coreValuesHeading?: string | null;
   missionCards?:
     | {
         heading: string;
         text: string;
+        /**
+         * CSS color value for card accent (e.g., #4078a9 or var(--brand-primary))
+         */
+        color?: string | null;
         id?: string | null;
       }[]
     | null;
   coreValues?:
     | {
         text: string;
+        /**
+         * CSS color value for value accent (e.g., #4078a9 or var(--brand-primary))
+         */
+        color?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -1633,6 +1649,7 @@ export interface SolutionsBlockSelect<T extends boolean = true> {
     | {
         text?: T;
         link?: T;
+        showCTA?: T;
       };
   id?: T;
   blockName?: T;
@@ -1763,17 +1780,20 @@ export interface AboutTeaserBlockSelect<T extends boolean = true> {
 export interface AboutBlockSelect<T extends boolean = true> {
   title?: T;
   description?: T;
+  coreValuesHeading?: T;
   missionCards?:
     | T
     | {
         heading?: T;
         text?: T;
+        color?: T;
         id?: T;
       };
   coreValues?:
     | T
     | {
         text?: T;
+        color?: T;
         id?: T;
       };
   id?: T;

@@ -113,6 +113,15 @@ export const SolutionsBlock: Block = {
           type: 'text',
           defaultValue: '/solutions',
         },
+        {
+          name: 'showCTA',
+          type: 'checkbox',
+          label: 'Show CTA Button',
+          defaultValue: true,
+          admin: {
+            description: 'Uncheck to hide the CTA button even if a link is entered.',
+          },
+        },
       ],
     },
   ],
