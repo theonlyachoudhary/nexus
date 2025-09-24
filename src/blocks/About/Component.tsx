@@ -1,5 +1,5 @@
 import React from 'react'
-import { SectionHeader } from '@/components/SectionHeader'
+// ...existing code...
 import { Card, CardContent } from '@/components/ui/card'
 
 interface AboutBlockProps {
@@ -19,8 +19,7 @@ interface AboutBlockProps {
 // ...existing code...
 
 export const AboutBlock: React.FC<AboutBlockProps> = ({
-  title,
-  description,
+  // ...existing code...
   missionCards,
   coreValues,
 }) => {

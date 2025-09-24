@@ -5,8 +5,8 @@ import type { Page } from '@/payload-types'
 import RichText from '@/components/RichText'
 
 type LowImpactHeroType = {
-  title?: string
-  description?: string
+  title?: string | null | undefined
+  description?: string | null | undefined
   children?: React.ReactNode
   richText?: Page['hero']['richText']
 }

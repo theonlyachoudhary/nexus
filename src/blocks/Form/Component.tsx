@@ -178,7 +178,7 @@ export const FormBlock: React.FC<
                 title: 'Proven Results',
                 desc: 'Join our satisfied clients who have achieved 30-150% improvements in efficiency and growth.',
               },
-            ].map((item, idx) => (
+            ].map((item) => (
               <motion.div
                 key={item.title}
                 className="flex items-start space-x-3"

@@ -59,14 +59,14 @@ export const RenderBlocks: React.FC<{
               if (blockType === 'mediaBlock') {
                 return (
                   <div className="" key={index}>
-                    <Block {...(block as any)} disableInnerContainer />
+                    <Block {...(block as Record<string, unknown>)} disableInnerContainer />
                   </div>
                 )
               }
               // Fallback for all other blocks
               return (
                 <div className="" key={index}>
-                  <Block {...(block as any)} />
+                  <Block {...(block as Record<string, unknown>)} />
                 </div>
               )
             }
