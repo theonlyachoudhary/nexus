@@ -4,21 +4,26 @@ import type { Page } from '@/payload-types'
 
 import RichText from '@/components/RichText'
 
-type LowImpactHeroType =
-  | {
-      children?: React.ReactNode
-      richText?: never
-    }
-  | (Omit<Page['hero'], 'richText'> & {
-      children?: never
-      richText?: Page['hero']['richText']
-    })
+type LowImpactHeroType = {
+  title?: string
+  description?: string
+  children?: React.ReactNode
+  richText?: Page['hero']['richText']
+}
 
-export const LowImpactHero: React.FC<LowImpactHeroType> = ({ children, richText }) => {
+export const LowImpactHero: React.FC<LowImpactHeroType> = ({
+  title,
+  description,
+  children,
+  richText,
+}) => {
   return (
-    <div className="container mt-16">
-      <div className="max-w-[48rem]">
-        {children || (richText && <RichText data={richText} enableGutter={false} />)}
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+      <div className="text-center mb-16">
+        {title && <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">{title}</h1>}
+        {description && <p className="text-xl max-w-3xl mx-auto leading-relaxed">{description}</p>}
+        {!title && !description && children}
+        {!title && !description && richText && <RichText data={richText} enableGutter={false} />}
       </div>
     </div>
   )

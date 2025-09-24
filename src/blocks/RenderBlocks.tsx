@@ -13,6 +13,8 @@ import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { SolutionsBlock } from '@/blocks/SolutionsBlock/Component'
 import { TestimonialsBlock } from '@/blocks/Testimonials/Component'
 import { BannerBlock } from '@/blocks/Banner/Component'
+import { AboutBlock } from '@/blocks/About/Component'
+import { TeamBlock } from '@/blocks/Team/Component'
 
 import { ProcessBlock } from '@/blocks/Process/Component'
 import { UnderConstructionBlock } from '@/blocks/UnderConstruction/Component'
@@ -28,9 +30,11 @@ const blockComponents = {
   mediaBlock: MediaBlock,
   solutions: SolutionsBlock,
   testimonials: TestimonialsBlock,
-  banner: BannerBlock, // This line is retained as it is not a duplicate
+  banner: BannerBlock,
   process: ProcessBlock,
   underConstruction: UnderConstructionBlock,
+  about: AboutBlock,
+  team: TeamBlock,
 }
 
 export const RenderBlocks: React.FC<{

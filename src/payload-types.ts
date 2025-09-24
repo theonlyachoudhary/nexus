@@ -153,6 +153,7 @@ export interface Page {
   hero: {
     type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'designHero';
     title?: string | null;
+    description?: string | null;
     highlightedWords?:
       | {
           word: string;
@@ -260,6 +261,8 @@ export interface Page {
         blockName?: string | null;
         blockType: 'underConstruction';
       }
+    | AboutBlock
+    | TeamBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1029,6 +1032,59 @@ export interface AboutTeaserBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutBlock".
+ */
+export interface AboutBlock {
+  title: string;
+  description?: string | null;
+  missionCards?:
+    | {
+        heading: string;
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  coreValues?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'about';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TeamBlock".
+ */
+export interface TeamBlock {
+  title: string;
+  description?: string | null;
+  members?:
+    | {
+        name: string;
+        role?: string | null;
+        bio?: string | null;
+        image?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  approachTitle?: string | null;
+  approachDescription?: string | null;
+  approachStats?:
+    | {
+        value: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'team';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "teamMembers".
  */
 export interface TeamMember {
@@ -1314,6 +1370,7 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         type?: T;
         title?: T;
+        description?: T;
         highlightedWords?:
           | T
           | {
@@ -1410,6 +1467,8 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        about?: T | AboutBlockSelect<T>;
+        team?: T | TeamBlockSelect<T>;
       };
   meta?:
     | T
@@ -1693,6 +1752,57 @@ export interface AboutTeaserBlockSelect<T extends boolean = true> {
     | {
         text?: T;
         link?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutBlock_select".
+ */
+export interface AboutBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  missionCards?:
+    | T
+    | {
+        heading?: T;
+        text?: T;
+        id?: T;
+      };
+  coreValues?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TeamBlock_select".
+ */
+export interface TeamBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  members?:
+    | T
+    | {
+        name?: T;
+        role?: T;
+        bio?: T;
+        image?: T;
+        id?: T;
+      };
+  approachTitle?: T;
+  approachDescription?: T;
+  approachStats?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
       };
   id?: T;
   blockName?: T;

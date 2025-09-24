@@ -45,10 +45,12 @@ export const hero: Field = {
     {
       name: 'title',
       type: 'text',
-      admin: {
-        condition: (_, { type } = {}) => type === 'designHero',
-      },
       label: 'Title (H1)',
+    },
+    {
+      name: 'description',
+      type: 'textarea',
+      label: 'Description',
     },
     {
       name: 'highlightedWords',
