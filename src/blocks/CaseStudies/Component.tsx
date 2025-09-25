@@ -31,6 +31,7 @@ interface CaseStudy {
 interface CaseStudiesBlockProps {
   heading?: string
   subheading?: string
+  highlights?: Array<{ value: string; description: string; color: string }>
   caseStudies?: CaseStudy[]
   ctaButton?: { text: string; link: string }
 }
@@ -38,11 +39,28 @@ interface CaseStudiesBlockProps {
 export const CaseStudiesBlock: React.FC<CaseStudiesBlockProps> = ({
   caseStudies = [],
   ctaButton,
+  highlights,
 }) => {
   return (
     <section className={`py-10 bg-muted/30`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="space-y-16">
+          {highlights && highlights.length > 0 && (
+            <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-10">
+              {highlights.map((highlight, idx) => (
+                <div className="text-center" key={idx}>
+                  <div
+                    className={`text-4xl font-bold mb-2 ${
+                      highlight.color === 'accent' ? 'text-accent' : 'text-primary'
+                    }`}
+                  >
+                    {highlight.value}
+                  </div>
+                  <p className="">{highlight.description}</p>
+                </div>
+              ))}
+            </div>
+          )}
           {caseStudies.map((study, index) => (
             <motion.div
               key={study.id || index}
