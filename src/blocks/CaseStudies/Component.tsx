@@ -4,7 +4,6 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
-import { SectionHeader } from '@/components/SectionHeader'
 
 // Type definitions
 interface CaseStudy {
@@ -17,6 +16,8 @@ interface CaseStudy {
   approach?: Array<{ step?: string }>
   solution?: string
   results?: Array<{ result?: string }>
+  deliverables?: Array<{ item?: string }>
+  notes?: Array<{ note?: string }>
   testimonial?: {
     quote?: string
     author?: string
@@ -100,6 +101,24 @@ export const CaseStudiesBlock: React.FC<CaseStudiesBlockProps> = ({
                         </div>
                       )}
 
+                    {study.deliverables &&
+                      Array.isArray(study.deliverables) &&
+                      study.deliverables.length > 0 && (
+                        <div>
+                          <h3 className="text-xl font-semibold text-foreground mb-3">
+                            Deliverables
+                          </h3>
+                          <ul className="space-y-2">
+                            {study.deliverables.map((item, idx) => (
+                              <li key={idx} className="flex items-start gap-3">
+                                <div className="w-2 h-2 bg-secondary rounded-full mt-3 flex-shrink-0"></div>
+                                <p className="">{item.item || String(item)}</p>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
                     {study.solution && (
                       <div>
                         <h3 className="text-xl font-semibold text-foreground mb-3">Solution</h3>
@@ -115,6 +134,20 @@ export const CaseStudiesBlock: React.FC<CaseStudiesBlockProps> = ({
                             <li key={resultIndex} className="flex items-start gap-3">
                               <div className="w-2 h-2 bg-primary rounded-full mt-3 flex-shrink-0"></div>
                               <p className="">{result.result || String(result)}</p>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {study.notes && Array.isArray(study.notes) && study.notes.length > 0 && (
+                      <div>
+                        <h3 className="text-xl font-semibold text-foreground mb-3">Notes</h3>
+                        <ul className="space-y-2">
+                          {study.notes.map((note, idx) => (
+                            <li key={idx} className="flex items-start gap-3">
+                              <div className="w-2 h-2 bg-muted rounded-full mt-3 flex-shrink-0"></div>
+                              <p className="">{note.note || String(note)}</p>
                             </li>
                           ))}
                         </ul>
