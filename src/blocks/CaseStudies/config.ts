@@ -5,6 +5,38 @@ export const CaseStudiesBlock: Block = {
   interfaceName: 'CaseStudiesBlock',
   fields: [
     {
+      name: 'highlights',
+      label: 'Highlight Metrics',
+      type: 'array',
+      minRows: 1,
+      maxRows: 3,
+      fields: [
+        {
+          name: 'value',
+          label: 'Value',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'description',
+          label: 'Description',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'color',
+          label: 'Color',
+          type: 'select',
+          options: [
+            { label: 'Primary', value: 'primary' },
+            { label: 'Accent', value: 'accent' },
+          ],
+          required: true,
+          defaultValue: 'primary',
+        },
+      ],
+    },
+    {
       name: 'heading',
       type: 'text',
       required: true,
