@@ -951,6 +951,14 @@ export interface TestimonialsBlock {
  * via the `definition` "CaseStudiesBlock".
  */
 export interface CaseStudiesBlock {
+  highlights?:
+    | {
+        value: string;
+        description: string;
+        color: 'primary' | 'accent';
+        id?: string | null;
+      }[]
+    | null;
   heading: string;
   subheading?: string | null;
   /**
@@ -998,6 +1006,14 @@ export interface CaseStudiesBlock {
         tags?:
           | {
               tag?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        highlights?:
+          | {
+              value: string;
+              description: string;
+              color: 'primary' | 'accent';
               id?: string | null;
             }[]
           | null;
@@ -1709,6 +1725,14 @@ export interface TestimonialsBlockSelect<T extends boolean = true> {
  * via the `definition` "CaseStudiesBlock_select".
  */
 export interface CaseStudiesBlockSelect<T extends boolean = true> {
+  highlights?:
+    | T
+    | {
+        value?: T;
+        description?: T;
+        color?: T;
+        id?: T;
+      };
   heading?: T;
   subheading?: T;
   caseStudies?:
@@ -1755,6 +1779,14 @@ export interface CaseStudiesBlockSelect<T extends boolean = true> {
           | T
           | {
               tag?: T;
+              id?: T;
+            };
+        highlights?:
+          | T
+          | {
+              value?: T;
+              description?: T;
+              color?: T;
               id?: T;
             };
         id?: T;
