@@ -113,9 +113,37 @@ export const CaseStudiesBlock: Block = {
           required: true,
         },
         {
+          name: 'approach',
+          label: 'Our Approach',
+          type: 'array',
+          minRows: 1,
+          fields: [
+            {
+              name: 'step',
+              label: 'Step',
+              type: 'text',
+              required: true,
+            },
+          ],
+        },
+        {
           name: 'solution',
           type: 'textarea',
           required: true,
+        },
+        {
+          name: 'deliverables',
+          label: 'Deliverables',
+          type: 'array',
+          minRows: 1,
+          fields: [
+            {
+              name: 'item',
+              label: 'Deliverable',
+              type: 'text',
+              required: true,
+            },
+          ],
         },
         {
           name: 'results',
@@ -123,6 +151,18 @@ export const CaseStudiesBlock: Block = {
           fields: [
             {
               name: 'result',
+              type: 'text',
+            },
+          ],
+        },
+        {
+          name: 'notes',
+          label: 'Notes',
+          type: 'array',
+          fields: [
+            {
+              name: 'note',
+              label: 'Note',
               type: 'text',
             },
           ],

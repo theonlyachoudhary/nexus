@@ -1,146 +1,155 @@
 import React from 'react'
+import { Card } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { SectionHeader } from '@/components/SectionHeader'
-import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
+import { SectionHeader } from '@/components/SectionHeader'
 
-// Types
-
-type CaseStudy = {
-  title: string
-  client: string
+// Type definitions
+interface CaseStudy {
+  id?: number
+  slug?: string
+  title?: string
+  client?: string
   industry?: string
-  challenge: string
-  solution: string
+  challenge?: string
+  approach?: Array<{ step?: string }>
+  solution?: string
   results?: Array<{ result?: string }>
-  metrics?: Array<{ label?: string; value?: string }>
-  image?: unknown
-  tags?: Array<{ tag?: string }>
+  testimonial?: {
+    quote?: string
+    author?: string
+    title?: string
+  }
+  metrics?: Record<string, string> | Array<{ label: string; value: string }>
 }
 
-export type CaseStudiesBlockProps = {
+interface CaseStudiesBlockProps {
   heading?: string
   subheading?: string
   caseStudies?: CaseStudy[]
-  ctaButton?: {
-    text: string
-    link: string
-  }
+  ctaButton?: { text: string; link: string }
 }
 
-const backgroundClasses: Record<string, string> = {
-  light: 'bg-white',
-  neutral: 'bg-brand-neutral/25',
-  'primary-light': 'bg-brand-ibm-blue/10',
-  muted: 'bg-muted/50',
-}
-
-export const CaseStudiesBlock: React.FC<CaseStudiesBlockProps> = (props) => {
-  const {
-    heading = 'Success Stories',
-    subheading = "See how we've helped businesses transform their operations and achieve measurable results.",
-    caseStudies = [
-      {
-        title: 'Manufacturing Efficiency Transformation',
-        client: 'Midwest Manufacturing Co.',
-        industry: 'Manufacturing',
-        challenge: 'Struggling with 40% production delays and unclear processes',
-        solution: 'Implemented streamlined workflows and automated tracking systems',
-        metrics: [
-          { label: 'Production Delays', value: '65% Reduction' },
-          { label: 'Cost Savings', value: '30% Decrease' },
-          { label: 'Implementation', value: '90 Days' },
-        ],
-      },
-      {
-        title: 'Construction Company Scale-Up',
-        client: 'Premier Construction Group',
-        industry: 'Construction',
-        challenge: 'Revenue plateau and operational bottlenecks limiting growth',
-        solution: 'Scaled operations with improved project management and team efficiency',
-        metrics: [
-          { label: 'Revenue Growth', value: '140% Increase' },
-          { label: 'Project Capacity', value: '3x More Projects' },
-          { label: 'Team Efficiency', value: '50% Improvement' },
-        ],
-      },
-      {
-        title: 'Digital Education Platform',
-        client: 'EduTech Solutions',
-        industry: 'Education',
-        challenge: 'Low student engagement and poor attendance rates',
-        solution: 'Developed interactive learning modules and engagement tracking',
-        metrics: [
-          { label: 'Student Attendance', value: '150% Growth' },
-          { label: 'Engagement Rate', value: '85% Increase' },
-          { label: 'Course Completion', value: '95% Success' },
-        ],
-      },
-    ],
-    ctaButton = { text: 'View All Case Studies', link: '/case-studies' },
-  } = props
-
-  // You can change the background here if you want to use a prop
-  const background = 'light'
-
+export const CaseStudiesBlock: React.FC<CaseStudiesBlockProps> = ({
+  caseStudies = [],
+  ctaButton,
+}) => {
   return (
-    <section className={`py-16 lg:py-24 ${backgroundClasses[background]}`}>
-      <SectionHeader heading={heading} subheading={subheading} maxWidth="4xl" spacing="lg" />
-      <div className="container my-16">
-        <div className="max-w-7xl mx-auto">
-          {caseStudies && caseStudies.length > 0 ? (
-            <div className="space-y-12">
-              <div className="flex justify-center">
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-16 justify-center">
-                  {caseStudies.map((caseStudy, index) => (
-                    <Card
-                      key={index}
-                      className="text-center bg-brand-neutral/20 flex flex-col justify-between h-full"
-                    >
-                      <div>
-                        <CardHeader>
-                          <CardTitle className="text-brand-primary">{caseStudy.title}</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="text-center mb-6">
-                            This is a brief description of the case study.
-                          </p>
-                          <div className="flex justify-center items-center">
-                            <div className="grid grid-cols-3 gap-y-8 gap-x-16 w-full max-w-md">
-                              {caseStudy.metrics?.slice(0, 3).map((metric, metricIndex) => (
-                                <div key={metricIndex} className="text-center">
-                                  <h3 className="text-brand-primary font-bold text-lg">
-                                    {metric.value}
-                                  </h3>
-                                  <p className="text-sm">{metric.label}</p>
+    <section className={`py-10 bg-muted/30`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="space-y-16">
+          {caseStudies.map((study, index) => (
+            <Card key={study.id || index} className="overflow-hidden">
+              <div className="grid lg:grid-cols-3 gap-0">
+                <div className="bg-primary text-primary-foreground p-8 rounded-lg lg:rounded-r-none">
+                  <Badge variant="secondary" className="mb-4">
+                    {study.industry}
+                  </Badge>
+                  <h2 className="text-2xl font-bold mb-4">{study.title}</h2>
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="font-semibold mb-2">Key Metrics</h4>
+                      <div className="space-y-2 text-sm">
+                        {study.metrics &&
+                          (Array.isArray(study.metrics)
+                            ? study.metrics.map((metric, idx) => (
+                                <div key={idx} className="flex justify-between">
+                                  <span className="opacity-90 capitalize">{metric.label}:</span>
+                                  <span className="font-semibold">{metric.value}</span>
                                 </div>
-                              ))}
-                            </div>
-                          </div>
-                        </CardContent>
+                              ))
+                            : Object.entries(study.metrics).map(([key, value]) => (
+                                <div key={key} className="flex justify-between">
+                                  <span className="opacity-90 capitalize">
+                                    {key.replace(/([A-Z])/g, ' $1')}:
+                                  </span>
+                                  <span className="font-semibold">{String(value)}</span>
+                                </div>
+                              )))}
                       </div>
-                      <div className="flex justify-center pb-6">
-                        <Button size="sm">Read Full Case Study</Button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-2 p-8">
+                  <div className="space-y-6">
+                    {study.challenge && (
+                      <div>
+                        <h3 className="text-xl font-semibold text-foreground mb-3">Challenge</h3>
+                        <p className="leading-relaxed">{study.challenge}</p>
                       </div>
-                    </Card>
-                  ))}
+                    )}
+
+                    {study.approach &&
+                      Array.isArray(study.approach) &&
+                      study.approach.length > 0 && (
+                        <div>
+                          <h3 className="text-xl font-semibold text-foreground mb-3">
+                            Our Approach
+                          </h3>
+                          <ul className="space-y-2">
+                            {study.approach.map((item, itemIndex) => (
+                              <li key={itemIndex} className="flex items-start gap-3">
+                                <div className="w-2 h-2 bg-accent rounded-full mt-3 flex-shrink-0"></div>
+                                <p className="">{item.step || String(item)}</p>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                    {study.solution && (
+                      <div>
+                        <h3 className="text-xl font-semibold text-foreground mb-3">Solution</h3>
+                        <p className="leading-relaxed">{study.solution}</p>
+                      </div>
+                    )}
+
+                    {study.results && Array.isArray(study.results) && study.results.length > 0 && (
+                      <div>
+                        <h3 className="text-xl font-semibold text-foreground mb-3">Results</h3>
+                        <ul className="space-y-2">
+                          {study.results.map((result, resultIndex) => (
+                            <li key={resultIndex} className="flex items-start gap-3">
+                              <div className="w-2 h-2 bg-primary rounded-full mt-3 flex-shrink-0"></div>
+                              <p className="">{result.result || String(result)}</p>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {study.testimonial && study.testimonial.quote && (
+                      <div className="bg-muted/50 rounded-lg p-6 mt-6">
+                        <h4 className="font-semibold text-foreground mb-3">Client Testimonial</h4>
+                        <blockquote className="text-muted-foreground italic leading-relaxed mb-4">
+                          &quot;{study.testimonial.quote}&quot;
+                        </blockquote>
+                        <div className="text-sm">
+                          {study.testimonial.author && (
+                            <p className="font-semibold text-foreground">
+                              {study.testimonial.author}
+                            </p>
+                          )}
+                          {study.testimonial.title && <p className="">{study.testimonial.title}</p>}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-              {ctaButton?.text && ctaButton?.link && (
-                <div className="text-center pt-8">
-                  <Button size="lg" variant="outline" asChild>
-                    <Link href={ctaButton.link} className="flex items-center gap-2">
-                      {ctaButton.text}
-                      <ArrowRight className="w-4 h-4" />
-                    </Link>
-                  </Button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">No case studies available.</p>
+            </Card>
+          ))}
+          {ctaButton?.text && ctaButton?.link && (
+            <div className="text-center pt-8">
+              <Button size="lg" variant="outline" asChild>
+                <Link href={ctaButton.link} className="flex items-center gap-2">
+                  {ctaButton.text}
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Button>
             </div>
           )}
         </div>

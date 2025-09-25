@@ -962,10 +962,28 @@ export interface CaseStudiesBlock {
         client: string;
         industry?: string | null;
         challenge: string;
+        approach?:
+          | {
+              step: string;
+              id?: string | null;
+            }[]
+          | null;
         solution: string;
+        deliverables?:
+          | {
+              item: string;
+              id?: string | null;
+            }[]
+          | null;
         results?:
           | {
               result?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        notes?:
+          | {
+              note?: string | null;
               id?: string | null;
             }[]
           | null;
@@ -1700,11 +1718,29 @@ export interface CaseStudiesBlockSelect<T extends boolean = true> {
         client?: T;
         industry?: T;
         challenge?: T;
+        approach?:
+          | T
+          | {
+              step?: T;
+              id?: T;
+            };
         solution?: T;
+        deliverables?:
+          | T
+          | {
+              item?: T;
+              id?: T;
+            };
         results?:
           | T
           | {
               result?: T;
+              id?: T;
+            };
+        notes?:
+          | T
+          | {
+              note?: T;
               id?: T;
             };
         metrics?:
