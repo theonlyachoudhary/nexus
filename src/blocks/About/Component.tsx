@@ -29,7 +29,7 @@ export const AboutBlock: React.FC<AboutBlockProps> = ({
   const defaultMissionCards = [
     {
       heading: 'Our Mission',
-      text: 'Help good businesses become great by equipping them with tools and thinking that deliver real value to customers, teams, and communities.',
+      text: 'Help good businesses become great by equipping them with the tools and thinking that deliver real value to customers, teams, and communities.',
       color: brandPrimary,
     },
     {
