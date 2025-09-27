@@ -872,43 +872,7 @@ export interface CTASectionBlock {
  */
 export interface SolutionsBlock {
   heading: string;
-  subheading?: string | null;
-  /**
-   * Add up to 6 solution items
-   */
-  solutions?:
-    | {
-        title: string;
-        /**
-         * A short phrase that appears below the title
-         */
-        subtitle?: string | null;
-        description: string;
-        /**
-         * Icon name from Lucide Icons (e.g., "workflow", "settings", "users")
-         */
-        icon?: string | null;
-        /**
-         * CSS color value (e.g., #f5f5f5 or #ffffff)
-         */
-        cardColor?: string | null;
-        features?:
-          | {
-              feature: string;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-      }[]
-    | null;
-  cta?: {
-    text?: string | null;
-    link?: string | null;
-    /**
-     * Uncheck to hide the CTA button even if a link is entered.
-     */
-    showCTA?: boolean | null;
-  };
+  description: string;
   id?: string | null;
   blockName?: string | null;
   blockType: 'solutions';
@@ -1690,30 +1654,7 @@ export interface CTASectionBlockSelect<T extends boolean = true> {
  */
 export interface SolutionsBlockSelect<T extends boolean = true> {
   heading?: T;
-  subheading?: T;
-  solutions?:
-    | T
-    | {
-        title?: T;
-        subtitle?: T;
-        description?: T;
-        icon?: T;
-        cardColor?: T;
-        features?:
-          | T
-          | {
-              feature?: T;
-              id?: T;
-            };
-        id?: T;
-      };
-  cta?:
-    | T
-    | {
-        text?: T;
-        link?: T;
-        showCTA?: T;
-      };
+  description?: T;
   id?: T;
   blockName?: T;
 }
