@@ -57,6 +57,15 @@ export const SolutionsBlock = () => {
   const defaultHeading = headingField?.defaultValue || 'Our Solutions'
   const defaultSubheading = descriptionField?.defaultValue || ''
 
+  // Sort products by ranking (lowest first)
+  const sortedProducts = (Array.isArray(flagshipProducts) ? [...flagshipProducts] : []).sort(
+    (a, b) => {
+      const rankA = typeof a?.ranking === 'number' ? a.ranking : Number.POSITIVE_INFINITY
+      const rankB = typeof b?.ranking === 'number' ? b.ranking : Number.POSITIVE_INFINITY
+      return rankA - rankB
+    },
+  )
+
   return (
     <section className="py-16 md:py-24">
       <motion.div
@@ -83,7 +92,7 @@ export const SolutionsBlock = () => {
             },
           }}
         >
-          {(Array.isArray(flagshipProducts) ? flagshipProducts : []).map((solution, i) => {
+          {sortedProducts.map((solution, i) => {
             // Defensive fallback for solution properties
             const safeSolution = solution || {}
             const solutionKey = i

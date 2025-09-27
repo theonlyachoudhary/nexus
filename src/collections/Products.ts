@@ -57,6 +57,12 @@ export const Products: CollectionConfig = {
       label: 'Flagship Product?',
       defaultValue: false,
     },
+    {
+      name: 'ranking',
+      type: 'number',
+      label: 'Ranking (lower = higher priority)',
+      required: false,
+    },
     ...slugField('name'),
   ],
 }

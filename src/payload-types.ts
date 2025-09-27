@@ -1134,6 +1134,7 @@ export interface Product {
     | null;
   cardColor: string;
   flagship?: boolean | null;
+  ranking?: number | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -2065,6 +2066,7 @@ export interface ProductsSelect<T extends boolean = true> {
       };
   cardColor?: T;
   flagship?: T;
+  ranking?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
