@@ -3,7 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { slugField } from '@/fields/slug'
 
 export const Products: CollectionConfig = {
-  slug: 'Products',
+  slug: 'products',
   admin: {
     useAsTitle: 'name',
   },

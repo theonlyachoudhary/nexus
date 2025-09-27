@@ -33,7 +33,7 @@ export const SolutionsBlock = () => {
   )
   useEffect(() => {
     const fetchFlagshipProducts = async () => {
-      const response = await fetch('/api/Products?flagship=true&limit=3')
+      const response = await fetch('/api/products?flagship=true&limit=3')
       const data = await response.json()
       setFlagshipProducts(data.docs)
     }
