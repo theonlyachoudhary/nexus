@@ -57,6 +57,6 @@ export const Products: CollectionConfig = {
       label: 'Flagship Product?',
       defaultValue: false,
     },
-    ...slugField('productName'),
+    ...slugField('name'),
   ],
 }
