@@ -83,7 +83,7 @@ export const SolutionsBlock = () => {
             },
           }}
         >
-          {flagshipProducts.map((solution, i) => {
+          {(Array.isArray(flagshipProducts) ? flagshipProducts : []).map((solution, i) => {
             const solutionKey = i
             const showDetails = openIndexes.includes(i)
             return (
@@ -159,7 +159,7 @@ export const SolutionsBlock = () => {
                   {/* Desktop: always visible */}
                   <div className="hidden sm:block">
                     <CardContent className="px-0 py-0">
-                      {solution.keyFeatures && solution.keyFeatures.length > 0 ? (
+                      {Array.isArray(solution.keyFeatures) && solution.keyFeatures.length > 0 ? (
                         solution.keyFeatures.map((f, idx) => {
                           const featureKey = `${solutionKey}-${idx}-${f.feature}`
                           return (
@@ -209,7 +209,8 @@ export const SolutionsBlock = () => {
                           className={cn('px-0 py-0', 'sm:hidden', showDetails ? 'block' : 'hidden')}
                         >
                           <CardContent className="px-0 py-0">
-                            {solution.keyFeatures && solution.keyFeatures.length > 0 ? (
+                            {Array.isArray(solution.keyFeatures) &&
+                            solution.keyFeatures.length > 0 ? (
                               solution.keyFeatures.map((f, idx) => {
                                 const featureKey = `${solutionKey}-${idx}-${f.feature}`
                                 return (
