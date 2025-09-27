@@ -1,54 +1,4 @@
-import type { Block, Field } from 'payload'
-
-const solutionItemFields: Field[] = [
-  {
-    name: 'title',
-    type: 'text',
-    required: true,
-  },
-  {
-    name: 'subtitle',
-    type: 'text',
-    admin: {
-      description: 'A short phrase that appears below the title',
-    },
-  },
-  {
-    name: 'description',
-    type: 'textarea',
-    required: true,
-  },
-  {
-    name: 'icon',
-    type: 'text',
-    admin: {
-      description: 'Icon name from Lucide Icons (e.g., "workflow", "settings", "users")',
-    },
-  },
-  {
-    name: 'cardColor',
-    type: 'text',
-    label: 'Card Color',
-    admin: {
-      description: 'CSS color value (e.g., #f5f5f5 or #ffffff)',
-      placeholder: '#f5f5f5',
-    },
-    defaultValue: '#f5f5f5',
-  },
-  {
-    name: 'features',
-    type: 'array',
-    label: 'Features',
-    minRows: 0,
-    fields: [
-      {
-        name: 'feature',
-        type: 'text',
-        required: true,
-      },
-    ],
-  },
-]
+import type { Block } from 'payload'
 
 export const SolutionsBlock: Block = {
   slug: 'solutions',
@@ -58,71 +8,14 @@ export const SolutionsBlock: Block = {
       name: 'heading',
       type: 'text',
       required: true,
-      defaultValue: 'Explore Our Solutions',
+      defaultValue: 'Our Solutions',
     },
     {
-      name: 'subheading',
+      name: 'description',
       type: 'textarea',
+      required: true,
       defaultValue:
-        'Holistic improvement of people, processes, and product alignment — with emphasis on workflow development and business process automation.',
-    },
-    {
-      name: 'solutions',
-      type: 'array',
-      minRows: 1,
-      maxRows: 6,
-      admin: {
-        description: 'Add up to 6 solution items',
-      },
-      defaultValue: [
-        {
-          title: 'Process Optimization',
-          subtitle: 'Workflow Efficiency',
-          description:
-            'Streamline workflows and eliminate bottlenecks for maximum efficiency and productivity.',
-          icon: 'workflow',
-        },
-        {
-          title: 'Team Alignment',
-          subtitle: 'Cross-functional Collaboration',
-          description:
-            'Align your teams with clear objectives and communication pathways to drive success.',
-          icon: 'users',
-        },
-        {
-          title: 'Business Automation',
-          subtitle: 'Smart Technology Integration',
-          description:
-            'Implement smart automation to reduce manual tasks and focus on high-value activities.',
-          icon: 'settings',
-        },
-      ],
-      fields: solutionItemFields,
-    },
-    {
-      name: 'cta',
-      type: 'group',
-      fields: [
-        {
-          name: 'text',
-          type: 'text',
-          defaultValue: 'View All Solutions',
-        },
-        {
-          name: 'link',
-          type: 'text',
-          defaultValue: '/solutions',
-        },
-        {
-          name: 'showCTA',
-          type: 'checkbox',
-          label: 'Show CTA Button',
-          defaultValue: true,
-          admin: {
-            description: 'Uncheck to hide the CTA button even if a link is entered.',
-          },
-        },
-      ],
+        'Explore our range of solutions designed to streamline your operations and drive success.',
     },
   ],
 }

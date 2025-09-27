@@ -73,7 +73,7 @@ export interface Config {
     categories: Category;
     users: User;
     teamMembers: TeamMember;
-    Products: Product;
+    products: Product;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -91,7 +91,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     teamMembers: TeamMembersSelect<false> | TeamMembersSelect<true>;
-    Products: ProductsSelect<false> | ProductsSelect<true>;
+    products: ProductsSelect<false> | ProductsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -1154,7 +1154,7 @@ export interface TeamMember {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Products".
+ * via the `definition` "products".
  */
 export interface Product {
   id: number;
@@ -1168,6 +1168,7 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
+  cardColor: string;
   flagship?: boolean | null;
   slug?: string | null;
   slugLock?: boolean | null;
@@ -1372,7 +1373,7 @@ export interface PayloadLockedDocument {
         value: number | TeamMember;
       } | null)
     | ({
-        relationTo: 'Products';
+        relationTo: 'products';
         value: number | Product;
       } | null)
     | ({
@@ -2108,7 +2109,7 @@ export interface TeamMembersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Products_select".
+ * via the `definition` "products_select".
  */
 export interface ProductsSelect<T extends boolean = true> {
   name?: T;
@@ -2121,6 +2122,7 @@ export interface ProductsSelect<T extends boolean = true> {
         feature?: T;
         id?: T;
       };
+  cardColor?: T;
   flagship?: T;
   slug?: T;
   slugLock?: T;

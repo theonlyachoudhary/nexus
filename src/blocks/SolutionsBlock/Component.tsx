@@ -11,55 +11,51 @@ function hexToRgba(hex: string, alpha = 0.1) {
   const b = num & 255
   return `rgba(${r},${g},${b},${alpha})`
 }
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardFooter } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { SectionHeader } from '@/components/SectionHeader'
+import { SolutionsBlock as SolutionsBlockConfig } from './config'
 import { cn } from '@/utilities/ui'
 import * as LucideIcons from 'lucide-react'
 import { ChevronRight, ChevronUp } from 'lucide-react'
-import type { LucideProps } from 'lucide-react'
+import { Product } from '@/payload-types'
 
-type SolutionFeature = {
-  feature: string
+type ProductsBlockProps = {
+  flagshipProducts: Product[]
 }
 
-type SolutionItem = {
-  title: string
-  subtitle?: string
-  description: string
-  icon?: string
-  cardColor?: string
-  features?: SolutionFeature[]
-  readMoreText?: string
-  readMoreLink?: string
-}
+const SolutionsBlock = () => {
+  const [flagshipProducts, setFlagshipProducts] = useState<ProductsBlockProps['flagshipProducts']>(
+    [],
+  )
+  useEffect(() => {
+    const fetchFlagshipProducts = async () => {
+      const response = await fetch('/api/products?flagship=true&limit=3')
+      const data = await response.json()
+      setFlagshipProducts(data.docs)
+    }
+    fetchFlagshipProducts()
+  }, [])
 
-export type SolutionsBlockProps = {
-  heading?: string
-  subheading?: string
-  solutions?: SolutionItem[]
-  cta?: {
-    text?: string
-    link?: string
-    showCTA?: boolean
-  }
-}
-
-export const SolutionsBlock: React.FC<SolutionsBlockProps> = ({
-  heading = 'Explore Our Solutions',
-  subheading = 'Holistic improvement of people, processes, and product alignment — with emphasis on workflow development and business process automation.',
-  solutions = [],
-  cta,
-}) => {
   // Manage toggle state for each card
   const [openIndexes, setOpenIndexes] = useState<number[]>([])
 
   const handleToggle = (idx: number) => {
     setOpenIndexes((prev) => (prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]))
   }
+
+  // Get default heading/subheading from config
+  const headingField = SolutionsBlockConfig.fields.find(
+    (f) => typeof f === 'object' && 'name' in f && f.name === 'heading',
+  ) as { defaultValue?: string } | undefined
+  const descriptionField = SolutionsBlockConfig.fields.find(
+    (f) => typeof f === 'object' && 'name' in f && f.name === 'description',
+  ) as { defaultValue?: string } | undefined
+  const defaultHeading = headingField?.defaultValue || 'Our Solutions'
+  const defaultSubheading = descriptionField?.defaultValue || ''
 
   return (
     <section className="py-16 md:py-24">
@@ -69,7 +65,7 @@ export const SolutionsBlock: React.FC<SolutionsBlockProps> = ({
         viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.7 }}
       >
-        <SectionHeader heading={heading} subheading={subheading} />
+        <SectionHeader heading={defaultHeading} subheading={defaultSubheading} />
       </motion.div>
 
       <div className="container mx-auto px-4">
@@ -87,15 +83,8 @@ export const SolutionsBlock: React.FC<SolutionsBlockProps> = ({
             },
           }}
         >
-          {solutions.map((solution, i) => {
+          {flagshipProducts.map((solution, i) => {
             const solutionKey = i
-            const iconName = solution.icon
-              ? solution.icon.charAt(0).toUpperCase() + solution.icon.slice(1).toLowerCase()
-              : 'Settings'
-
-            const IconComponent = (LucideIcons[iconName as keyof typeof LucideIcons] ||
-              LucideIcons.Settings) as React.ComponentType<LucideProps>
-
             const showDetails = openIndexes.includes(i)
             return (
               <motion.div
@@ -124,21 +113,19 @@ export const SolutionsBlock: React.FC<SolutionsBlockProps> = ({
                         style={{ width: 220, minWidth: 180, maxWidth: 260 }}
                       >
                         <h3 className="text-xl font-bold font-condensed text-white">
-                          {solution.title}
+                          {solution.productAcronym}
                         </h3>
-                        {solution.subtitle && (
-                          <p className="text-white text-sm font-medium mt-1">{solution.subtitle}</p>
+                        {solution.name && (
+                          <p className="text-white text-sm font-medium mt-1">{solution.name}</p>
                         )}
                       </div>
                       <span className="block sm:hidden">
                         <span className="flex flex-row items-center gap-2 w-full">
                           <span className="text-xl font-bold font-condensed text-white">
-                            {solution.title}
+                            {solution.productAcronym}
                           </span>
-                          {solution.subtitle && (
-                            <span className="text-white text-sm font-medium">
-                              {solution.subtitle}
-                            </span>
+                          {solution.name && (
+                            <span className="text-white text-sm font-medium">{solution.name}</span>
                           )}
                           <button
                             className="ml-auto text-white flex items-center"
@@ -153,8 +140,8 @@ export const SolutionsBlock: React.FC<SolutionsBlockProps> = ({
                             )}
                           </button>
                         </span>
-                        {showDetails && solution.description && (
-                          <p className="text-white/80 mt-1">{solution.description}</p>
+                        {showDetails && solution.oneSentenceDescription && (
+                          <p className="text-white/80 mt-1">{solution.oneSentenceDescription}</p>
                         )}
                       </span>
                     </div>
@@ -162,8 +149,8 @@ export const SolutionsBlock: React.FC<SolutionsBlockProps> = ({
                     <div className="hidden sm:block my-auto w-1 h-12 bg-white mx-2 self-stretch rounded" />
                     {/* On desktop, show subtitle and description in right column. On mobile, only show subtitle here. */}
                     <div className="flex-1 my-auto hidden sm:block">
-                      {solution.description && (
-                        <p className="text-white/80">{solution.description}</p>
+                      {solution.oneSentenceDescription && (
+                        <p className="text-white/80">{solution.oneSentenceDescription}</p>
                       )}
                     </div>
                   </div>
@@ -172,8 +159,8 @@ export const SolutionsBlock: React.FC<SolutionsBlockProps> = ({
                   {/* Desktop: always visible */}
                   <div className="hidden sm:block">
                     <CardContent className="px-0 py-0">
-                      {solution.features && solution.features.length > 0 ? (
-                        solution.features.map((f, idx) => {
+                      {solution.keyFeatures && solution.keyFeatures.length > 0 ? (
+                        solution.keyFeatures.map((f, idx) => {
                           const featureKey = `${solutionKey}-${idx}-${f.feature}`
                           return (
                             <div
@@ -188,7 +175,7 @@ export const SolutionsBlock: React.FC<SolutionsBlockProps> = ({
                                   : {}
                               }
                             >
-                              <IconComponent
+                              <LucideIcons.Check
                                 className="w-8 h-8"
                                 style={{ color: solution.cardColor }}
                               />
@@ -198,30 +185,16 @@ export const SolutionsBlock: React.FC<SolutionsBlockProps> = ({
                         })
                       ) : (
                         <div className="flex flex-row items-center gap-4 px-5 py-1 bg-white">
-                          <IconComponent
+                          <LucideIcons.Check
                             className="w-8 h-8"
                             style={{ color: solution.cardColor }}
                           />
                           <p className="text-sm text-brand-text-secondary m-0">
-                            {solution.description}
+                            {solution.keyFeatures?.[0]?.feature}
                           </p>
                         </div>
                       )}
                     </CardContent>
-                    {solution.readMoreLink && (
-                      <CardFooter className="py-1">
-                        <Button
-                          asChild
-                          variant="link"
-                          className="p-0 font-medium hover:text-brand-primary-light"
-                          style={{ color: solution.cardColor }}
-                        >
-                          <Link href={solution.readMoreLink}>
-                            {solution.readMoreText || 'Learn more'} &rarr;
-                          </Link>
-                        </Button>
-                      </CardFooter>
-                    )}
                   </div>
                   {/* Mobile: AnimatePresence for expand/collapse */}
                   <AnimatePresence initial={false}>
@@ -236,8 +209,8 @@ export const SolutionsBlock: React.FC<SolutionsBlockProps> = ({
                           className={cn('px-0 py-0', 'sm:hidden', showDetails ? 'block' : 'hidden')}
                         >
                           <CardContent className="px-0 py-0">
-                            {solution.features && solution.features.length > 0 ? (
-                              solution.features.map((f, idx) => {
+                            {solution.keyFeatures && solution.keyFeatures.length > 0 ? (
+                              solution.keyFeatures.map((f, idx) => {
                                 const featureKey = `${solutionKey}-${idx}-${f.feature}`
                                 return (
                                   <div
@@ -252,7 +225,7 @@ export const SolutionsBlock: React.FC<SolutionsBlockProps> = ({
                                         : {}
                                     }
                                   >
-                                    <IconComponent
+                                    <LucideIcons.Check
                                       className="w-8 h-8"
                                       style={{ color: solution.cardColor }}
                                     />
@@ -264,12 +237,12 @@ export const SolutionsBlock: React.FC<SolutionsBlockProps> = ({
                               })
                             ) : (
                               <div className="flex flex-row items-center gap-4 px-5 py-1 bg-white">
-                                <IconComponent
+                                <LucideIcons.Check
                                   className="w-8 h-8"
                                   style={{ color: solution.cardColor }}
                                 />
                                 <p className="text-sm text-brand-text-secondary m-0">
-                                  {solution.description}
+                                  {solution.oneSentenceDescription}
                                 </p>
                               </div>
                             )}
@@ -282,22 +255,7 @@ export const SolutionsBlock: React.FC<SolutionsBlockProps> = ({
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3, ease: 'easeInOut' }}
                           className={cn('py-1', 'sm:hidden', showDetails ? 'block' : 'hidden')}
-                        >
-                          {solution.readMoreLink && (
-                            <CardFooter className="py-1">
-                              <Button
-                                asChild
-                                variant="link"
-                                className="p-0 font-medium hover:text-brand-primary-light"
-                                style={{ color: solution.cardColor }}
-                              >
-                                <Link href={solution.readMoreLink}>
-                                  {solution.readMoreText || 'Learn more'} &rarr;
-                                </Link>
-                              </Button>
-                            </CardFooter>
-                          )}
-                        </motion.div>
+                        ></motion.div>
                       </>
                     )}
                   </AnimatePresence>
@@ -307,19 +265,17 @@ export const SolutionsBlock: React.FC<SolutionsBlockProps> = ({
           })}
         </motion.div>
 
-        {cta?.showCTA !== false && cta?.text && cta?.link && (
-          <motion.div
-            className="mt-12 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-          >
-            <Button asChild variant="default" size="lg">
-              <Link href={cta.link}>{cta.text}</Link>
-            </Button>
-          </motion.div>
-        )}
+        <motion.div
+          className="mt-12 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+        >
+          <Button asChild variant="default" size="lg">
+            <Link href="/products">View More</Link>
+          </Button>
+        </motion.div>
       </div>
     </section>
   )

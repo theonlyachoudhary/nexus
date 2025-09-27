@@ -3,7 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { slugField } from '@/fields/slug'
 
 export const Products: CollectionConfig = {
-  slug: 'Products',
+  slug: 'products',
   admin: {
     useAsTitle: 'name',
   },
@@ -44,6 +44,12 @@ export const Products: CollectionConfig = {
           label: 'Feature',
         },
       ],
+    },
+    {
+      name: 'cardColor',
+      type: 'text',
+      label: 'Card Color',
+      required: true,
     },
     {
       name: 'flagship',
