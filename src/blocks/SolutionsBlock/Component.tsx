@@ -48,10 +48,14 @@ export const SolutionsBlock = () => {
   }
 
   // Get default heading/subheading from config
-
-  const defaultHeading = 'Our Engagement Pathways'
-  const defaultSubheading =
-    'Organizations grow in different ways. Our ARC, GRID, and NOVA tiers provide clear pathways for quick fixes, scalable systems, or full transformation.'
+  const headingField = SolutionsBlockConfig.fields.find(
+    (f) => typeof f === 'object' && 'name' in f && f.name === 'heading',
+  ) as { defaultValue?: string } | undefined
+  const descriptionField = SolutionsBlockConfig.fields.find(
+    (f) => typeof f === 'object' && 'name' in f && f.name === 'description',
+  ) as { defaultValue?: string } | undefined
+  const defaultHeading = headingField?.defaultValue || 'Our Solutions'
+  const defaultSubheading = descriptionField?.defaultValue || ''
 
   return (
     <section className="py-16 md:py-24">

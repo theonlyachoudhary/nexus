@@ -8,7 +8,7 @@ const solutionsFields: Field[] = [
     defaultValue: 'Our Solutions',
   },
   {
-    name: 'description',
+    name: 'subheading',
     type: 'textarea',
     required: true,
     defaultValue:
