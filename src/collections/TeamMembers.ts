@@ -14,6 +14,7 @@ export const TeamMembers: CollectionConfig = {
     {
       name: 'name',
       type: 'text',
+      label: 'Full Name',
       required: true,
     },
     {
