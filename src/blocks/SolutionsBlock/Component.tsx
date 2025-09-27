@@ -27,7 +27,7 @@ type ProductsBlockProps = {
   flagshipProducts: Product[]
 }
 
-const SolutionsBlock = () => {
+export const SolutionsBlock = () => {
   const [flagshipProducts, setFlagshipProducts] = useState<ProductsBlockProps['flagshipProducts']>(
     [],
   )
