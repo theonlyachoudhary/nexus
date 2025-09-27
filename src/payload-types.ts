@@ -73,6 +73,7 @@ export interface Config {
     categories: Category;
     users: User;
     teamMembers: TeamMember;
+    Products: Product;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -90,6 +91,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     teamMembers: TeamMembersSelect<false> | TeamMembersSelect<true>;
+    Products: ProductsSelect<false> | ProductsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -1152,6 +1154,28 @@ export interface TeamMember {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Products".
+ */
+export interface Product {
+  id: number;
+  name: string;
+  productAcronym?: string | null;
+  oneSentenceDescription?: string | null;
+  fullDescription?: string | null;
+  keyFeatures?:
+    | {
+        feature?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  flagship?: boolean | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1346,6 +1370,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'teamMembers';
         value: number | TeamMember;
+      } | null)
+    | ({
+        relationTo: 'Products';
+        value: number | Product;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -2073,6 +2101,27 @@ export interface TeamMembersSelect<T extends boolean = true> {
   email?: T;
   linkedIn?: T;
   image?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Products_select".
+ */
+export interface ProductsSelect<T extends boolean = true> {
+  name?: T;
+  productAcronym?: T;
+  oneSentenceDescription?: T;
+  fullDescription?: T;
+  keyFeatures?:
+    | T
+    | {
+        feature?: T;
+        id?: T;
+      };
+  flagship?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
