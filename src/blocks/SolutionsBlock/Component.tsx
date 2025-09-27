@@ -84,8 +84,13 @@ export const SolutionsBlock = () => {
           }}
         >
           {(Array.isArray(flagshipProducts) ? flagshipProducts : []).map((solution, i) => {
+            // Defensive fallback for solution properties
+            const safeSolution = solution || {}
             const solutionKey = i
             const showDetails = openIndexes.includes(i)
+            const keyFeatures = Array.isArray(safeSolution.keyFeatures)
+              ? safeSolution.keyFeatures
+              : []
             return (
               <motion.div
                 key={solutionKey}
@@ -102,7 +107,7 @@ export const SolutionsBlock = () => {
                 >
                   <div
                     className="flex flex-col sm:flex-row items-start gap-2 sm:gap-4 px-6 py-3"
-                    style={solution.cardColor ? { background: solution.cardColor } : {}}
+                    style={safeSolution.cardColor ? { background: safeSolution.cardColor } : {}}
                   >
                     <div
                       className="w-full sm:w-auto"
@@ -113,19 +118,21 @@ export const SolutionsBlock = () => {
                         style={{ width: 220, minWidth: 180, maxWidth: 260 }}
                       >
                         <h3 className="text-xl font-bold font-condensed text-white">
-                          {solution.productAcronym}
+                          {safeSolution.productAcronym || ''}
                         </h3>
-                        {solution.name && (
-                          <p className="text-white text-sm font-medium mt-1">{solution.name}</p>
+                        {safeSolution.name && (
+                          <p className="text-white text-sm font-medium mt-1">{safeSolution.name}</p>
                         )}
                       </div>
                       <span className="block sm:hidden">
                         <span className="flex flex-row items-center gap-2 w-full">
                           <span className="text-xl font-bold font-condensed text-white">
-                            {solution.productAcronym}
+                            {safeSolution.productAcronym || ''}
                           </span>
-                          {solution.name && (
-                            <span className="text-white text-sm font-medium">{solution.name}</span>
+                          {safeSolution.name && (
+                            <span className="text-white text-sm font-medium">
+                              {safeSolution.name}
+                            </span>
                           )}
                           <button
                             className="ml-auto text-white flex items-center"
@@ -140,8 +147,10 @@ export const SolutionsBlock = () => {
                             )}
                           </button>
                         </span>
-                        {showDetails && solution.oneSentenceDescription && (
-                          <p className="text-white/80 mt-1">{solution.oneSentenceDescription}</p>
+                        {showDetails && safeSolution.oneSentenceDescription && (
+                          <p className="text-white/80 mt-1">
+                            {safeSolution.oneSentenceDescription}
+                          </p>
                         )}
                       </span>
                     </div>
@@ -149,8 +158,8 @@ export const SolutionsBlock = () => {
                     <div className="hidden sm:block my-auto w-1 h-12 bg-white mx-2 self-stretch rounded" />
                     {/* On desktop, show subtitle and description in right column. On mobile, only show subtitle here. */}
                     <div className="flex-1 my-auto hidden sm:block">
-                      {solution.oneSentenceDescription && (
-                        <p className="text-white/80">{solution.oneSentenceDescription}</p>
+                      {safeSolution.oneSentenceDescription && (
+                        <p className="text-white/80">{safeSolution.oneSentenceDescription}</p>
                       )}
                     </div>
                   </div>
@@ -159,8 +168,8 @@ export const SolutionsBlock = () => {
                   {/* Desktop: always visible */}
                   <div className="hidden sm:block">
                     <CardContent className="px-0 py-0">
-                      {Array.isArray(solution.keyFeatures) && solution.keyFeatures.length > 0 ? (
-                        solution.keyFeatures.map((f, idx) => {
+                      {keyFeatures.length > 0 ? (
+                        keyFeatures.map((f, idx) => {
                           const featureKey = `${solutionKey}-${idx}-${f.feature}`
                           return (
                             <div
@@ -170,14 +179,14 @@ export const SolutionsBlock = () => {
                                 idx % 2 === 0 ? 'bg-white' : '',
                               )}
                               style={
-                                idx % 2 === 1 && solution.cardColor
-                                  ? { background: hexToRgba(solution.cardColor, 0.1) }
+                                idx % 2 === 1 && safeSolution.cardColor
+                                  ? { background: hexToRgba(safeSolution.cardColor, 0.1) }
                                   : {}
                               }
                             >
                               <LucideIcons.Check
                                 className="w-8 h-8"
-                                style={{ color: solution.cardColor }}
+                                style={{ color: safeSolution.cardColor }}
                               />
                               <p className="text-sm text-brand-text-secondary m-0">{f.feature}</p>
                             </div>
@@ -187,10 +196,12 @@ export const SolutionsBlock = () => {
                         <div className="flex flex-row items-center gap-4 px-5 py-1 bg-white">
                           <LucideIcons.Check
                             className="w-8 h-8"
-                            style={{ color: solution.cardColor }}
+                            style={{ color: safeSolution.cardColor }}
                           />
                           <p className="text-sm text-brand-text-secondary m-0">
-                            {solution.keyFeatures?.[0]?.feature}
+                            {safeSolution.keyFeatures?.[0]?.feature ||
+                              safeSolution.oneSentenceDescription ||
+                              'No features listed.'}
                           </p>
                         </div>
                       )}
@@ -209,9 +220,8 @@ export const SolutionsBlock = () => {
                           className={cn('px-0 py-0', 'sm:hidden', showDetails ? 'block' : 'hidden')}
                         >
                           <CardContent className="px-0 py-0">
-                            {Array.isArray(solution.keyFeatures) &&
-                            solution.keyFeatures.length > 0 ? (
-                              solution.keyFeatures.map((f, idx) => {
+                            {keyFeatures.length > 0 ? (
+                              keyFeatures.map((f, idx) => {
                                 const featureKey = `${solutionKey}-${idx}-${f.feature}`
                                 return (
                                   <div
@@ -221,14 +231,14 @@ export const SolutionsBlock = () => {
                                       idx % 2 === 0 ? 'bg-white' : '',
                                     )}
                                     style={
-                                      idx % 2 === 1 && solution.cardColor
-                                        ? { background: hexToRgba(solution.cardColor, 0.1) }
+                                      idx % 2 === 1 && safeSolution.cardColor
+                                        ? { background: hexToRgba(safeSolution.cardColor, 0.1) }
                                         : {}
                                     }
                                   >
                                     <LucideIcons.Check
                                       className="w-8 h-8"
-                                      style={{ color: solution.cardColor }}
+                                      style={{ color: safeSolution.cardColor }}
                                     />
                                     <p className="text-sm text-brand-text-secondary m-0">
                                       {f.feature}
@@ -240,10 +250,10 @@ export const SolutionsBlock = () => {
                               <div className="flex flex-row items-center gap-4 px-5 py-1 bg-white">
                                 <LucideIcons.Check
                                   className="w-8 h-8"
-                                  style={{ color: solution.cardColor }}
+                                  style={{ color: safeSolution.cardColor }}
                                 />
                                 <p className="text-sm text-brand-text-secondary m-0">
-                                  {solution.oneSentenceDescription}
+                                  {safeSolution.oneSentenceDescription || 'No features listed.'}
                                 </p>
                               </div>
                             )}
