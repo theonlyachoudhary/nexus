@@ -1,5 +1,5 @@
 {
-  "id": "8638a8b4-c215-45eb-b179-2a94f9b69f63",
+  "id": "b8f3647a-695a-42aa-b651-30de1ef0b4b4",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -1509,15 +1509,15 @@
           "primaryKey": true,
           "notNull": true
         },
-        "title": {
-          "name": "title",
+        "heading": {
+          "name": "heading",
           "type": "varchar",
           "primaryKey": false,
           "notNull": false,
           "default": "'See Proven Results'"
         },
-        "description": {
-          "name": "description",
+        "subheading": {
+          "name": "subheading",
           "type": "varchar",
           "primaryKey": false,
           "notNull": false,
@@ -5661,15 +5661,15 @@
           "primaryKey": true,
           "notNull": true
         },
-        "title": {
-          "name": "title",
+        "heading": {
+          "name": "heading",
           "type": "varchar",
           "primaryKey": false,
           "notNull": false,
           "default": "'See Proven Results'"
         },
-        "description": {
-          "name": "description",
+        "subheading": {
+          "name": "subheading",
           "type": "varchar",
           "primaryKey": false,
           "notNull": false,

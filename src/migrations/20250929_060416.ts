@@ -57,21 +57,25 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   ALTER TABLE "pages_blocks_solutions_solutions_features" DISABLE ROW LEVEL SECURITY;
   ALTER TABLE "pages_blocks_solutions_solutions" DISABLE ROW LEVEL SECURITY;
+  ALTER TABLE "pages_blocks_testimonials_testimonials" DISABLE ROW LEVEL SECURITY;
   ALTER TABLE "pages_blocks_team_members" DISABLE ROW LEVEL SECURITY;
   ALTER TABLE "pages_blocks_team_approach_stats" DISABLE ROW LEVEL SECURITY;
   ALTER TABLE "pages_blocks_team" DISABLE ROW LEVEL SECURITY;
   ALTER TABLE "_pages_v_blocks_solutions_solutions_features" DISABLE ROW LEVEL SECURITY;
   ALTER TABLE "_pages_v_blocks_solutions_solutions" DISABLE ROW LEVEL SECURITY;
+  ALTER TABLE "_pages_v_blocks_testimonials_testimonials" DISABLE ROW LEVEL SECURITY;
   ALTER TABLE "_pages_v_blocks_team_members" DISABLE ROW LEVEL SECURITY;
   ALTER TABLE "_pages_v_blocks_team_approach_stats" DISABLE ROW LEVEL SECURITY;
   ALTER TABLE "_pages_v_blocks_team" DISABLE ROW LEVEL SECURITY;
   DROP TABLE "pages_blocks_solutions_solutions_features" CASCADE;
   DROP TABLE "pages_blocks_solutions_solutions" CASCADE;
+  DROP TABLE "pages_blocks_testimonials_testimonials" CASCADE;
   DROP TABLE "pages_blocks_team_members" CASCADE;
   DROP TABLE "pages_blocks_team_approach_stats" CASCADE;
   DROP TABLE "pages_blocks_team" CASCADE;
   DROP TABLE "_pages_v_blocks_solutions_solutions_features" CASCADE;
   DROP TABLE "_pages_v_blocks_solutions_solutions" CASCADE;
+  DROP TABLE "_pages_v_blocks_testimonials_testimonials" CASCADE;
   DROP TABLE "_pages_v_blocks_team_members" CASCADE;
   DROP TABLE "_pages_v_blocks_team_approach_stats" CASCADE;
   DROP TABLE "_pages_v_blocks_team" CASCADE;
@@ -137,6 +141,16 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   	"card_color" varchar DEFAULT '#f5f5f5'
   );
   
+  CREATE TABLE "pages_blocks_testimonials_testimonials" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"quote" varchar,
+  	"author" varchar,
+  	"role" varchar,
+  	"company" varchar
+  );
+  
   CREATE TABLE "pages_blocks_team_members" (
   	"_order" integer NOT NULL,
   	"_parent_id" varchar NOT NULL,
@@ -184,6 +198,17 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   	"description" varchar,
   	"icon" varchar,
   	"card_color" varchar DEFAULT '#f5f5f5',
+  	"_uuid" varchar
+  );
+  
+  CREATE TABLE "_pages_v_blocks_testimonials_testimonials" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"quote" varchar,
+  	"author" varchar,
+  	"role" varchar,
+  	"company" varchar,
   	"_uuid" varchar
   );
   
@@ -253,12 +278,14 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   ALTER TABLE "team_members" ADD COLUMN "image_id" integer;
   ALTER TABLE "pages_blocks_solutions_solutions_features" ADD CONSTRAINT "pages_blocks_solutions_solutions_features_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_solutions_solutions"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_solutions_solutions" ADD CONSTRAINT "pages_blocks_solutions_solutions_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_solutions"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_testimonials_testimonials" ADD CONSTRAINT "pages_blocks_testimonials_testimonials_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_testimonials"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_team_members" ADD CONSTRAINT "pages_blocks_team_members_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "pages_blocks_team_members" ADD CONSTRAINT "pages_blocks_team_members_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_team"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_team_approach_stats" ADD CONSTRAINT "pages_blocks_team_approach_stats_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_team"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_team" ADD CONSTRAINT "pages_blocks_team_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_solutions_solutions_features" ADD CONSTRAINT "_pages_v_blocks_solutions_solutions_features_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_solutions_solutions"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_solutions_solutions" ADD CONSTRAINT "_pages_v_blocks_solutions_solutions_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_solutions"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_testimonials_testimonials" ADD CONSTRAINT "_pages_v_blocks_testimonials_testimonials_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_testimonials"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_team_members" ADD CONSTRAINT "_pages_v_blocks_team_members_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_team_members" ADD CONSTRAINT "_pages_v_blocks_team_members_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_team"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_team_approach_stats" ADD CONSTRAINT "_pages_v_blocks_team_approach_stats_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_team"("id") ON DELETE cascade ON UPDATE no action;
@@ -267,6 +294,8 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   CREATE INDEX "pages_blocks_solutions_solutions_features_parent_id_idx" ON "pages_blocks_solutions_solutions_features" USING btree ("_parent_id");
   CREATE INDEX "pages_blocks_solutions_solutions_order_idx" ON "pages_blocks_solutions_solutions" USING btree ("_order");
   CREATE INDEX "pages_blocks_solutions_solutions_parent_id_idx" ON "pages_blocks_solutions_solutions" USING btree ("_parent_id");
+  CREATE INDEX "pages_blocks_testimonials_testimonials_order_idx" ON "pages_blocks_testimonials_testimonials" USING btree ("_order");
+  CREATE INDEX "pages_blocks_testimonials_testimonials_parent_id_idx" ON "pages_blocks_testimonials_testimonials" USING btree ("_parent_id");
   CREATE INDEX "pages_blocks_team_members_order_idx" ON "pages_blocks_team_members" USING btree ("_order");
   CREATE INDEX "pages_blocks_team_members_parent_id_idx" ON "pages_blocks_team_members" USING btree ("_parent_id");
   CREATE INDEX "pages_blocks_team_members_image_idx" ON "pages_blocks_team_members" USING btree ("image_id");
@@ -279,6 +308,8 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   CREATE INDEX "_pages_v_blocks_solutions_solutions_features_parent_id_idx" ON "_pages_v_blocks_solutions_solutions_features" USING btree ("_parent_id");
   CREATE INDEX "_pages_v_blocks_solutions_solutions_order_idx" ON "_pages_v_blocks_solutions_solutions" USING btree ("_order");
   CREATE INDEX "_pages_v_blocks_solutions_solutions_parent_id_idx" ON "_pages_v_blocks_solutions_solutions" USING btree ("_parent_id");
+  CREATE INDEX "_pages_v_blocks_testimonials_testimonials_order_idx" ON "_pages_v_blocks_testimonials_testimonials" USING btree ("_order");
+  CREATE INDEX "_pages_v_blocks_testimonials_testimonials_parent_id_idx" ON "_pages_v_blocks_testimonials_testimonials" USING btree ("_parent_id");
   CREATE INDEX "_pages_v_blocks_team_members_order_idx" ON "_pages_v_blocks_team_members" USING btree ("_order");
   CREATE INDEX "_pages_v_blocks_team_members_parent_id_idx" ON "_pages_v_blocks_team_members" USING btree ("_parent_id");
   CREATE INDEX "_pages_v_blocks_team_members_image_idx" ON "_pages_v_blocks_team_members" USING btree ("image_id");
