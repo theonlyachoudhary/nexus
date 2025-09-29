@@ -14,7 +14,6 @@ import { TestimonialsBlock } from '../../blocks/Testimonials/config'
 import { CaseStudiesBlock } from '../../blocks/CaseStudies/config'
 import { AboutTeaser } from '../../blocks/AboutTeaser/config'
 import { About } from '../../blocks/About/config'
-import { Team } from '../../blocks/TeamBlock/config'
 import { Process } from '../../blocks/Process/config'
 import { UnderConstruction } from '../../blocks/UnderConstruction/config'
 import { hero } from '@/heros/config'
@@ -100,7 +99,6 @@ export const Pages: CollectionConfig<'pages'> = {
                 Process,
                 UnderConstruction,
                 About,
-                Team,
               ],
               required: true,
               admin: {
