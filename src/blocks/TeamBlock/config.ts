@@ -1,6 +1,6 @@
 import type { Field } from 'payload'
 
-export const TeamBlockFields: Field[] = [
+export const TeamBlock: Field[] = [
   {
     name: 'title',
     type: 'text',

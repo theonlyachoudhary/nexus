@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card, CardContent } from '@/components/ui/card'
-// ...existing code...
 import { SectionHeader } from '@/components/SectionHeader'
 import { TeamMember } from '@/payload-types'
 type TeamBlockProps = {

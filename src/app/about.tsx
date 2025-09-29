@@ -1,5 +1,5 @@
 import React from 'react'
-import { TeamBlock } from '@/blocks/Team/Component'
+import { TeamBlock } from '@/blocks/TeamBlock/Component'
 import { fetchTeamMembers, TeamBlockMember } from '@/utilities/fetchTeamMembers'
 
 interface AboutPageProps {
