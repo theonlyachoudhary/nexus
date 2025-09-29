@@ -1109,7 +1109,7 @@ export interface TeamMember {
   title: string;
   bio?: string | null;
   email?: string | null;
-  linkedIn?: string | null;
+  linked_in?: string | null;
   image?: (number | null) | Media;
   slug?: string | null;
   slugLock?: boolean | null;
@@ -2042,7 +2042,7 @@ export interface TeamMembersSelect<T extends boolean = true> {
   title?: T;
   bio?: T;
   email?: T;
-  linkedIn?: T;
+  linked_in?: T;
   image?: T;
   slug?: T;
   slugLock?: T;
