@@ -885,20 +885,8 @@ export interface SolutionsBlock {
  * via the `definition` "TestimonialsBlock".
  */
 export interface TestimonialsBlock {
-  heading: string;
-  subheading?: string | null;
-  /**
-   * Add testimonials from clients
-   */
-  testimonials?:
-    | {
-        quote: string;
-        author: string;
-        role?: string | null;
-        company?: string | null;
-        id?: string | null;
-      }[]
-    | null;
+  title: string;
+  description?: string | null;
   /**
    * Background color for the testimonials section
    */
@@ -1694,17 +1682,8 @@ export interface SolutionsBlockSelect<T extends boolean = true> {
  * via the `definition` "TestimonialsBlock_select".
  */
 export interface TestimonialsBlockSelect<T extends boolean = true> {
-  heading?: T;
-  subheading?: T;
-  testimonials?:
-    | T
-    | {
-        quote?: T;
-        author?: T;
-        role?: T;
-        company?: T;
-        id?: T;
-      };
+  title?: T;
+  description?: T;
   background?: T;
   primaryCta?:
     | T
