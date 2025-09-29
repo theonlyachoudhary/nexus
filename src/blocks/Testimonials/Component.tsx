@@ -9,8 +9,8 @@ import Link from 'next/link'
 import { Testimonial } from '@/payload-types'
 
 type TestimonialsBlockProps = {
-  title?: string
-  description?: string
+  heading?: string
+  subheading?: string
   background?: 'light' | 'neutral' | 'primary-light' | 'muted'
   primaryCta?: {
     text?: string
@@ -23,8 +23,8 @@ type TestimonialsBlockProps = {
 }
 
 export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
-  title = 'See Proven Results',
-  description = 'Our clients achieve measurable improvements in efficiency, clarity, and growth.',
+  heading = 'See Proven Results',
+  subheading = 'Our clients achieve measurable improvements in efficiency, clarity, and growth.',
   background = 'muted',
   primaryCta = {
     text: 'View Case Studies',
@@ -79,7 +79,7 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
 
   return (
     <section className={cn('py-20', bgClass)}>
-      <SectionHeader heading={title} subheading={description} />
+      <SectionHeader heading={heading} subheading={subheading} />
 
       <div className="container my-16">
         <div className="flex justify-center">

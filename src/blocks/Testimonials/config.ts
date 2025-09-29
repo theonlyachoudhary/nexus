@@ -5,13 +5,13 @@ export const TestimonialsBlock: Block = {
   interfaceName: 'TestimonialsBlock',
   fields: [
     {
-      name: 'title',
+      name: 'heading',
       type: 'text',
       required: true,
       defaultValue: 'See Proven Results',
     },
     {
-      name: 'description',
+      name: 'subheading',
       type: 'textarea',
       defaultValue:
         'Our clients achieve measurable improvements in efficiency, clarity, and growth.',
