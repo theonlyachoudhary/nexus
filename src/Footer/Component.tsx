@@ -73,20 +73,10 @@ export async function Footer() {
 
                   return (
                     <div key={index}>
-                      {memberSlug ? (
-                        <Link
-                          href={`/team/${memberSlug}`}
-                          className="hover:text-primary transition-colors"
-                        >
-                          {displayName}
-                          {memberTitle && ` — ${memberTitle}`}
-                        </Link>
-                      ) : (
-                        <p>
-                          {displayName}
-                          {memberTitle && ` — ${memberTitle}`}
-                        </p>
-                      )}
+                      <Link href={'/about#team'} className="hover:text-primary transition-colors">
+                        {displayName}
+                        {memberTitle && ` — ${memberTitle}`}
+                      </Link>
                     </div>
                   )
                 }
@@ -98,7 +88,10 @@ export async function Footer() {
 
         {/* Copyright */}
         <div className="border-t border-border mt-12 pt-8 text-center text-muted-foreground">
-          <p>{copyrightText || '© 2024 Nexus Consultancy. All rights reserved.'}</p>
+          <p>
+            {copyrightText ||
+              `© ${new Date().getFullYear()} Nexus Consultancy. All rights reserved.`}
+          </p>
         </div>
       </div>
     </footer>

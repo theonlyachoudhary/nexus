@@ -86,7 +86,7 @@ export const Footer: GlobalConfig = {
       name: 'copyrightText',
       type: 'text',
       label: 'Copyright Text',
-      defaultValue: '© 2024 Nexus Consultancy. All rights reserved.',
+      defaultValue: 'All rights reserved.',
     },
     {
       name: 'companyInfo',
