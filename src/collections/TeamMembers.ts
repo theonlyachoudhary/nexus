@@ -29,7 +29,7 @@ export const TeamMembers: CollectionConfig = {
       label: 'Biography',
     },
     {
-      name: 'linkedIn',
+      name: 'linked_in',
       type: 'text',
       label: 'LinkedIn URL',
     },

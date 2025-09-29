@@ -78,9 +78,9 @@ export const TeamBlock: React.FC<TeamBlockProps> = ({
                         </p>
                         <p className="leading-relaxed">{member.bio}</p>
                       </div>
-                      {member.linkedIn && (
+                      {member.linked_in && (
                         <a
-                          href={member.linkedIn}
+                          href={member.linked_in}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-block mb-4 text-primary hover:underline"
