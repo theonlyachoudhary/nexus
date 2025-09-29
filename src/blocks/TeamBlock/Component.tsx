@@ -7,6 +7,7 @@ import { TeamMember } from '@/payload-types'
 type TeamBlockProps = {
   title?: string
   description?: string
+  members: TeamMember[]
 }
 export const TeamBlock: React.FC<TeamBlockProps> = ({
   title = 'Meet the Team',
