@@ -888,6 +888,10 @@ export interface TestimonialsBlock {
   heading: string;
   subheading?: string | null;
   /**
+   * Select testimonials to display in this block
+   */
+  testimonials?: (number | Testimonial)[] | null;
+  /**
    * Background color for the testimonials section
    */
   background?: ('light' | 'neutral' | 'primary-light' | 'muted') | null;
@@ -902,6 +906,21 @@ export interface TestimonialsBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'testimonials';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials".
+ */
+export interface Testimonial {
+  id: number;
+  name: string;
+  title: string;
+  organization?: string | null;
+  testimonial?: string | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1096,21 +1115,6 @@ export interface Product {
   cardColor: string;
   flagship?: boolean | null;
   ranking?: number | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "testimonials".
- */
-export interface Testimonial {
-  id: number;
-  name: string;
-  title: string;
-  organization?: string | null;
-  testimonial?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -1684,6 +1688,7 @@ export interface SolutionsBlockSelect<T extends boolean = true> {
 export interface TestimonialsBlockSelect<T extends boolean = true> {
   heading?: T;
   subheading?: T;
+  testimonials?: T;
   background?: T;
   primaryCta?:
     | T
