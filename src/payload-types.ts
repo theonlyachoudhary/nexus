@@ -74,6 +74,8 @@ export interface Config {
     users: User;
     teamMembers: TeamMember;
     products: Product;
+    testimonials: Testimonial;
+    'case-studies': CaseStudy;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -92,6 +94,8 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     teamMembers: TeamMembersSelect<false> | TeamMembersSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
+    testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
+    'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -264,7 +268,6 @@ export interface Page {
         blockType: 'underConstruction';
       }
     | AboutBlock
-    | TeamBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1072,35 +1075,6 @@ export interface AboutBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TeamBlock".
- */
-export interface TeamBlock {
-  title: string;
-  description?: string | null;
-  members?:
-    | {
-        name: string;
-        role?: string | null;
-        bio?: string | null;
-        image?: (number | null) | Media;
-        id?: string | null;
-      }[]
-    | null;
-  approachTitle?: string | null;
-  approachDescription?: string | null;
-  approachStats?:
-    | {
-        value: string;
-        label: string;
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'team';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "teamMembers".
  */
 export interface TeamMember {
@@ -1108,9 +1082,8 @@ export interface TeamMember {
   name: string;
   title: string;
   bio?: string | null;
-  email?: string | null;
   linked_in?: string | null;
-  image?: (number | null) | Media;
+  priority?: number | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -1135,6 +1108,56 @@ export interface Product {
   cardColor: string;
   flagship?: boolean | null;
   ranking?: number | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials".
+ */
+export interface Testimonial {
+  id: number;
+  name: string;
+  title: string;
+  organization?: string | null;
+  testimonial?: string | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-studies".
+ */
+export interface CaseStudy {
+  id: number;
+  name: string;
+  title: string;
+  metrics?:
+    | {
+        metric?: string | null;
+        value?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -1342,6 +1365,14 @@ export interface PayloadLockedDocument {
         value: number | Product;
       } | null)
     | ({
+        relationTo: 'testimonials';
+        value: number | Testimonial;
+      } | null)
+    | ({
+        relationTo: 'case-studies';
+        value: number | CaseStudy;
+      } | null)
+    | ({
         relationTo: 'redirects';
         value: number | Redirect;
       } | null)
@@ -1512,7 +1543,6 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
         about?: T | AboutBlockSelect<T>;
-        team?: T | TeamBlockSelect<T>;
       };
   meta?:
     | T
@@ -1840,34 +1870,6 @@ export interface AboutBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TeamBlock_select".
- */
-export interface TeamBlockSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-  members?:
-    | T
-    | {
-        name?: T;
-        role?: T;
-        bio?: T;
-        image?: T;
-        id?: T;
-      };
-  approachTitle?: T;
-  approachDescription?: T;
-  approachStats?:
-    | T
-    | {
-        value?: T;
-        label?: T;
-        id?: T;
-      };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -2041,9 +2043,8 @@ export interface TeamMembersSelect<T extends boolean = true> {
   name?: T;
   title?: T;
   bio?: T;
-  email?: T;
   linked_in?: T;
-  image?: T;
+  priority?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -2067,6 +2068,40 @@ export interface ProductsSelect<T extends boolean = true> {
   cardColor?: T;
   flagship?: T;
   ranking?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials_select".
+ */
+export interface TestimonialsSelect<T extends boolean = true> {
+  name?: T;
+  title?: T;
+  organization?: T;
+  testimonial?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-studies_select".
+ */
+export interface CaseStudiesSelect<T extends boolean = true> {
+  name?: T;
+  title?: T;
+  metrics?:
+    | T
+    | {
+        metric?: T;
+        value?: T;
+        id?: T;
+      };
+  content?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
