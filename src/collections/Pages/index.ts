@@ -21,6 +21,7 @@ import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
+import { TeamBlock } from '../../blocks/TeamBlock/config'
 
 import {
   MetaDescriptionField,
@@ -99,6 +100,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 Process,
                 UnderConstruction,
                 About,
+                TeamBlock,
               ],
               required: true,
               admin: {
