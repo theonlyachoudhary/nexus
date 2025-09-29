@@ -5,14 +5,13 @@ const teamFields: Field[] = [
     name: 'title',
     type: 'text',
     required: true,
-    defaultValue: 'Our Solutions',
+    defaultValue: 'Our Team',
   },
   {
     name: 'description',
     type: 'textarea',
     required: true,
-    defaultValue:
-      'Explore our range of solutions designed to streamline your operations and drive success.',
+    defaultValue: 'Explore our range of team members who are dedicated to driving success.',
   },
 ]
 

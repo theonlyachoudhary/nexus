@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { SectionHeader } from '@/components/SectionHeader'
 import { TeamMember } from '@/payload-types'
 type TeamBlockProps = {
@@ -78,18 +78,20 @@ export const TeamBlock: React.FC<TeamBlockProps> = ({
                         </p>
                         <p className="leading-relaxed">{member.bio}</p>
                       </div>
-                      {member.linked_in && (
-                        <a
-                          href={member.linked_in}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-block mb-4 text-primary hover:underline"
-                        >
-                          Visit LinkedIn
-                        </a>
-                      )}
                     </div>
                   </CardContent>
+                  <CardFooter className="p-4 pt-0 flex justify-end">
+                    {member.linked_in && (
+                      <a
+                        href={member.linked_in}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block mb-4 text-primary hover:underline"
+                      >
+                        Visit LinkedIn
+                      </a>
+                    )}
+                  </CardFooter>
                 </Card>
               </motion.div>
             ))}
