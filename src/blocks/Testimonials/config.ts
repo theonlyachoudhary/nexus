@@ -17,6 +17,16 @@ export const TestimonialsBlock: Block = {
         'Our clients achieve measurable improvements in efficiency, clarity, and growth.',
     },
     {
+      name: 'testimonials',
+      type: 'relationship',
+      relationTo: 'testimonials',
+      hasMany: true,
+      required: false,
+      admin: {
+        description: 'Select testimonials to display in this block',
+      },
+    },
+    {
       name: 'background',
       type: 'radio',
       defaultValue: 'muted',
