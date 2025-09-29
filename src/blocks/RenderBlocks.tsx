@@ -15,7 +15,7 @@ import { TestimonialsBlock } from '@/blocks/Testimonials/Component'
 import { BannerBlock } from '@/blocks/Banner/Component'
 import { AboutBlock } from '@/blocks/About/Component'
 import { TeamBlock } from '@/blocks/Team/Component'
-
+import { OurApproachBlock } from './OurApproach/Componenet'
 import { ProcessBlock } from '@/blocks/Process/Component'
 import { UnderConstructionBlock } from '@/blocks/UnderConstruction/Component'
 
@@ -26,6 +26,7 @@ const blockComponents = {
   content: ContentBlock,
   cta: CallToActionBlock,
   ctaSection: CTASectionBlock,
+  ourApproach: OurApproachBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
   solutions: SolutionsBlock,

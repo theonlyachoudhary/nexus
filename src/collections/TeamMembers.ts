@@ -34,9 +34,10 @@ export const TeamMembers: CollectionConfig = {
       label: 'LinkedIn URL',
     },
     {
-      name: 'image',
-      type: 'upload',
-      relationTo: 'media',
+      name: 'priority',
+      type: 'number',
+      label:
+        'Priority (lower numbers appear first on the webpage, we love all our team members equally :) )',
     },
     ...slugField('name'),
   ],
