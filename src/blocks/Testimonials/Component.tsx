@@ -1,23 +1,16 @@
 'use client'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/utilities/ui'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { SectionHeader } from '@/components/SectionHeader'
 import Link from 'next/link'
+import { Testimonial } from '@/payload-types'
 
-type Testimonial = {
-  quote: string
-  author: string
-  role?: string
-  company?: string
-}
-
-export type TestimonialsBlockProps = {
-  heading?: string
-  subheading?: string
-  testimonials?: Testimonial[]
+type TestimonialsBlockProps = {
+  title?: string
+  description?: string
   background?: 'light' | 'neutral' | 'primary-light' | 'muted'
   primaryCta?: {
     text?: string
@@ -30,9 +23,8 @@ export type TestimonialsBlockProps = {
 }
 
 export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
-  heading = 'See Proven Results',
-  subheading = 'Our clients achieve measurable improvements in efficiency, clarity, and growth.',
-  testimonials = [],
+  title = 'See Proven Results',
+  description = 'Our clients achieve measurable improvements in efficiency, clarity, and growth.',
   background = 'muted',
   primaryCta = {
     text: 'View Case Studies',
@@ -50,16 +42,49 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
     muted: 'bg-white',
   }[background]
 
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const res = await fetch(
+          '/api/testimonials?limit=5&where[featured][equals]=true&depth=1&sort=priority',
+        )
+        if (!res.ok) {
+          throw new Error(`Failed: ${res.status} ${res.statusText}`)
+        }
+        const json = await res.json()
+        setTestimonials(json.docs || [])
+      } catch (err) {
+        console.error('Error fetching testimonials:', err)
+        setError(err instanceof Error ? err.message : 'Unknown error')
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchTestimonials()
+  }, [])
+
+  if (loading) {
+    return <p className="mx-auto text-center">Loading testimonials...</p>
+  }
+  if (error) {
+    return <p className="mx-auto text-center">Error loading testimonials: {error}</p>
+  }
+  if (testimonials.length === 0) {
+    return <p className="mx-auto text-center">No testimonials available.</p>
+  }
+
   return (
     <section className={cn('py-20', bgClass)}>
-      <SectionHeader heading={heading} subheading={subheading} />
+      <SectionHeader heading={title} subheading={description} />
 
       <div className="container my-16">
-        {/* Removed the header section since it's now in SectionHeader */}
-
         <div className="flex justify-center">
           <div className="grid md:grid-cols-3 gap-y-8 gap-x-16 mb-12 items-stretch">
-            {testimonials.map((testimonial, index) => (
+            {testimonials?.map((testimonial, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 40 }}
@@ -70,14 +95,14 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
                 <Card className="p-6 hover:shadow-lg transition-shadow bg-brand-neutral/25 flex flex-col h-full">
                   <CardContent className="flex flex-col h-full p-0">
                     <p className="leading-relaxed italic flex-grow mb-4">
-                      &quot;{testimonial.quote}&quot;
+                      &quot;{testimonial.testimonial}&quot;
                     </p>
                     <div className="border-t pt-4 mt-auto">
-                      <p className="font-semibold text-foreground">{testimonial.author}</p>
+                      <p className="font-semibold text-foreground">{testimonial.name}</p>
                       <p className="text-sm">
-                        {testimonial.role}
-                        {testimonial.role && testimonial.company ? ', ' : ''}
-                        {testimonial.company}
+                        {testimonial.title}
+                        {testimonial.title && testimonial.organization ? ', ' : ''}
+                        {testimonial.organization}
                       </p>
                     </div>
                   </CardContent>

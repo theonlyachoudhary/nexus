@@ -1,6 +1,8 @@
 import type { CollectionConfig } from 'payload'
 
 import { slugField } from '@/fields/slug'
+import { authenticated } from '@/access/authenticated'
+import { anyone } from '@/access/anyone'
 
 export const Testimonials: CollectionConfig = {
   slug: 'testimonials',
@@ -8,7 +10,10 @@ export const Testimonials: CollectionConfig = {
     useAsTitle: 'name',
   },
   access: {
-    read: () => true,
+    create: authenticated,
+    delete: authenticated,
+    read: anyone,
+    update: authenticated,
   },
   fields: [
     {
