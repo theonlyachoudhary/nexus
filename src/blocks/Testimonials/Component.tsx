@@ -50,9 +50,7 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const res = await fetch(
-          '/api/testimonials?limit=5&where[featured][equals]=true&depth=1&sort=priority',
-        )
+        const res = await fetch('/api/testimonials?')
         if (!res.ok) {
           throw new Error(`Failed: ${res.status} ${res.statusText}`)
         }
