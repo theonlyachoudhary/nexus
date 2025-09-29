@@ -1,32 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Card, CardContent } from '@/components/ui/card'
 import Image from 'next/image'
 import { SectionHeader } from '@/components/SectionHeader'
+import { TeamMember } from '@/payload-types'
 
-type TeamBlockProps = {
-  title?: string
-  description?: string
-  members?: Array<{
-    id?: string | number
-    name?: string
-    role?: string
-    bio?: string
-    image?: string | { url?: string }
-  }>
-  approachTitle?: string
-  approachDescription?: string
-  approachStats?: Array<{ value: string; label: string }>
-}
 
-export const TeamBlock: React.FC<TeamBlockProps> = ({
+export const TeamBlock = ({
   title,
   description,
-  members,
   approachTitle,
   approachDescription,
   approachStats,
+}: {
+  title?: string
+  description?: string
+  approachTitle?: string
+  approachDescription?: string
+  approachStats?: Array<{ value: string; label: string }>
 }) => {
-  const membersToRender = Array.isArray(members) && members.length > 0 ? members : []
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([])
+  useEffect(() => {
+    const fetchTeamMembers = async () => {
+      const response = await fetch('/api/teamMembers?limit=12')
+      const data = await response.json()
+      setTeamMembers(Array.isArray(data.docs) ? data.docs : [])
+    }
+    fetchTeamMembers()
+  }, [])
+
+  // Sort by ranking if present
+  const sortedMembers = [...teamMembers].sort((a, b) => {
+    const rankA = typeof a?.ranking === 'number' ? a.ranking! : Number.POSITIVE_INFINITY
+    const rankB = typeof b?.ranking === 'number' ? b.ranking! : Number.POSITIVE_INFINITY
+    return rankA - rankB
+  })
+
   const statsToRender =
     Array.isArray(approachStats) && approachStats.length > 0
       ? approachStats
@@ -50,7 +59,7 @@ export const TeamBlock: React.FC<TeamBlockProps> = ({
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12">
-          {membersToRender.map((member, index) => (
+          {sortedMembers.map((member, index) => (
             <Card
               key={member.id || index}
               className="bg-white border-gray-200 shadow-sm hover:shadow-md transition-shadow"

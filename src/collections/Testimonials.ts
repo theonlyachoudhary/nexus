@@ -2,8 +2,8 @@ import type { CollectionConfig } from 'payload'
 
 import { slugField } from '@/fields/slug'
 
-export const TeamMembers: CollectionConfig = {
-  slug: 'teamMembers',
+export const Testimonials: CollectionConfig = {
+  slug: 'testimonials',
   admin: {
     useAsTitle: 'name',
   },
@@ -14,29 +14,24 @@ export const TeamMembers: CollectionConfig = {
     {
       name: 'name',
       type: 'text',
-      label: 'Full Name',
+      label: 'Name',
       required: true,
     },
     {
       name: 'title',
       type: 'text',
-      label: 'Job Title',
+      label: 'Job Title/Position',
       required: true,
     },
     {
-      name: 'bio',
-      type: 'textarea',
-      label: 'Biography',
-    },
-    {
-      name: 'linkedIn',
+      name: 'organization',
       type: 'text',
-      label: 'LinkedIn URL',
+      label: 'Organization',
     },
     {
-      name: 'image',
-      type: 'upload',
-      relationTo: 'media',
+      name: 'testimonial',
+      type: 'textarea',
+      label: 'Testimonial',
     },
     ...slugField('name'),
   ],
