@@ -11,6 +11,7 @@ import { Testimonial } from '@/payload-types'
 type TestimonialsBlockProps = {
   heading?: string
   subheading?: string
+  testimonials?: Testimonial[]
   background?: 'light' | 'neutral' | 'primary-light' | 'muted'
   primaryCta?: {
     text?: string

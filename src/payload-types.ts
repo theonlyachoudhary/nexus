@@ -885,8 +885,8 @@ export interface SolutionsBlock {
  * via the `definition` "TestimonialsBlock".
  */
 export interface TestimonialsBlock {
-  title: string;
-  description?: string | null;
+  heading: string;
+  subheading?: string | null;
   /**
    * Background color for the testimonials section
    */
@@ -1682,8 +1682,8 @@ export interface SolutionsBlockSelect<T extends boolean = true> {
  * via the `definition` "TestimonialsBlock_select".
  */
 export interface TestimonialsBlockSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
+  heading?: T;
+  subheading?: T;
   background?: T;
   primaryCta?:
     | T
