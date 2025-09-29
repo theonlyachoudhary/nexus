@@ -268,6 +268,7 @@ export interface Page {
         blockType: 'underConstruction';
       }
     | AboutBlock
+    | TeamBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1063,6 +1064,17 @@ export interface AboutBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TeamBlock".
+ */
+export interface TeamBlock {
+  title: string;
+  description: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'team';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "teamMembers".
  */
 export interface TeamMember {
@@ -1531,6 +1543,7 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
         about?: T | AboutBlockSelect<T>;
+        team?: T | TeamBlockSelect<T>;
       };
   meta?:
     | T
@@ -1844,6 +1857,16 @@ export interface AboutBlockSelect<T extends boolean = true> {
         color?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TeamBlock_select".
+ */
+export interface TeamBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
   id?: T;
   blockName?: T;
 }

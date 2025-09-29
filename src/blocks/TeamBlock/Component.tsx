@@ -20,7 +20,7 @@ export const TeamBlock: React.FC<TeamBlockProps> = ({
   useEffect(() => {
     const fetchTeamMembers = async () => {
       try {
-        const res = await fetch('/api/teamMembers?limit=12&depth=1')
+        const res = await fetch('/api/teamMembers?limit=12&depth=1&sort=priority')
         if (!res.ok) {
           throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`)
         }
@@ -58,7 +58,7 @@ export const TeamBlock: React.FC<TeamBlockProps> = ({
           />
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid lg:grid-cols-2 gap-12 items-stretch">
           <AnimatePresence>
             {members.map((member, idx) => (
               <motion.div
@@ -68,7 +68,7 @@ export const TeamBlock: React.FC<TeamBlockProps> = ({
                 exit={{ x: -100, opacity: 0 }}
                 transition={{ duration: 0.5, delay: idx * 0.15 }}
               >
-                <Card className="bg-white border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                <Card className="bg-white border-gray-200 shadow-sm hover:shadow-md transition-shadow h-full">
                   <CardContent className="p-8">
                     <div className="flex flex-col md:flex-row gap-6">
                       <div className="flex-1 text-center md:text-left">
@@ -80,13 +80,13 @@ export const TeamBlock: React.FC<TeamBlockProps> = ({
                       </div>
                     </div>
                   </CardContent>
-                  <CardFooter className="p-4 pt-0 flex justify-end">
+                  <CardFooter className="p-4 pt-0 flex justify-start">
                     {member.linked_in && (
                       <a
                         href={member.linked_in}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-block mb-4 text-primary hover:underline"
+                        className="inline-block text-primary hover:underline"
                       >
                         Visit LinkedIn
                       </a>
