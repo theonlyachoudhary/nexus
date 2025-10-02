@@ -4,11 +4,15 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { SectionHeader } from '@/components/SectionHeader'
 import { TeamMember } from '@/payload-types'
+import clsx from 'clsx'
+import Image from 'next/image'
+
 type TeamBlockProps = {
   title?: string
   description?: string
   members: TeamMember[]
 }
+
 export const TeamBlock: React.FC<TeamBlockProps> = ({
   title = 'Meet the Team',
   description = 'Our experienced professionals bring decades of combined expertise in change management, process optimization, and strategic consulting.',
@@ -16,6 +20,7 @@ export const TeamBlock: React.FC<TeamBlockProps> = ({
   const [members, setMembers] = useState<TeamMember[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({})
 
   useEffect(() => {
     const fetchTeamMembers = async () => {
@@ -25,8 +30,9 @@ export const TeamBlock: React.FC<TeamBlockProps> = ({
           throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`)
         }
         const json = await res.json()
-        // Typically REST endpoint returns { docs: TeamMember[] }
-        setMembers(json.docs || [])
+        // Filter out non-core members in JS
+        const coreMembers = (json.docs || []).filter((m: TeamMember) => !m.non_core)
+        setMembers(coreMembers)
       } catch (err) {
         console.error('Error fetching team members:', err)
         setError(err instanceof Error ? err.message : 'Unknown error')
@@ -37,6 +43,13 @@ export const TeamBlock: React.FC<TeamBlockProps> = ({
 
     fetchTeamMembers()
   }, [])
+
+  const toggleExpand = (id: string) => {
+    setExpanded((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }))
+  }
 
   if (loading) {
     return <p className="mx-auto text-center">Loading team members...</p>
@@ -59,7 +72,7 @@ export const TeamBlock: React.FC<TeamBlockProps> = ({
           />
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-stretch">
+        <div className="grid lg:grid-cols-3 gap-12">
           <AnimatePresence>
             {members.map((member, idx) => (
               <motion.div
@@ -69,16 +82,70 @@ export const TeamBlock: React.FC<TeamBlockProps> = ({
                 exit={{ x: -100, opacity: 0 }}
                 transition={{ duration: 0.5, delay: idx * 0.15 }}
               >
-                <Card className="bg-brand-neutral/20 border-gray-200 shadow-sm hover:shadow-md transition-shadow h-full flex flex-col">
+                <Card className="bg-brand-neutral/20 border-gray-200 shadow-sm hover:shadow-md transition-shadow flex flex-col">
                   <CardContent className="p-8 flex-1">
-                    <div className="flex flex-col md:flex-row gap-6">
-                      <div className="flex-1 text-center md:text-left">
-                        <h3 className="text-2xl font-bold mb-2">{member.name}</h3>
-                        <p className="font-semibold mb-4" style={{ color: 'var(--brand-primary)' }}>
-                          {member.title}
-                        </p>
-                        <p className="leading-relaxed">{member.bio}</p>
+                    {/* Image row */}
+                    {member.image && (
+                      <div className="w-full flex justify-center mb-4">
+                        <Image
+                          src={
+                            typeof member.image === 'string'
+                              ? member.image
+                              : typeof member.image === 'object' &&
+                                  member.image !== null &&
+                                  'url' in member.image
+                                ? (member.image as { url: string }).url
+                                : ''
+                          }
+                          alt={member.name}
+                          width={400}
+                          height={300}
+                          className="w-full aspect-[4/3] object-cover border border-gray-200 shadow rounded-[5px] transition-transform duration-200 hover:scale-105 hover:shadow-lg"
+                        />
                       </div>
+                    )}
+                    {/* Info row: name, title, email */}
+                    <div className="flex flex-col items-start mb-4">
+                      <h3 className="text-2xl font-bold mb-1">{member.name}</h3>
+                      <p className="font-semibold mb-1" style={{ color: 'var(--brand-primary)' }}>
+                        {member.title}
+                      </p>
+                      {member.email && <p className="text-sm text-gray-600">{member.email}</p>}
+                    </div>
+                    {/* Bio row */}
+                    <div
+                      className="cursor-pointer"
+                      onClick={(e) => {
+                        if (
+                          (e.target as HTMLElement).closest('a') &&
+                          (e.target as HTMLElement).closest('a')?.href === member.linked_in
+                        ) {
+                          return
+                        }
+                        toggleExpand(String(member.id))
+                      }}
+                    >
+                      <div
+                        className={clsx(
+                          'leading-relaxed transition-all',
+                          !expanded[member.id] && 'line-clamp-3 max-h-20',
+                        )}
+                      >
+                        {member.bio}
+                      </div>
+                      {member.bio && member.bio.length > 200 && (
+                        <button
+                          className="mt-2 text-sm text-primary underline focus:outline-none"
+                          tabIndex={0}
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            toggleExpand(String(member.id))
+                          }}
+                        >
+                          {expanded[member.id] ? 'Show less' : 'Read more'}
+                        </button>
+                      )}
                     </div>
                   </CardContent>
                   <CardFooter className="p-8 pt-0 flex justify-start">

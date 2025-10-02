@@ -18,7 +18,7 @@ import { TeamBlock } from '@/blocks/TeamBlock/Component'
 import { OurApproachBlock } from './OurApproach/Componenet'
 import { ProcessBlock } from '@/blocks/Process/Component'
 import { UnderConstructionBlock } from '@/blocks/UnderConstruction/Component'
-
+import { CaseStudyTeaserBlock } from './CaseStudyTeaser'
 const blockComponents = {
   aboutTeaser: AboutTeaserBlock,
   archive: ArchiveBlock,
@@ -36,6 +36,7 @@ const blockComponents = {
   underConstruction: UnderConstructionBlock,
   about: AboutBlock,
   team: TeamBlock,
+  caseStudyTeaser: CaseStudyTeaserBlock,
 }
 
 export const RenderBlocks: React.FC<{

@@ -4,6 +4,14 @@ import { slugField } from '@/fields/slug'
 import { authenticated } from '@/access/authenticated'
 import { anyone } from '@/access/anyone'
 
+import {
+  FixedToolbarFeature,
+  HeadingFeature,
+  InlineToolbarFeature,
+  LinkFeature,
+  lexicalEditor,
+} from '@payloadcms/richtext-lexical'
+
 export const CaseStudies: CollectionConfig = {
   slug: 'case-studies',
   admin: {
@@ -29,6 +37,12 @@ export const CaseStudies: CollectionConfig = {
       required: true,
     },
     {
+      name: 'summary',
+      type: 'textarea',
+      label: 'Summary',
+      required: false,
+    },
+    {
       name: 'metrics',
       type: 'array',
       label: 'Key Metrics Achieved',
@@ -49,6 +63,15 @@ export const CaseStudies: CollectionConfig = {
       name: 'content',
       type: 'richText',
       label: 'Case Study Content (Format with headings, lists, links, etc.)',
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => [
+          ...rootFeatures,
+          HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
+          LinkFeature(),
+          FixedToolbarFeature(),
+          InlineToolbarFeature(),
+        ],
+      }),
     },
     ...slugField('name'),
   ],

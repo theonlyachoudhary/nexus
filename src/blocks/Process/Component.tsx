@@ -1,7 +1,7 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { SectionHeader } from '@/components/SectionHeader'
 import { motion, useAnimation, useInView } from 'framer-motion'
 // Predeclare hooks for up to 10 steps (safe for most use cases)
@@ -75,6 +75,7 @@ export interface ProcessBlockProps {
   ctaText: string
   ctaButton: string
   ctaLink: string
+  neutralBackground?: boolean // <-- add this prop
 }
 
 export function ProcessBlock({
@@ -84,10 +85,13 @@ export function ProcessBlock({
   ctaText,
   ctaButton,
   ctaLink,
+  neutralBackground = false, // <-- default to false
 }: ProcessBlockProps) {
   // --- React hook compliant animation setup ---
   const stepCount = steps.length
   const { refs, inViews, controls } = useStepAnimations(stepCount)
+
+  const [activeStep, setActiveStep] = useState<number | null>(null)
 
   useEffect(() => {
     inViews.forEach((inView, idx) => {
@@ -96,8 +100,11 @@ export function ProcessBlock({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inViews.map(Boolean).join(',')])
 
+  // Set section background based on neutralBackground prop
+  const sectionBgClass = neutralBackground ? 'bg-brand-neutral/20' : 'bg-white'
+
   return (
-    <section className="py-20 bg-muted/20 overflow-x-hidden">
+    <section className={`py-20 ${sectionBgClass} overflow-x-hidden`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <SectionHeader heading={heading} subheading={intro} />
 
@@ -118,7 +125,7 @@ export function ProcessBlock({
                       transition: { type: 'spring', stiffness: 300, damping: 20 },
                     },
                   }}
-                  className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg shadow-lg"
+                  className="w-10 h-10 bg-gradient-to-br from-primary to-brand-primary rounded-full flex items-center justify-center text-white font-extrabold text-xl shadow-lg"
                 >
                   {idx + 1}
                 </motion.div>
@@ -154,7 +161,7 @@ export function ProcessBlock({
               >
                 <div className="ml-2 mb-8">
                   <div className="bg-background rounded-lg p-6 shadow-sm border">
-                    <h3 className="text-lg font-semibold mb-2`">{step.title}</h3>
+                    <h3 className="text-lg font-semibold mb-2">{step.title}</h3>
                     <p className="leading-relaxed">{step.description}</p>
                   </div>
                 </div>
@@ -163,45 +170,58 @@ export function ProcessBlock({
           ))}
         </div>
 
-        {/* Desktop grid with framer-motion animation */}
-        {/* Desktop: 3 cards per row, always 3 per row (pad with empty divs if needed) */}
-        <div className="hidden md:block md:mb-12">
-          {Array.from({ length: Math.ceil(steps.length / 3) }).map((_, rowIdx, arr) => {
-            const rowSteps = steps.slice(rowIdx * 3, rowIdx * 3 + 3)
-            const isLastRow = rowIdx === arr.length - 1
-            return (
-              <div key={rowIdx} className="flex gap-8 mb-8 justify-center">
-                {rowSteps.map((step, idx) => (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.5, delay: (rowIdx * 3 + idx) * 0.1 }}
-                    className="bg-background rounded-lg p-8 shadow-sm border basis-1/3 max-w-[32%] flex flex-col"
-                  >
-                    <div className="flex items-center mb-4">
-                      <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">
-                        {rowIdx * 3 + idx + 1}
-                      </div>
-                      <h3 className="text-xl font-semibold text-foreground">{step.title}</h3>
-                    </div>
-                    <p className="leading-relaxed">{step.description}</p>
-                  </motion.div>
-                ))}
-                {/* Only pad non-final rows */}
-                {!isLastRow &&
-                  Array.from({ length: 3 - rowSteps.length }).map((_, padIdx) => (
-                    <div key={padIdx + 'pad'} className="basis-1/3 max-w-[32%]" />
-                  ))}
+        {/* Desktop progress bar with step numbers */}
+        <div className="hidden md:block w-full mb-8">
+          <div className="relative flex items-center justify-between w-full">
+            {/* Progress bar */}
+            <motion.div
+              initial={{ width: 0 }}
+              whileInView={{ width: '100%' }}
+              transition={{ duration: 1 }}
+              className="absolute top-1/2 left-0 right-0 h-2 bg-primary rounded-full -translate-y-1/2 z-0"
+              style={{ zIndex: 0 }}
+            />
+            {/* Step numbers */}
+            {steps.map((_, idx) => (
+              <div
+                key={idx}
+                className="relative z-10 flex flex-col items-center w-1/3"
+                style={{ width: `${100 / steps.length}%` }}
+              >
+                <div className="w-12 h-12 bg-gradient-to-br from-primary to-brand-primary rounded-full flex items-center justify-center text-white font-extrabold text-2xl shadow-lg mb-2">
+                  {idx + 1}
+                </div>
               </div>
-            )
-          })}
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop cards below progress bar */}
+        <div className="hidden md:grid md:grid-cols-3 gap-8 md:mb-12">
+          {steps.map((step, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              className="bg-brand-neutral/20 rounded-xl p-8 shadow-md border border-gray-100 flex flex-col"
+            >
+              {/* Step number on card, no circle */}
+              <div className="flex items-center mb-4">
+                <span className="text-2xl font-extrabold text-brand-primary mr-3">{idx + 1}.</span>
+                <h3 className="text-xl font-semibold text-foreground" id={`step-title-${idx}`}>
+                  {step.title}
+                </h3>
+              </div>
+              <p className="leading-relaxed">{step.description}</p>
+            </motion.div>
+          ))}
         </div>
 
         {/* CTA */}
         <div className="text-center">
-          <p className="text-lg mb-6">{ctaText}</p>
+          <p className="text-lg mb-3">{ctaText}</p>
           <Button asChild size="lg" className="">
             <Link href={ctaLink}>{ctaButton}</Link>
           </Button>

@@ -27,7 +27,7 @@ export const CTASectionBlock: React.FC<CTASectionProps> = ({
   primaryCta = { text: 'Book Your Free Consultation', link: '/book-consultation' },
 }) => {
   return (
-    <section className="py-24 bg-brand-neutral/20">
+    <section className="py-24">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">

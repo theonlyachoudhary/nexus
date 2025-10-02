@@ -22,6 +22,7 @@ import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
 import { TeamBlock } from '../../blocks/TeamBlock/config'
+import { CaseStudyTeaser } from '@/blocks/CaseStudyTeaser'
 
 import {
   MetaDescriptionField,
@@ -101,6 +102,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 UnderConstruction,
                 About,
                 TeamBlock,
+                CaseStudyTeaser,
               ],
               required: true,
               admin: {

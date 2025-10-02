@@ -18,6 +18,7 @@ export const DesignHero: React.FC<Page['hero']> = ({
   highlightedWords,
   subtitle,
   ctaButton,
+  heroImage,
 }) => {
   const { setHeaderTheme } = useHeaderTheme()
 
@@ -46,7 +47,7 @@ export const DesignHero: React.FC<Page['hero']> = ({
   const wordsToHighlight = highlightedWords?.map((item) => item.word) || []
 
   return (
-    <section className="relative h-[32rem] lg:h-[40rem] overflow-hidden lg:pt-0 my-0">
+    <section className="relative h-[60vh]overflow-hidden lg:pt-0 my-0">
       {/* Background Images */}
       <motion.div
         className="absolute inset-0 pointer-events-none z-10 overflow-hidden"
@@ -61,8 +62,20 @@ export const DesignHero: React.FC<Page['hero']> = ({
           transition={{ duration: 1.2, delay: 0.2 }}
         >
           <Image
-            src="/image.webp"
-            alt=""
+            src={
+              typeof heroImage === 'object' &&
+              heroImage !== null &&
+              'url' in heroImage &&
+              typeof heroImage.url === 'string' &&
+              heroImage.url
+                ? heroImage.url
+                : '/image.webp'
+            }
+            alt={
+              typeof heroImage === 'object' && heroImage !== null && 'alt' in heroImage
+                ? (heroImage.alt as string)
+                : ''
+            }
             fill
             className="hidden lg:block object-cover object-right"
             draggable={false}
@@ -70,9 +83,9 @@ export const DesignHero: React.FC<Page['hero']> = ({
           />
         </motion.div>
 
-        {/* Background SVG - constrained to 80% of viewport width on large screens */}
+        {/* Background SVG - constrained to smaller width and height on large screens */}
         <motion.div
-          className="hidden lg:block absolute left-0 top-0 bottom-0 w-[80vw]"
+          className="hidden lg:block absolute left-0 top-0 w-[60vw] h-[60vh]"
           initial={{ x: -80, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 1.1, delay: 0.4 }}
@@ -82,8 +95,8 @@ export const DesignHero: React.FC<Page['hero']> = ({
       </motion.div>
 
       {/* Content */}
-      <div className="relative z-20 h-[32rem] lg:h-[40rem] flex items-center">
-        <div className="mx-auto md:mx-0 md:w-[70%] md:max-w-[70vw] px-[10%] lg:pl-[5%] lg:pr-[15%] lg:w-[70rem] space-y-6 text-center md:text-left">
+      <div className="relative z-20 lg:h-[60vh] lg:w-[50vw] flex items-center justify-center lg:justify-start">
+        <div className="mx-auto p-24 px-[10%] lg:pl-[5%] lg:pr-[15%] lg:w-[70rem] space-y-6 text-center md:text-center lg:text-left">
           {/* Title */}
           {title && (
             <motion.h1

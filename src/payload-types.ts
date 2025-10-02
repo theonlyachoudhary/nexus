@@ -212,6 +212,7 @@ export interface Page {
         }[]
       | null;
     media?: (number | null) | Media;
+    heroImage?: (number | null) | Media;
   };
   layout: (
     | CallToActionBlock
@@ -239,6 +240,10 @@ export interface Page {
         ctaText: string;
         ctaButton: string;
         ctaLink: string;
+        /**
+         * Set section background to brand-neutral/20 instead of white.
+         */
+        neutralBackground?: boolean | null;
         id?: string | null;
         blockName?: string | null;
         blockType: 'process';
@@ -900,6 +905,10 @@ export interface TestimonialsBlock {
     text?: string | null;
     link?: string | null;
   };
+  /**
+   * Set section background to brand-neutral/20 instead of white.
+   */
+  neutralBackground?: boolean | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'testimonials';
@@ -1081,9 +1090,12 @@ export interface TeamMember {
   id: number;
   name: string;
   title: string;
+  email?: string | null;
+  image?: (number | null) | Media;
   bio?: string | null;
   linked_in?: string | null;
   priority?: number | null;
+  non_core?: boolean | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -1136,6 +1148,7 @@ export interface CaseStudy {
   id: number;
   name: string;
   title: string;
+  summary?: string | null;
   metrics?:
     | {
         metric?: string | null;
@@ -1477,6 +1490,7 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
             };
         media?: T;
+        heroImage?: T;
       };
   layout?:
     | T
@@ -1508,6 +1522,7 @@ export interface PagesSelect<T extends boolean = true> {
               ctaText?: T;
               ctaButton?: T;
               ctaLink?: T;
+              neutralBackground?: T;
               id?: T;
               blockName?: T;
             };
@@ -1710,6 +1725,7 @@ export interface TestimonialsBlockSelect<T extends boolean = true> {
         text?: T;
         link?: T;
       };
+  neutralBackground?: T;
   id?: T;
   blockName?: T;
 }
@@ -2044,9 +2060,12 @@ export interface UsersSelect<T extends boolean = true> {
 export interface TeamMembersSelect<T extends boolean = true> {
   name?: T;
   title?: T;
+  email?: T;
+  image?: T;
   bio?: T;
   linked_in?: T;
   priority?: T;
+  non_core?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -2096,6 +2115,7 @@ export interface TestimonialsSelect<T extends boolean = true> {
 export interface CaseStudiesSelect<T extends boolean = true> {
   name?: T;
   title?: T;
+  summary?: T;
   metrics?:
     | T
     | {

@@ -130,6 +130,13 @@ export const hero: Field = {
       relationTo: 'media',
       required: true,
     },
+    {
+      name: 'heroImage',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Hero Image',
+      required: false,
+    },
   ],
   label: false,
 }

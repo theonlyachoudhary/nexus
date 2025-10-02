@@ -31,6 +31,7 @@ interface AboutTeaserBlockProps {
     text?: string
     link?: string
   }
+  neutralBackground?: boolean // <-- Add this prop
 }
 
 export const AboutTeaserBlock: React.FC<AboutTeaserBlockProps> = (props) => {
@@ -56,10 +57,14 @@ export const AboutTeaserBlock: React.FC<AboutTeaserBlockProps> = (props) => {
       ],
     },
     cta = { text: 'Learn More About Our Team', link: '/about' },
+    neutralBackground = false, // <-- Default to false
   } = props
 
+  // Set background class based on toggle
+  const sectionBgClass = neutralBackground ? 'bg-brand-neutral/20' : 'bg-white'
+
   return (
-    <section className="py-20 my-0 bg-brand-neutral/20">
+    <section className={`py-20 my-0 ${sectionBgClass}`}>
       <SectionHeader
         heading={heading}
         subheading={subheading}

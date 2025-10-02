@@ -29,7 +29,7 @@ export const AboutBlock: React.FC<AboutBlockProps> = ({
   const defaultMissionCards = [
     {
       heading: 'Our Mission',
-      text: 'Help good businesses become great by equipping them with the tools and thinking that deliver real value to customers, teams, and communities.',
+      text: 'Help good businesses become great by equipping them with tools and thinking that deliver real value to customers, teams, and communities.',
       color: brandPrimary,
     },
     {
@@ -53,12 +53,12 @@ export const AboutBlock: React.FC<AboutBlockProps> = ({
   const coreValuesHeadingToRender = coreValuesHeading || 'Our Core Values'
 
   return (
-    <section className="py-20 bg-white">
+    <section className="pb-12 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 mb-16">
           {missionCardsToRender.map(
             (card: { heading: string; text: string; color?: string }, idx: number) => (
-              <Card key={idx} className="p-8 bg-white border-gray-200">
+              <Card key={idx} className="p-8 bg-brand-neutral/25 border-gray-200">
                 <CardContent className="space-y-6">
                   <div className="flex items-center gap-4 mb-6">
                     <div
@@ -78,7 +78,7 @@ export const AboutBlock: React.FC<AboutBlockProps> = ({
           )}
         </div>
 
-        <div className="bg-gray-50 rounded-lg p-8">
+        <div className="rounded-lg p-5 pt-0">
           <h3 className="text-2xl font-bold text-center text-foreground mb-8">
             {coreValuesHeadingToRender}
           </h3>

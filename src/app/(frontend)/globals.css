@@ -4,6 +4,8 @@
 
 /* Import IBM Plex Sans and IBM Plex Sans Condensed fonts */
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@400;500;600&display=swap');
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
 
 @layer base {
   h1,

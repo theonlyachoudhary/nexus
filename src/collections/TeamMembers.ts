@@ -29,6 +29,19 @@ export const TeamMembers: CollectionConfig = {
       required: true,
     },
     {
+      name: 'email',
+      type: 'email',
+      label: 'Email Address',
+      required: false,
+    },
+    {
+      name: 'image',
+      type: 'upload',
+      label: 'Profile Image',
+      relationTo: 'media',
+      required: false,
+    },
+    {
       name: 'bio',
       type: 'textarea',
       label: 'Biography',
@@ -43,6 +56,12 @@ export const TeamMembers: CollectionConfig = {
       type: 'number',
       label:
         'Priority (lower numbers appear first on the webpage, we love all our team members equally :) )',
+    },
+    {
+      name: 'non_core',
+      type: 'checkbox',
+      label: 'Non-core Team Member',
+      required: false,
     },
     ...slugField('name'),
   ],

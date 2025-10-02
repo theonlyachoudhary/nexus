@@ -2,7 +2,7 @@
 import type { FormFieldBlock, Form as FormType } from '@payloadcms/plugin-form-builder/types'
 
 import { useRouter } from 'next/navigation'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useForm, FormProvider } from 'react-hook-form'
 import RichText from '@/components/RichText'
@@ -13,6 +13,13 @@ import { Clock, Gift, Target, TrendingUp, CheckCircle } from 'lucide-react'
 import { fields } from './fields'
 import { getClientSideURL } from '@/utilities/getURL'
 import { SectionHeader } from '@/components/SectionHeader'
+
+// Extend Window type to include 'calendar'
+declare global {
+  interface Window {
+    calendar?: any
+  }
+}
 
 export type FormBlockType = {
   blockName?: string
@@ -120,12 +127,49 @@ export const FormBlock: React.FC<
     [router, formID, redirect, confirmationType],
   )
 
+  // Google Calendar Appointment Scheduling Button
+  const calendarRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    // Only add script if not already present
+    if (!document.getElementById('google-calendar-script')) {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = 'https://calendar.google.com/calendar/scheduling-button-script.css'
+      document.head.appendChild(link)
+
+      const script = document.createElement('script')
+      script.id = 'google-calendar-script'
+      script.src = 'https://calendar.google.com/calendar/scheduling-button-script.js'
+      script.async = true
+      script.onload = () => {
+        if (window.calendar && calendarRef.current) {
+          window.calendar.schedulingButton.load({
+            url: 'https://calendar.google.com/calendar/appointments/AcZssZ3ps-h4_G8P2pVK1RiBnFET-DdEy5djM6bzX8Y=?gv=true',
+            color: '#001d6c',
+            label: 'Get in Touch',
+            target: calendarRef.current,
+          })
+        }
+      }
+      document.body.appendChild(script)
+    } else {
+      if (window.calendar && calendarRef.current) {
+        window.calendar.schedulingButton.load({
+          url: 'https://calendar.google.com/calendar/appointments/AcZssZ3ps-h4_G8P2pVK1RiBnFET-DdEy5djM6bzX8Y=?gv=true',
+          color: '#001d6c',
+          label: 'Get in Touch',
+          target: calendarRef.current,
+        })
+      }
+    }
+  }, [])
+
   return (
-    <div className="container">
-      <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-        {/* Left Column - Outreach Information */}
+    <div className="container py-24">
+      <div className="flex flex-col gap-12 items-center">
+        {/* Outreach Information, Calendar Button, and Intro all in one column */}
         <motion.div
-          className="space-y-4"
+          className="space-y-4 w-full max-w-2xl"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
@@ -198,9 +242,14 @@ export const FormBlock: React.FC<
             ))}
           </motion.div>
 
-          {enableIntro && introContent && !hasSubmitted && (
+          {/* Google Calendar Appointment Button */}
+          <div className="pt-8 flex justify-center">
+            <div ref={calendarRef} />
+          </div>
+
+          {enableIntro && introContent && (
             <motion.div
-              className="max-w-lg ml-4 pt-4 border-t border-border"
+              className="max-w-lg pt-8 border-t border-border mx-auto"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.5 }}
@@ -209,91 +258,6 @@ export const FormBlock: React.FC<
               <RichText data={introContent} enableGutter={false} />
             </motion.div>
           )}
-        </motion.div>
-
-        {/* Right Column - Form */}
-        <motion.div
-          className="lg:sticky lg:top-8"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.7, delay: 0.15 }}
-        >
-          <div className="p-8 lg:p-10 border border-border rounded-lg bg-background shadow-lg">
-            <h3 className="text-2xl font-semibold mb-4">Send us a message</h3>
-
-            <FormProvider {...formMethods}>
-              {!isLoading && hasSubmitted && confirmationType === 'message' && (
-                <div className="text-center py-12">
-                  <div className="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-400" />
-                  </div>
-                  <div className="prose prose-lg max-w-none">
-                    <RichText data={confirmationMessage} />
-                  </div>
-                </div>
-              )}
-              {isLoading && !hasSubmitted && (
-                <div className="text-center py-12">
-                  <div className="animate-spin rounded-full h-10 w-10 border-3 border-primary border-t-transparent mx-auto mb-6"></div>
-                  <p className="text-lg text-muted-foreground font-condensed">
-                    Sending your message...
-                  </p>
-                </div>
-              )}
-              {error && (
-                <div className="p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg mb-8">
-                  <p className="text-red-800 dark:text-red-200 font-condensed">{`${error.status || '500'}: ${error.message || ''}`}</p>
-                </div>
-              )}
-              {!hasSubmitted && (
-                <form id={formID} onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-                  <div className="space-y-6">
-                    {formFromProps &&
-                      formFromProps.fields &&
-                      formFromProps.fields?.map((field, index) => {
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                        const Field: React.FC<any> =
-                          fields?.[field.blockType as keyof typeof fields]
-                        if (Field) {
-                          return (
-                            <div key={index} className="space-y-2">
-                              <Field
-                                form={formFromProps}
-                                {...field}
-                                {...formMethods}
-                                control={control}
-                                errors={errors}
-                                register={register}
-                              />
-                            </div>
-                          )
-                        }
-                        return null
-                      })}
-                  </div>
-
-                  <Button
-                    form={formID}
-                    type="submit"
-                    variant="default"
-                    className="w-full mt-8 h-12 text-lg font-semibold bg-primary hover:bg-primary/90 transition-all duration-200"
-                    size="lg"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? (
-                      <div className="flex items-center gap-3">
-                        <div className="animate-spin rounded-full h-5 w-5 border-2 border-primary-foreground border-t-transparent"></div>
-                        <span>Sending...</span>
-                      </div>
-                    ) : (
-                      submitButtonLabel || 'Send Message'
-                    )}
-                  </Button>
-                </form>
-              )}
-            </FormProvider>
-          </div>
         </motion.div>
       </div>
     </div>

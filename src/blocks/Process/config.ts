@@ -100,5 +100,14 @@ export const Process: Block = {
       required: true,
       defaultValue: '/book-consultation',
     },
+    {
+      name: 'neutralBackground',
+      type: 'checkbox',
+      label: 'Use Neutral Background',
+      defaultValue: false,
+      admin: {
+        description: 'Set section background to brand-neutral/20 instead of white.',
+      },
+    },
   ],
 }
