@@ -274,6 +274,7 @@ export interface Page {
       }
     | AboutBlock
     | TeamBlock
+    | CaseStudyTeaserBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1084,6 +1085,17 @@ export interface TeamBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CaseStudyTeaserBlock".
+ */
+export interface CaseStudyTeaserBlock {
+  title: string;
+  description?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'caseStudyTeaser';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "teamMembers".
  */
 export interface TeamMember {
@@ -1559,6 +1571,7 @@ export interface PagesSelect<T extends boolean = true> {
             };
         about?: T | AboutBlockSelect<T>;
         team?: T | TeamBlockSelect<T>;
+        caseStudyTeaser?: T | CaseStudyTeaserBlockSelect<T>;
       };
   meta?:
     | T
@@ -1881,6 +1894,16 @@ export interface AboutBlockSelect<T extends boolean = true> {
  * via the `definition` "TeamBlock_select".
  */
 export interface TeamBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CaseStudyTeaserBlock_select".
+ */
+export interface CaseStudyTeaserBlockSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   id?: T;

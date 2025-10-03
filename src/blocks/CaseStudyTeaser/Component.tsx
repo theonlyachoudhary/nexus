@@ -4,15 +4,26 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { SectionHeader } from '@/components/SectionHeader' // <-- Import SectionHeader
+import { title } from 'process'
 
 type CaseStudy = {
   title: string
   name: string // Organization name
+  summary?: string
   metrics?: { metric: string; value: string }[]
   slug?: string
 }
 
-export const CaseStudyTeaserBlock: React.FC = () => {
+export interface CaseStudyTeaserBlockProps {
+  title?: string
+  description?: string
+}
+
+export const CaseStudyTeaserBlock: React.FC<CaseStudyTeaserBlockProps> = ({
+  title,
+  description,
+}) => {
   const [caseStudies, setCaseStudies] = useState<CaseStudy[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -43,7 +54,13 @@ export const CaseStudyTeaserBlock: React.FC = () => {
 
   return (
     <section className="py-12">
-      <div className="flex flex-wrap justify-center gap-8">
+      <SectionHeader
+        heading={title ?? ''}
+        subheading={description ?? ''}
+        align="center"
+        spacing="md"
+      />
+      <div className="flex flex-wrap justify-center items-center gap-8 min-h-[20rem]">
         {caseStudies.map((cs, idx) => (
           <motion.div
             key={idx}
@@ -51,26 +68,51 @@ export const CaseStudyTeaserBlock: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: idx * 0.1 }}
-            className="w-full max-w-xs"
+            className="flex justify-center"
           >
-            <Card className="p-6 rounded-xl border border-gray-100 bg-brand-neutral/25 flex flex-col h-[220px] justify-between shadow-sm">
+            <Card className="p-6 rounded-xl border border-gray-100 bg-brand-neutral/25 flex flex-col max-w-[30rem] justify-between shadow-sm mx-auto">
               <CardContent className="flex flex-col h-full p-0">
-                <div>
-                  <h3 className="font-bold text-lg mb-1">{cs.title}</h3>
-                  <p className="text-sm text-brand-primary font-medium mb-2">{cs.name}</p>
+                <div className="">
+                  <h3 className="font-bold text-primary text-lg mb-1 text-center">{cs.title}</h3>
+                  <p className="font-medium mb-2 text-center">{cs.name}</p>
+                  {/* Summary section below organization name */}
+                  {cs.summary && (
+                    <p className="text-center text-brand-text-secondary mb-3">{cs.summary}</p>
+                  )}
                   {cs.metrics && cs.metrics.length > 0 && (
-                    <ul className="text-xs mb-2 list-disc list-inside">
-                      {cs.metrics.map((m, i) => (
-                        <li key={i}>
-                          <span className="font-semibold">{m.metric}:</span> {m.value}
-                        </li>
-                      ))}
-                    </ul>
+                    <div className="mb-5 flex justify-center">
+                      <div
+                        className={`grid w-full`}
+                        style={{
+                          gridTemplateColumns: `repeat(${Math.min(cs.metrics.length, 3)}, minmax(0, 1fr))`,
+                          justifyContent: cs.metrics.length < 3 ? 'center' : undefined,
+                          maxWidth: '36rem',
+                          gap:
+                            cs.metrics.length === 1
+                              ? '2rem'
+                              : cs.metrics.length === 2
+                                ? '3rem'
+                                : '2.5rem',
+                        }}
+                      >
+                        {cs.metrics.map((m, i) => (
+                          <div
+                            key={i}
+                            className="flex flex-col items-center justify-center min-h-[4.5rem] text-center px-4"
+                          >
+                            <p className="text-lg font-bold text-primary leading-[1.2] whitespace-nowrap">
+                              {m.metric}
+                            </p>
+                            <p className="text-sm whitespace-nowrap">{m.value}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   )}
                 </div>
-                <div className="mt-auto pt-2">
+                <div className="mt-auto pt-2 flex justify-center">
                   <Button variant="default" size="sm" asChild>
-                    <Link href="/case-studies">View Case Studies</Link>
+                    <Link href="/case-studies">Read Full Case Study</Link>
                   </Button>
                 </div>
               </CardContent>
