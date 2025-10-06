@@ -24,7 +24,7 @@ import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
 import { TeamBlock } from '../../blocks/TeamBlock/config'
 import { CaseStudyTeaser } from '@/blocks/CaseStudyTeaser'
 import { CoreStack } from '@/blocks/CoreStackBlock'
-
+import { ApplicationEcosystem } from '@/blocks/ApplicationEcosystemBlock'
 import {
   MetaDescriptionField,
   MetaImageField,
@@ -105,6 +105,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 TeamBlock,
                 CaseStudyTeaser,
                 CoreStack,
+                ApplicationEcosystem,
               ],
               required: true,
               admin: {
