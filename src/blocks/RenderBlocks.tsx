@@ -19,6 +19,7 @@ import { OurApproachBlock } from './OurApproach/Componenet'
 import { ProcessBlock } from '@/blocks/Process/Component'
 import { UnderConstructionBlock } from '@/blocks/UnderConstruction/Component'
 import { CaseStudyTeaserBlock } from './CaseStudyTeaser'
+import { CoreStackBlock } from '@/blocks/CoreStackBlock'
 const blockComponents = {
   aboutTeaser: AboutTeaserBlock,
   archive: ArchiveBlock,
@@ -37,6 +38,7 @@ const blockComponents = {
   about: AboutBlock,
   team: TeamBlock,
   caseStudyTeaser: CaseStudyTeaserBlock,
+  coreStack: CoreStackBlock,
 }
 
 export const RenderBlocks: React.FC<{

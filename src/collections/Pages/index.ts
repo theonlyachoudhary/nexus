@@ -23,6 +23,7 @@ import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
 import { TeamBlock } from '../../blocks/TeamBlock/config'
 import { CaseStudyTeaser } from '@/blocks/CaseStudyTeaser'
+import { CoreStack } from '@/blocks/CoreStackBlock'
 
 import {
   MetaDescriptionField,
@@ -103,6 +104,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 About,
                 TeamBlock,
                 CaseStudyTeaser,
+                CoreStack,
               ],
               required: true,
               admin: {
