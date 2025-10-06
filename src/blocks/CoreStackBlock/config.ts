@@ -1,7 +1,8 @@
 import type { Block } from 'payload'
+
 export const CoreStack: Block = {
   slug: 'coreStack',
-  interfaceName: 'CoreStackBlock',
+  interfaceName: 'CoreStackBlockProps',
   fields: [
     {
       name: 'title',
@@ -10,25 +11,33 @@ export const CoreStack: Block = {
       defaultValue: 'Learn About Who We Are',
     },
     {
-      name: 'description',
+      name: 'subtitle', // changed from 'description'
       type: 'textarea',
       defaultValue:
         'Nexus is the gold standard in professional change management consulting — disciplined, adaptable, and relentlessly committed to excellence.',
     },
     {
-      name: 'content',
-      type: 'group',
+      name: 'cards', // changed from 'content'
+      type: 'array',
       fields: [
         {
           name: 'image',
-          type: 'text',
+          type: 'upload',
+          relationTo: 'media',
           required: true,
-          defaultValue: 'https://via.placeholder.com/150',
         },
         {
           name: 'summary',
           type: 'textarea',
-          defaultValue: 'A brief summary of the application.',
+        },
+        {
+          name: 'scale',
+          type: 'number',
+          label: 'Image Scale',
+          min: 0.1,
+          max: 3,
+          defaultValue: 1,
+          required: false,
         },
       ],
     },

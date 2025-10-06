@@ -275,7 +275,7 @@ export interface Page {
     | AboutBlock
     | TeamBlock
     | CaseStudyTeaserBlock
-    | CoreStackBlock
+    | CoreStackBlockProps
     | ApplicationEcosystemBlockProps
   )[];
   meta?: {
@@ -1098,15 +1098,19 @@ export interface CaseStudyTeaserBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CoreStackBlock".
+ * via the `definition` "CoreStackBlockProps".
  */
-export interface CoreStackBlock {
+export interface CoreStackBlockProps {
   title: string;
-  description?: string | null;
-  content: {
-    image: string;
-    summary?: string | null;
-  };
+  subtitle?: string | null;
+  cards?:
+    | {
+        image: number | Media;
+        summary?: string | null;
+        scale?: number | null;
+        id?: string | null;
+      }[]
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'coreStack';
@@ -1612,7 +1616,7 @@ export interface PagesSelect<T extends boolean = true> {
         about?: T | AboutBlockSelect<T>;
         team?: T | TeamBlockSelect<T>;
         caseStudyTeaser?: T | CaseStudyTeaserBlockSelect<T>;
-        coreStack?: T | CoreStackBlockSelect<T>;
+        coreStack?: T | CoreStackBlockPropsSelect<T>;
         applicationEcosystemBlock?: T | ApplicationEcosystemBlockPropsSelect<T>;
       };
   meta?:
@@ -1953,16 +1957,18 @@ export interface CaseStudyTeaserBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CoreStackBlock_select".
+ * via the `definition` "CoreStackBlockProps_select".
  */
-export interface CoreStackBlockSelect<T extends boolean = true> {
+export interface CoreStackBlockPropsSelect<T extends boolean = true> {
   title?: T;
-  description?: T;
-  content?:
+  subtitle?: T;
+  cards?:
     | T
     | {
         image?: T;
         summary?: T;
+        scale?: T;
+        id?: T;
       };
   id?: T;
   blockName?: T;
