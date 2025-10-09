@@ -1,8 +1,8 @@
 import type { Block } from 'payload'
 
-export const OurApproachBlock: Block = {
-  slug: 'ourApproachBlock',
-  interfaceName: 'OurApproachBlock',
+export const OurApproach: Block = {
+  slug: 'ourApproach',
+  interfaceName: 'OurApproachBlockProps',
   fields: [
     {
       name: 'title',

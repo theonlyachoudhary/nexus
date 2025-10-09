@@ -15,12 +15,14 @@ import { TestimonialsBlock } from '@/blocks/Testimonials/Component'
 import { BannerBlock } from '@/blocks/Banner/Component'
 import { AboutBlock } from '@/blocks/About/Component'
 import { TeamBlock } from '@/blocks/TeamBlock/Component'
-import { OurApproachBlock } from './OurApproach/Componenet'
+import { OurApproachBlock } from './OurApproach/Component'
 import { ProcessBlock } from '@/blocks/Process/Component'
 import { UnderConstructionBlock } from '@/blocks/UnderConstruction/Component'
 import { CaseStudyTeaserBlock } from './CaseStudyTeaser'
 import { CoreStackBlock } from '@/blocks/CoreStackBlock'
 import { ApplicationEcosystemBlock } from '@/blocks/ApplicationEcosystemBlock/Component'
+import { PartnersBannerBlock } from '@/blocks/PartnersBanner/Component'
+
 const blockComponents = {
   aboutTeaser: AboutTeaserBlock,
   archive: ArchiveBlock,
@@ -41,6 +43,7 @@ const blockComponents = {
   caseStudyTeaser: CaseStudyTeaserBlock,
   coreStack: CoreStackBlock,
   applicationEcosystem: ApplicationEcosystemBlock,
+  partnersBanner: PartnersBannerBlock,
 }
 
 export const RenderBlocks: React.FC<{

@@ -277,6 +277,7 @@ export interface Page {
     | CaseStudyTeaserBlock
     | CoreStackBlockProps
     | ApplicationEcosystemBlockProps
+    | PartnersBannerBlockProps
   )[];
   meta?: {
     title?: string | null;
@@ -1140,6 +1141,24 @@ export interface ApplicationEcosystemBlockProps {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PartnersBannerBlockProps".
+ */
+export interface PartnersBannerBlockProps {
+  title: string;
+  subtitle?: string | null;
+  cards?:
+    | {
+        image: number | Media;
+        scale?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'partnersBanner';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "teamMembers".
  */
 export interface TeamMember {
@@ -1618,6 +1637,7 @@ export interface PagesSelect<T extends boolean = true> {
         caseStudyTeaser?: T | CaseStudyTeaserBlockSelect<T>;
         coreStack?: T | CoreStackBlockPropsSelect<T>;
         applicationEcosystemBlock?: T | ApplicationEcosystemBlockPropsSelect<T>;
+        partnersBanner?: T | PartnersBannerBlockPropsSelect<T>;
       };
   meta?:
     | T
@@ -1990,6 +2010,23 @@ export interface ApplicationEcosystemBlockPropsSelect<T extends boolean = true> 
               image?: T;
               id?: T;
             };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PartnersBannerBlockProps_select".
+ */
+export interface PartnersBannerBlockPropsSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  cards?:
+    | T
+    | {
+        image?: T;
+        scale?: T;
         id?: T;
       };
   id?: T;

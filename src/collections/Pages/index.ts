@@ -25,6 +25,7 @@ import { TeamBlock } from '../../blocks/TeamBlock/config'
 import { CaseStudyTeaser } from '@/blocks/CaseStudyTeaser'
 import { CoreStack } from '@/blocks/CoreStackBlock'
 import { ApplicationEcosystem } from '@/blocks/ApplicationEcosystemBlock'
+import { PartnersBanner } from '@/blocks/PartnersBanner'
 import {
   MetaDescriptionField,
   MetaImageField,
@@ -106,6 +107,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 CaseStudyTeaser,
                 CoreStack,
                 ApplicationEcosystem,
+                PartnersBanner,
               ],
               required: true,
               admin: {

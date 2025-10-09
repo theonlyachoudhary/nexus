@@ -27,16 +27,32 @@ export const CaseStudyTeaserBlock: React.FC<CaseStudyTeaserBlockProps> = ({
   const [caseStudies, setCaseStudies] = useState<CaseStudy[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [maxHeight, setMaxHeight] = useState<number>(0)
+
+  const cardRefs = React.useRef<(HTMLDivElement | null)[]>([])
+
+  useEffect(() => {
+    // After cards render, measure the largest height
+    if (cardRefs.current.length && caseStudies.length) {
+      let max = 0
+      cardRefs.current.forEach((ref) => {
+        if (ref) {
+          const rect = ref.getBoundingClientRect()
+          if (rect.height > max) max = rect.height
+        }
+      })
+      if (max) setMaxHeight(max)
+    }
+  }, [caseStudies, loading])
 
   useEffect(() => {
     const fetchCaseStudies = async () => {
       try {
         const res = await fetch(
-          '/api/case-studies/1?depth=2&draft=false&locale=undefined&trash=false',
+          '/api/case-studies?depth=2&draft=false&locale=undefined&trash=false',
         )
         if (!res.ok) throw new Error(`Failed: ${res.status} ${res.statusText}`)
         const json = await res.json()
-        // If the API returns a single case study, wrap it in an array
         const docs = Array.isArray(json.docs) ? json.docs : [json]
         setCaseStudies(docs.slice(0, 3))
       } catch (err) {
@@ -70,53 +86,57 @@ export const CaseStudyTeaserBlock: React.FC<CaseStudyTeaserBlockProps> = ({
             transition={{ duration: 0.5, delay: idx * 0.1 }}
             className="flex justify-center"
           >
-            <Card className="p-6 rounded-xl border border-gray-100 bg-brand-neutral/25 flex flex-col max-w-[30rem] justify-between shadow-sm mx-auto">
-              <CardContent className="flex flex-col h-full p-0">
-                <div className="">
-                  <h3 className="font-bold text-primary text-lg mb-1 text-center">{cs.title}</h3>
-                  <p className="font-medium mb-2 text-center">{cs.name}</p>
-                  {/* Summary section below organization name */}
-                  {cs.summary && (
-                    <p className="text-center text-brand-text-secondary mb-3">{cs.summary}</p>
-                  )}
-                  {cs.metrics && cs.metrics.length > 0 && (
-                    <div className="mb-5 flex justify-center">
-                      <div
-                        className={`grid w-full`}
-                        style={{
-                          gridTemplateColumns: `repeat(${Math.min(cs.metrics.length, 3)}, minmax(0, 1fr))`,
-                          justifyContent: cs.metrics.length < 3 ? 'center' : undefined,
-                          maxWidth: '36rem',
-                          gap:
-                            cs.metrics.length === 1
-                              ? '2rem'
-                              : cs.metrics.length === 2
-                                ? '3rem'
-                                : '2.5rem',
-                        }}
-                      >
-                        {cs.metrics.map((m, i) => (
-                          <div
-                            key={i}
-                            className="flex flex-col items-center justify-center min-h-[4.5rem] text-center px-4"
-                          >
-                            <p className="text-lg font-bold text-primary leading-[1.2] whitespace-nowrap">
-                              {m.metric}
-                            </p>
-                            <p className="text-sm whitespace-nowrap">{m.value}</p>
-                          </div>
-                        ))}
+            <div
+              ref={(el) => {
+                cardRefs.current[idx] = el
+              }}
+              style={maxHeight ? { height: maxHeight } : undefined}
+            >
+              <Card className="p-6 rounded-xl border border-gray-100 bg-brand-neutral/25 flex flex-col max-w-[30rem] justify-between shadow-sm mx-auto w-full h-full">
+                <CardContent className="flex flex-col h-full p-0">
+                  <div>
+                    <h3 className="font-bold text-primary text-lg mb-1 text-center">{cs.title}</h3>
+                    <p className="font-medium mb-2 text-center">{cs.name}</p>
+                    {cs.summary && (
+                      <p className="text-center text-brand-text-secondary mb-3">{cs.summary}</p>
+                    )}
+                  </div>
+                  <div className="mt-auto w-full">
+                    {cs.metrics && cs.metrics.length > 0 && (
+                      <div className="mb-5 flex justify-center w-full">
+                        <div
+                          className={`
+              grid w-full py-3
+              ${cs.metrics.length === 1 ? 'grid-cols-1' : ''}
+              ${cs.metrics.length === 2 ? 'grid-cols-2' : ''}
+              ${cs.metrics.length >= 3 ? 'grid-cols-3' : ''}
+              gap-6
+              max-w-3xl
+            `}
+                        >
+                          {cs.metrics.map((m, i) => (
+                            <div
+                              key={i}
+                              className="flex flex-col items-center justify-center text-center px-2 break-words w-full"
+                            >
+                              <span className="text-lg font-bold text-primary leading-tight break-words">
+                                {m.metric}
+                              </span>
+                              <p className="text-sm break-words">{m.value}</p>
+                            </div>
+                          ))}
+                        </div>
                       </div>
+                    )}
+                    <div className="pt-2 flex justify-center">
+                      <Button variant="default" size="sm" asChild>
+                        <Link href="/case-studies">Read Full Case Study</Link>
+                      </Button>
                     </div>
-                  )}
-                </div>
-                <div className="mt-auto pt-2 flex justify-center">
-                  <Button variant="default" size="sm" asChild>
-                    <Link href="/case-studies">Read Full Case Study</Link>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </motion.div>
         ))}
       </div>
