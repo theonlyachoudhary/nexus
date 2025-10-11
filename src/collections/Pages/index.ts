@@ -22,10 +22,11 @@ import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
 import { TeamBlock } from '../../blocks/TeamBlock/config'
-import { CaseStudyTeaser } from '@/blocks/CaseStudyTeaser'
-import { CoreStack } from '@/blocks/CoreStackBlock'
-import { ApplicationEcosystem } from '@/blocks/ApplicationEcosystemBlock'
-import { PartnersBanner } from '@/blocks/PartnersBanner'
+import { CaseStudyTeaser } from '@/blocks/CaseStudyTeaser/config'
+import { CoreStack } from '@/blocks/CoreStackBlock/config'
+import { ApplicationEcosystem } from '@/blocks/ApplicationEcosystemBlock/config'
+import { PartnersBanner } from '@/blocks/PartnersBanner/config'
+import { ServiceSummary } from '@/blocks/ServiceSummary/config'
 import {
   MetaDescriptionField,
   MetaImageField,
@@ -108,6 +109,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 CoreStack,
                 ApplicationEcosystem,
                 PartnersBanner,
+                ServiceSummary,
               ],
               required: true,
               admin: {
