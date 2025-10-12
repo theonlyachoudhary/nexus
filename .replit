@@ -44,3 +44,4 @@ externalPort = 3000
 [deployment]
 run = ["sh", "-c", "npm start"]
 deploymentTarget = "gce"
+build = ["sh", "-c", "npm run build"]
