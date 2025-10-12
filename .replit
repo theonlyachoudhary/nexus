@@ -21,13 +21,13 @@ args = "Server"
 name = "Server"
 author = "agent"
 
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "pnpm run dev"
-waitForPort = 5000
-
 [workflows.workflow.metadata]
 outputType = "webview"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "yes | pnpm run dev"
+waitForPort = 5000
 
 [[ports]]
 localPort = 5000
@@ -42,8 +42,8 @@ localPort = 42075
 externalPort = 3000
 
 [[ports]]
-localPort = 42917
-externalPort = 3002
+localPort = 42751
+externalPort = 3003
 
 [deployment]
 run = ["sh", "-c", "npm start"]
