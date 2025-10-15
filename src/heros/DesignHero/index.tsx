@@ -77,14 +77,9 @@ export const DesignHero: React.FC<Page['hero']> = ({
         </div>
 
         {/* Background SVG - constrained to smaller width and height on large screens */}
-        <motion.div
-          className="hidden lg:block absolute left-0 top-0 w-[60vw] h-[60vh]"
-          initial={{ x: -80, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 1.1, delay: 0.4 }}
-        >
+        <div className="hidden lg:block absolute left-0 top-0 w-[60vw] h-[60vh]">
           <Image src="/hero.svg" alt="" fill className="w-full h-full" draggable={false} priority />
-        </motion.div>
+        </div>
       </div>
 
       {/* Content */}
@@ -102,7 +97,7 @@ export const DesignHero: React.FC<Page['hero']> = ({
               }}
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.2}}
             />
           )}
 
@@ -115,7 +110,7 @@ export const DesignHero: React.FC<Page['hero']> = ({
               }}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.5 }}
+              transition={{ duration: 0.2}}
             >
               {subtitle}
             </motion.h3>
@@ -127,7 +122,7 @@ export const DesignHero: React.FC<Page['hero']> = ({
               className="pt-4 space-y-3"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.8 }}
+              transition={{ duration: 0.2}}
             >
               <Button asChild size="lg" className="font-semibold">
                 <a
