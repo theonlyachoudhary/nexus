@@ -76,7 +76,7 @@ export const CaseStudyTeaserBlock: React.FC<CaseStudyTeaserBlockProps> = ({
         align="center"
         spacing="md"
       />
-      <div className="flex flex-wrap justify-center items-center gap-8 min-h-[20rem]">
+      <div className="flex flex-wrap justify-center items-center gap-8 mx-6 min-h-[20rem]">
         {caseStudies.map((cs, idx) => (
           <motion.div
             key={idx}

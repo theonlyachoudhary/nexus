@@ -178,7 +178,7 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
   const visibleTestimonials = getVisibleTestimonials()
 
   return (
-    <section className={cn('py-24', bgClass)}>
+    <section className={cn('py-12', bgClass)}>
       <SectionHeader heading={heading} subheading={subheading} />
 
       <div className="container my-5">
@@ -225,23 +225,24 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
           </AnimatePresence>
         </div>
 
-        {/* Desktop: 3-card layout with center focus and fade transitions */}
+        {/* Desktop: 3-card layout with center focus and same fade/slide animation as mobile */}
         <div
           className="hidden lg:flex items-center justify-center w-full max-w-7xl gap-8 mx-auto overflow-hidden"
           style={{ minHeight: maxHeight ? `${maxHeight}px` : 'auto' }}
         >
-          <AnimatePresence mode="sync">
+          <AnimatePresence mode="wait">
             {visibleTestimonials.map(({ testimonial, position }) => (
               <motion.div
                 key={`${currentSlide}-${position}`}
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, x: 50 }}
                 animate={{
-                  scale: position === 0 ? 1.05 : 0.95,
                   opacity: position === 0 ? 1 : 0.5,
+                  x: 0,
+                  scale: position === 0 ? 1.05 : 0.95,
                   zIndex: position === 0 ? 2 : 1,
                 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.6, ease: 'easeInOut' }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.5, ease: 'easeInOut' }}
                 className="flex-1 flex justify-center items-center max-w-md"
               >
                 <TestimonialCard testimonial={testimonial} minHeight={maxHeight} />
@@ -249,6 +250,7 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
             ))}
           </AnimatePresence>
         </div>
+
 
         {/* Custom navigation buttons and breadcrumbs */}
         <div className="flex items-center justify-center gap-6 mt-6">
