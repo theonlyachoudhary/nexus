@@ -118,7 +118,7 @@ export const DesignHero: React.FC<Page['hero']> = ({
             <motion.h3
               className="text-black/60 font-medium"
               style={{
-                fontSize: 'clamp(1.125rem, 3vh, 1.75rem)',
+                fontSize: 'clamp(1.125rem, 2vh, 1.75rem)',
               }}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
