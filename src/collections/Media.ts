@@ -37,6 +37,21 @@ export const Media: CollectionConfig = {
         },
       }),
     },
+    {
+      name: 'imageFormatWarning',
+      type: 'ui',
+      admin: {
+        condition: (data) => {
+          return data?.mimeType && !data.mimeType.includes('webp')
+        },
+        components: {
+          Field: {
+            path: '@/components/ImageFormatWarning',
+            exportName: 'ImageFormatWarning',
+          },
+        },
+      },
+    },
   ],
   upload: {
     // Upload to the public/media directory in Next.js making them publicly accessible even outside of Payload
