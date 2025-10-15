@@ -152,6 +152,17 @@ Preferred communication style: Simple, everyday language.
 - Reduced icon sizes for mobile: w-5 h-5 (vs w-6 h-6 on md+)
 - Improved space utilization on small screens while maintaining readability
 
+**October 15, 2025 - Testimonials Carousel Enhancement:**
+- Removed all fixed heights (h-[300px], h-[280px], height: 350px) to prevent content from being cut off
+- Implemented dynamic height calculation: all testimonials rendered invisibly with visibility:hidden to measure natural heights
+- All cards now uniformly sized to match the tallest testimonial card (prevents layout shifts during transitions)
+- Replaced react-slick with custom Framer Motion AnimatePresence carousel for smoother animations
+- Mobile: Single card with fade + horizontal slide transitions (0.5s duration)
+- Desktop: 3-card layout with center card focused (scale 1.05, opacity 1) and side cards faded (scale 0.95, opacity 0.5)
+- Added window resize listener to recalculate heights dynamically for responsive behavior
+- Autoplay starts after measurement completes (5-second intervals)
+- Extracted reusable TestimonialCard component to reduce code duplication
+
 **October 15, 2025 - React Version Alignment Fix:**
 - Fixed React version mismatch causing "Invalid hook call" errors
 - Updated react-dom from "19.1.0" (locked) to "^19.1.0" (caret) in package.json
