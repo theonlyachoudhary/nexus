@@ -88,7 +88,7 @@ Preferred communication style: Simple, everyday language.
 **Core Framework:**
 - **Payload CMS** (v3.55.1): Headless CMS with admin panel
 - **Next.js** (v15.4.4): React framework with App Router
-- **React** (v19.1.0): UI library
+- **React** (v19.2.0): UI library (aligned with react-dom v19.2.0)
 - **PostgreSQL**: Primary database (via `@payloadcms/db-postgres`)
 
 **CMS Plugins:**
@@ -134,6 +134,14 @@ Preferred communication style: Simple, everyday language.
 - **Workflow**: Development server runs with `yes | pnpm run dev` to auto-accept Payload CMS schema push prompts
 
 ## Recent Changes
+
+**October 15, 2025 - React Version Alignment Fix:**
+- Fixed React version mismatch causing "Invalid hook call" errors
+- Updated react-dom from "19.1.0" (locked) to "^19.1.0" (caret) in package.json
+- Both React and react-dom now aligned at version 19.2.0
+- Cleared Next.js build cache and reinstalled dependencies
+- Resolved header and footer rendering issues - components now display AWS database data correctly
+- All hydration errors eliminated
 
 **October 12, 2025 - AWS Database Connection:**
 - Connected to existing AWS PostgreSQL database via `DATABASE_URI` secret
