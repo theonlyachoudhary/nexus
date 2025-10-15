@@ -163,6 +163,13 @@ Preferred communication style: Simple, everyday language.
 - Autoplay starts after measurement completes (5-second intervals)
 - Extracted reusable TestimonialCard component to reduce code duplication
 
+**October 15, 2025 - CoreStackBlock Layout Fix:**
+- Changed from grid layout to flexbox on all screen sizes to properly center single cards
+- Mobile/small screens: Cards use w-[calc(50%-0.5rem)] to maintain 2-per-row layout
+- Medium+ screens: Cards use fixed w-[15rem] width
+- Single cards in a row now automatically center on all screen sizes (especially mobile/tablet)
+- Preserved existing hover effects and styling
+
 **October 15, 2025 - React Version Alignment Fix:**
 - Fixed React version mismatch causing "Invalid hook call" errors
 - Updated react-dom from "19.1.0" (locked) to "^19.1.0" (caret) in package.json
