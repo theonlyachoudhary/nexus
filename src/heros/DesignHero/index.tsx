@@ -100,7 +100,10 @@ export const DesignHero: React.FC<Page['hero']> = ({
           {/* Title */}
           {title && (
             <motion.h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight"
+              className="font-bold text-foreground leading-tight"
+              style={{
+                fontSize: 'clamp(2rem, 6vh, 4rem)',
+              }}
               dangerouslySetInnerHTML={{
                 __html: renderHighlightedTitle(title, wordsToHighlight),
               }}
@@ -113,7 +116,10 @@ export const DesignHero: React.FC<Page['hero']> = ({
           {/* Subtitle */}
           {subtitle && (
             <motion.h3
-              className="text-xl md:text-2xl text-black/60 font-medium"
+              className="text-black/60 font-medium"
+              style={{
+                fontSize: 'clamp(1.125rem, 3vh, 1.75rem)',
+              }}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.5 }}
