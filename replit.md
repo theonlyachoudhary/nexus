@@ -142,6 +142,7 @@ Preferred communication style: Simple, everyday language.
 - Title now scales with clamp(2rem, 6vh, 4rem) based on screen height instead of width breakpoints
 - Subtitle scales with clamp(1.125rem, 3vh, 1.75rem) for improved readability on various screen heights
 - Admin panel now shows helpful notice when uploading JPEG/PNG images suggesting webp conversion
+- Added blur placeholder to DesignHero background image for smoother loading experience (eliminates blank space during image load)
 
 **October 15, 2025 - React Version Alignment Fix:**
 - Fixed React version mismatch causing "Invalid hook call" errors
