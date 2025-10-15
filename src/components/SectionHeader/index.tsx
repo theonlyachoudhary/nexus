@@ -74,7 +74,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
           <p
             className={cn('text-brand-text-secondary leading-relaxed', subheadingClassName)}
             style={{
-              fontSize: 'clamp(1.125rem, 3vh, 1.75rem)',
+              fontSize: 'clamp(1.125rem, 2vh, 1.75rem)',
             }}
           >
             {subheading}
