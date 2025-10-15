@@ -49,18 +49,9 @@ export const DesignHero: React.FC<Page['hero']> = ({
   return (
     <section className="relative h-[60vh]overflow-hidden lg:pt-0 my-0">
       {/* Background Images */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none z-10 overflow-hidden"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-      >
+      <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
         {/* Background PNG - Large screens only */}
-        <motion.div
-          initial={{ scale: 1.1, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.2, delay: 0.2 }}
-        >
+        <div>
           <Image
             src={
               typeof heroImage === 'object' &&
@@ -83,7 +74,7 @@ export const DesignHero: React.FC<Page['hero']> = ({
             placeholder="blur"
             blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZmlsdGVyIGlkPSJibHVyIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI4Ii8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2Y1ZjVmNSIgZmlsdGVyPSJ1cmwoI2JsdXIpIi8+PC9zdmc+"
           />
-        </motion.div>
+        </div>
 
         {/* Background SVG - constrained to smaller width and height on large screens */}
         <motion.div
@@ -94,7 +85,7 @@ export const DesignHero: React.FC<Page['hero']> = ({
         >
           <Image src="/hero.svg" alt="" fill className="w-full h-full" draggable={false} priority />
         </motion.div>
-      </motion.div>
+      </div>
 
       {/* Content */}
       <div className="relative z-20 lg:h-[60vh] lg:w-[50vw] flex items-center justify-center lg:justify-start">
