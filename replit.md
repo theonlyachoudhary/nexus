@@ -135,6 +135,14 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
+**October 15, 2025 - DesignHero Enhancements:**
+- Added image format warning system for non-webp uploads in Media collection
+- Created ImageFormatWarning UI component that displays compression benefits notice
+- Updated DesignHero text sizing to use viewport-height-based fluid typography
+- Title now scales with clamp(2rem, 6vh, 4rem) based on screen height instead of width breakpoints
+- Subtitle scales with clamp(1.125rem, 3vh, 1.75rem) for improved readability on various screen heights
+- Admin panel now shows helpful notice when uploading JPEG/PNG images suggesting webp conversion
+
 **October 15, 2025 - React Version Alignment Fix:**
 - Fixed React version mismatch causing "Invalid hook call" errors
 - Updated react-dom from "19.1.0" (locked) to "^19.1.0" (caret) in package.json
