@@ -144,6 +144,7 @@ Preferred communication style: Simple, everyday language.
 - Admin panel now shows helpful notice when uploading JPEG/PNG images suggesting webp conversion
 - Added blur placeholder to DesignHero background image for smoother loading experience (eliminates blank space during image load)
 - Removed all animations from background image for instant display (SVG overlay animation preserved)
+- Applied same viewport-height-based text scaling to SectionHeader component for consistent responsive behavior across all headings
 
 **October 15, 2025 - React Version Alignment Fix:**
 - Fixed React version mismatch causing "Invalid hook call" errors
