@@ -89,20 +89,36 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
 const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
   const { isEnabled: draft } = await draftMode()
 
-  const payload = await getPayload({ config: configPromise })
+  try {
+    const payload = await getPayload({ config: configPromise })
 
-  const result = await payload.find({
-    collection: 'pages',
-    draft,
-    limit: 1,
-    pagination: false,
-    overrideAccess: draft,
-    where: {
-      slug: {
-        equals: slug,
+    const result = await payload.find({
+      collection: 'pages',
+      draft,
+      limit: 1,
+      pagination: false,
+      overrideAccess: draft,
+      where: {
+        slug: {
+          equals: slug,
+        },
       },
-    },
-  })
+    })
 
-  return result.docs?.[0] || null
+    return result.docs?.[0] || null
+  } catch (err: unknown) {
+    // During static builds or environments without the DB/migrations applied,
+    // Payload queries can throw Postgres errors (eg. missing tables). Rather than
+    // crashing the Next.js export, treat the page as not-found and continue the
+    // build. Log the error for debugging.
+    let message: string
+    if (err && typeof err === 'object' && 'message' in err) {
+      const m = (err as { message?: unknown }).message
+      message = typeof m === 'string' ? m : String(m)
+    } else {
+      message = String(err)
+    }
+    console.warn('queryPageBySlug: failed to fetch page from Payload:', message)
+    return null
+  }
 })
