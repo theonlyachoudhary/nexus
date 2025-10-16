@@ -1,0 +1,46 @@
+Recoverable Error
+
+Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+See more info here: https://nextjs.org/docs/messages/react-hydration-error
+
+  ...
+    <RenderFromTemplateContext>
+      <ScrollAndFocusHandler segmentPath={[...]}>
+        <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+          <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+            <LoadingBoundary loading={null}>
+              <HTTPAccessFallbackBoundary notFound={[...]} forbidden={undefined} unauthorized={undefined}>
+                <HTTPAccessFallbackErrorBoundary pathname="/admin" notFound={[...]} forbidden={undefined} ...>
+                  <RedirectBoundary>
+                    <RedirectErrorBoundary router={{...}}>
+                      <InnerLayoutRouter url="/admin" tree={[...]} cacheNode={{lazyData:null, ...}} segmentPath={[...]}>
+                        <link>
+                        <Layout>
+                          <RootLayout>
+                            <html data-theme="light" dir="LTR" lang="en" suppressHydrationWarning={false}>
+                              <head>
++                               <style>
+-                               <script
+-                                 src="/__replco/static/devtools/injected.js"
+-                                 onerror={"parent.postMessage({event:'error',payload:'script.onerror: Failed to load..."}
+-                               >
+                              ...
+
+src/app/(payload)/layout.tsx (26:3) @ Layout
+
+  24 |
+  25 | const Layout = ({ children }: Args) => (
+> 26 |   <RootLayout config={config} importMap={importMap} serverFunction={serverFunction}>
+     |   ^
+  27 |     {children}
+  28 |   </RootLayout>
+  29 | )

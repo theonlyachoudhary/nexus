@@ -36,6 +36,21 @@ export const Media: CollectionConfig = {
         },
       }),
     },
+    {
+      name: 'imageFormatWarning',
+      type: 'ui',
+      admin: {
+        condition: (data) => {
+          return data?.mimeType && !data.mimeType.includes('webp')
+        },
+        components: {
+          Field: {
+            path: '@/components/ImageFormatWarning',
+            exportName: 'ImageFormatWarning',
+          },
+        },
+      },
+    },
   ],
   upload: {
     adminThumbnail: 'thumbnail',
