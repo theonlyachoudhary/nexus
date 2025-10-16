@@ -15,6 +15,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 interface HeaderClientProps {
   data: Header
+  vertical?: boolean
 }
 
 export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
