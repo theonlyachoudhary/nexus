@@ -14,6 +14,11 @@ const solutionsFields: Field[] = [
     defaultValue:
       'Explore our range of solutions designed to streamline your operations and drive success.',
   },
+  {
+    name: 'summarized',
+    type: 'checkbox',
+    defaultValue: false
+  }
 ]
 
 export const SolutionsBlock: Block = {

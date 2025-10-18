@@ -887,6 +887,7 @@ export interface CTASectionBlock {
 export interface SolutionsBlock {
   heading: string;
   subheading: string;
+  summarized?: boolean | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'solutions';
@@ -1802,6 +1803,7 @@ export interface CTASectionBlockSelect<T extends boolean = true> {
 export interface SolutionsBlockSelect<T extends boolean = true> {
   heading?: T;
   subheading?: T;
+  summarized?: T;
   id?: T;
   blockName?: T;
 }
