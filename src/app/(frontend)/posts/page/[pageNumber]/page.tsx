@@ -3,11 +3,14 @@ import type { Metadata } from 'next/types'
 import { CollectionArchive } from '@/components/CollectionArchive'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
-import configPromise from '@payload-config'
-import { getPayload } from 'payload'
+// import configPromise from '@payload-config' // Disabled for static export
+// import { getPayload } from 'payload' // Disabled for static export
 import React from 'react'
 import PageClient from './page.client'
 import { notFound } from 'next/navigation'
+
+import { getPayload } from 'payload'
+import configPromise from '@payload-config'
 
 export const revalidate = 600
 
@@ -19,19 +22,19 @@ type Args = {
 
 export default async function Page({ params: paramsPromise }: Args) {
   const { pageNumber } = await paramsPromise
-  const payload = await getPayload({ config: configPromise })
 
   const sanitizedPageNumber = Number(pageNumber)
 
   if (!Number.isInteger(sanitizedPageNumber)) notFound()
 
-  const posts = await payload.find({
-    collection: 'posts',
-    depth: 1,
-    limit: 12,
+  // For static export, return empty posts array
+  // In a real static site, you would return pre-fetched data here
+  const posts = {
+    docs: [],
+    totalDocs: 0,
     page: sanitizedPageNumber,
-    overrideAccess: false,
-  })
+    totalPages: 1,
+  }
 
   return (
     <div className="pt-24 pb-24">

@@ -42,7 +42,8 @@ export const SeedButton: React.FC = () => {
         toast.promise(
           new Promise((resolve, reject) => {
             try {
-              fetch('/next/seed', { method: 'POST', credentials: 'include' })
+              // Seed functionality removed for static export
+              Promise.resolve({ ok: false, status: 404 })
                 .then((res) => {
                   if (res.ok) {
                     resolve(true)

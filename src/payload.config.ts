@@ -1,5 +1,6 @@
 // storage-adapter-import-placeholder
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { s3Storage } from '@payloadcms/storage-s3'
 
 import sharp from 'sharp' // sharp-import
 import path from 'path'
@@ -38,28 +39,6 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     user: Users.slug,
-    livePreview: {
-      breakpoints: [
-        {
-          label: 'Mobile',
-          name: 'mobile',
-          width: 375,
-          height: 667,
-        },
-        {
-          label: 'Tablet',
-          name: 'tablet',
-          width: 768,
-          height: 1024,
-        },
-        {
-          label: 'Desktop',
-          name: 'desktop',
-          width: 1440,
-          height: 900,
-        },
-      ],
-    },
   },
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
@@ -84,6 +63,32 @@ export default buildConfig({
   plugins: [
     ...plugins,
     // storage-adapter-placeholder
+    s3Storage({
+      collections: {
+        media: true,
+      },
+      bucket:
+        process.env.S3_BUCKET ??
+        (() => {
+          throw new Error('S3_BUCKET environment variable is not set')
+        })(),
+      config: {
+        credentials: {
+          accessKeyId:
+            process.env.S3_ACCESS_KEY_ID ??
+            (() => {
+              throw new Error('S3_ACCESS_KEY_ID environment variable is not set')
+            })(),
+          secretAccessKey:
+            process.env.S3_SECRET_ACCESS_KEY ??
+            (() => {
+              throw new Error('S3_SECRET_ACCESS_KEY environment variable is not set')
+            })(),
+        },
+        region: process.env.S3_REGION,
+        endpoint: process.env.S3_ENDPOINT,
+      },
+    }),
   ],
   secret: process.env.PAYLOAD_SECRET,
   sharp,
