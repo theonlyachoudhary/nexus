@@ -1,18 +1,38 @@
 import type { Metadata } from 'next'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
-// import configPromise from '@payload-config' // Disabled for static export
-import type { RequiredDataFromCollectionSlug } from 'payload'
+import configPromise from '@payload-config'
+import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
+import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 import { homeStatic } from '@/endpoints/seed/home-static'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
+import { LivePreviewListener } from '@/components/LivePreviewListener'
 
 export async function generateStaticParams() {
-  // For static export, return empty array - pages will be generated at build time
-  // In a real static site, you would pre-generate all page slugs here
-  return []
+  const payload = await getPayload({ config: configPromise })
+  const pages = await payload.find({
+    collection: 'pages',
+    draft: false,
+    limit: 1000,
+    overrideAccess: false,
+    pagination: false,
+    select: {
+      slug: true,
+    },
+  })
+
+  const params = pages.docs
+    ?.filter((doc) => {
+      return doc.slug !== 'home'
+    })
+    .map(({ slug }) => {
+      return { slug }
+    })
+
+  return params
 }
 
 type Args = {
@@ -22,6 +42,7 @@ type Args = {
 }
 
 export default async function Page({ params: paramsPromise }: Args) {
+  const { isEnabled: draft } = await draftMode()
   const { slug = 'home' } = await paramsPromise
   const url = '/' + slug
 
@@ -48,6 +69,8 @@ export default async function Page({ params: paramsPromise }: Args) {
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
 
+      {draft && <LivePreviewListener />}
+
       <RenderHero {...hero} />
       <RenderBlocks blocks={layout} />
     </article>
@@ -64,8 +87,22 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
 }
 
 const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
-  // For static export, return null - pages will be pre-generated
-  // In a real static site, you would return pre-fetched data here
-  console.warn('queryPageBySlug: static export mode - no database access')
-  return null
+  const { isEnabled: draft } = await draftMode()
+
+  const payload = await getPayload({ config: configPromise })
+
+  const result = await payload.find({
+    collection: 'pages',
+    draft,
+    limit: 1,
+    pagination: false,
+    overrideAccess: draft,
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
+  })
+
+  return result.docs?.[0] || null
 })

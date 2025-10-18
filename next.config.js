@@ -1,4 +1,8 @@
-const NEXT_PUBLIC_SERVER_URL =
+import { withPayload } from '@payloadcms/next/withPayload'
+
+import redirects from './redirects.js'
+
+const NEXT_PUBLIC_SERVER_URL = 
   process.env.NEXT_PUBLIC_SERVER_URL ||
   (process.env.REPL_SLUG && process.env.REPL_OWNER
     ? `https://${process.env.REPL_SLUG}.${process.env.REPL_OWNER}.repl.co`
@@ -6,9 +10,8 @@ const NEXT_PUBLIC_SERVER_URL =
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
   images: {
-    unoptimized: true,
+    unoptimized: process.env.NEXT_IMAGE_UNOPTIMIZED === 'true',
     remotePatterns: [
       ...[NEXT_PUBLIC_SERVER_URL /* 'https://example.com' */].map((item) => {
         const url = new URL(item)
@@ -30,6 +33,7 @@ const nextConfig = {
     return webpackConfig
   },
   reactStrictMode: true,
+  redirects,
 }
 
-export default nextConfig
+export default withPayload(nextConfig, { devBundleServerPackages: false })

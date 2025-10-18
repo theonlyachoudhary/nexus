@@ -71,9 +71,10 @@ export const AdminBar: React.FC<{
           logo={<Title />}
           onAuthChange={onAuthChange}
           onPreviewExit={() => {
-            // Exit preview functionality removed for static export
-            router.push('/')
-            router.refresh()
+            fetch('/next/exit-preview').then(() => {
+              router.push('/')
+              router.refresh()
+            })
           }}
           style={{
             backgroundColor: 'transparent',
