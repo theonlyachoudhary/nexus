@@ -83,7 +83,7 @@ export const DesignHero: React.FC<Page['hero']> = ({
       </div>
 
       {/* Content */}
-      <div className="relative z-20 lg:h-[60vh] lg:w-[50vw] flex items-center justify-center lg:justify-start">
+      <div className="ml-[3rem] relative z-20 lg:h-[60vh] lg:w-[50vw] flex items-center justify-center lg:justify-start">
         <div className="mx-auto p-24 px-[10%] lg:pl-[5%] lg:pr-[15%] lg:w-[70rem] space-y-6 text-center md:text-center lg:text-left">
           {/* Title */}
           {title && (
