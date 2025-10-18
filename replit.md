@@ -4,7 +4,10 @@ This is a **Payload CMS-powered website template** built with Next.js 15, design
 
 The template is production-ready with features like draft previews, live previews, SEO optimization, form building, search functionality, and scheduled publishing.
 
-**Deployment Status:** Successfully migrated from Vercel to Replit on October 11, 2025. The application runs on port 5000 and connects to an existing AWS PostgreSQL database.
+**Deployment Status:** 
+- Successfully migrated from Vercel to Replit on October 11, 2025
+- Application runs on port 5000 and connects to an existing AWS PostgreSQL database
+- Configured for Autoscale deployment (October 15, 2025) with dynamic rendering for all CMS-driven pages
 
 # User Preferences
 
@@ -169,6 +172,15 @@ Preferred communication style: Simple, everyday language.
 - Medium+ screens: Cards use fixed w-[15rem] width
 - Single cards in a row now automatically center on all screen sizes (especially mobile/tablet)
 - Preserved existing hover effects and styling
+
+**October 15, 2025 - Autoscale Deployment Configuration:**
+- Configured deployment type as Autoscale (not static) for Payload CMS functionality
+- Build command: `pnpm build`
+- Run command: `pnpm start`
+- Converted all dynamic pages to force-dynamic rendering to prevent database access during build
+- Removed `generateStaticParams()` from page routes (pages now render dynamically at request time)
+- Pages configured for dynamic rendering: home/[slug], posts/[slug], posts pagination
+- This ensures deployment builds complete successfully without requiring database access during static generation
 
 **October 15, 2025 - React Version Alignment Fix:**
 - Fixed React version mismatch causing "Invalid hook call" errors
