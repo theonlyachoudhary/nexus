@@ -210,7 +210,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
                 </div>
 
                 <div className="flex flex-col gap-0">
-                  <HeaderNav data={data} vertical />
+                  <HeaderNav data={data} />
 
                   {/* Mobile CTA */}
                   {cta?.text && (

@@ -22,10 +22,11 @@ import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
 import { TeamBlock } from '../../blocks/TeamBlock/config'
-import { CaseStudyTeaser } from '@/blocks/CaseStudyTeaser'
-import { CoreStack } from '@/blocks/CoreStackBlock'
-import { ApplicationEcosystem } from '@/blocks/ApplicationEcosystemBlock'
-import { PartnersBanner } from '@/blocks/PartnersBanner'
+import { CaseStudyTeaser } from '@/blocks/CaseStudyTeaser/config'
+import { CoreStack } from '@/blocks/CoreStackBlock/config'
+import { ApplicationEcosystem } from '@/blocks/ApplicationEcosystemBlock/config'
+import { PartnersBanner } from '@/blocks/PartnersBanner/config'
+import { ServiceSummary } from '@/blocks/ServiceSummary/config'
 import {
   MetaDescriptionField,
   MetaImageField,
@@ -51,23 +52,6 @@ export const Pages: CollectionConfig<'pages'> = {
   },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
-    livePreview: {
-      url: ({ data, req }) => {
-        const path = generatePreviewPath({
-          slug: typeof data?.slug === 'string' ? data.slug : '',
-          collection: 'pages',
-          req,
-        })
-
-        return path
-      },
-    },
-    preview: (data, { req }) =>
-      generatePreviewPath({
-        slug: typeof data?.slug === 'string' ? data.slug : '',
-        collection: 'pages',
-        req,
-      }),
     useAsTitle: 'title',
   },
   fields: [
@@ -108,6 +92,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 CoreStack,
                 ApplicationEcosystem,
                 PartnersBanner,
+                ServiceSummary,
               ],
               required: true,
               admin: {
@@ -162,9 +147,6 @@ export const Pages: CollectionConfig<'pages'> = {
   },
   versions: {
     drafts: {
-      autosave: {
-        interval: 100, // We set this interval for optimal live preview
-      },
       schedulePublish: true,
     },
     maxPerDoc: 50,
