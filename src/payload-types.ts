@@ -278,6 +278,7 @@ export interface Page {
     | CoreStackBlockProps
     | ApplicationEcosystemBlockProps
     | PartnersBannerBlockProps
+    | ServiceSummaryBlockProps
   )[];
   meta?: {
     title?: string | null;
@@ -1159,6 +1160,25 @@ export interface PartnersBannerBlockProps {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServiceSummaryBlockProps".
+ */
+export interface ServiceSummaryBlockProps {
+  title: string;
+  subtitle?: string | null;
+  cards?:
+    | {
+        title: string;
+        description: string;
+        icon: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'serviceSummary';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "teamMembers".
  */
 export interface TeamMember {
@@ -1638,6 +1658,7 @@ export interface PagesSelect<T extends boolean = true> {
         coreStack?: T | CoreStackBlockPropsSelect<T>;
         applicationEcosystemBlock?: T | ApplicationEcosystemBlockPropsSelect<T>;
         partnersBanner?: T | PartnersBannerBlockPropsSelect<T>;
+        serviceSummary?: T | ServiceSummaryBlockPropsSelect<T>;
       };
   meta?:
     | T
@@ -2027,6 +2048,24 @@ export interface PartnersBannerBlockPropsSelect<T extends boolean = true> {
     | {
         image?: T;
         scale?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServiceSummaryBlockProps_select".
+ */
+export interface ServiceSummaryBlockPropsSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  cards?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        icon?: T;
         id?: T;
       };
   id?: T;

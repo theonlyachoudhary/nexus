@@ -22,6 +22,7 @@ import { CaseStudyTeaserBlock } from './CaseStudyTeaser'
 import { CoreStackBlock } from '@/blocks/CoreStackBlock'
 import { ApplicationEcosystemBlock } from '@/blocks/ApplicationEcosystemBlock/Component'
 import { PartnersBannerBlock } from '@/blocks/PartnersBanner/Component'
+import { ServiceSummaryBlock } from '@/blocks/ServiceSummary/Component'
 
 const blockComponents = {
   aboutTeaser: AboutTeaserBlock,
@@ -44,6 +45,7 @@ const blockComponents = {
   coreStack: CoreStackBlock,
   applicationEcosystem: ApplicationEcosystemBlock,
   partnersBanner: PartnersBannerBlock,
+  serviceSummary: ServiceSummaryBlock
 }
 
 export const RenderBlocks: React.FC<{
