@@ -124,10 +124,10 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
           {/* Center: Navigation - hidden on small screens */}
           <nav
             aria-label="Primary"
-            className="hidden md:flex md:items-center md:justify-center md:flex-1"
+            className="hidden md:flex items-center justify-center md:flex-1"
           >
-            <div className="w-full max-w-3xl">
-              <HeaderNav data={data} className="flex flex-row gap-6" />
+            <div className="w-full max-w-3xl mx-auto">
+              <HeaderNav data={data} className="flex flex-row gap-6 items-center justify-center" />
             </div>
           </nav>
 
