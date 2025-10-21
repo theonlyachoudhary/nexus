@@ -35,14 +35,18 @@ const TestimonialCard: React.FC<{
       className="p-6 hover:shadow-xl transition-shadow bg-brand-neutral/25 rounded-xl border border-gray-100 flex flex-col w-full"
       style={{ minHeight: minHeight ? `${minHeight}px` : 'auto' }}
     >
-      <CardContent className="flex flex-col h-full p-0">
-        <div className="relative mb-4 flex-grow">
+      {/* Make CardContent a full-height column so footer can be pushed to the bottom */}
+      <CardContent className="flex flex-col flex-1 p-0">
+        {/* Content area grows to fill available space */}
+        <div className="relative mb-4 flex-1">
           <FaQuoteLeft
             className="text-4xl text-brand-primary absolute -top-4 -left-2 opacity-30"
             aria-hidden="true"
           />
           <p className="leading-relaxed italic pl-8">{testimonial?.testimonial || ''}</p>
         </div>
+
+        {/* Footer is pushed to the bottom with mt-auto (and kept visually separated) */}
         <div className="border-t pt-4 mt-auto">
           <p className="font-semibold text-brand-primary">{testimonial?.name || ''}</p>
           <p className="text-sm font-medium">
@@ -55,6 +59,7 @@ const TestimonialCard: React.FC<{
     </Card>
   )
 }
+
 
 export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
   heading = 'See Proven Results',

@@ -34,9 +34,6 @@ export const CTASectionBlock: React.FC<CTASectionProps> = ({
             <SectionHeader
               heading={heading}
               subheading={subheading}
-              containerClassName="max-w-7xl sm:px-6 lg:px-8"
-              headingClassName="text-4xl md:text-5xl font-semibold"
-              subheadingClassName="text-xl subtitle text-brand-text-secondary"
             />
 
             <div className="grid grid-cols-2 sm:grid-cols-2 gap-6">

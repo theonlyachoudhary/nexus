@@ -209,12 +209,14 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
                   </button>
                 </div>
 
-                <div className="flex flex-col gap-0">
-                  <HeaderNav data={data} />
+                {/* Make nav items stack vertically on mobile: */}
+                <div className="flex flex-col gap-4">
+                  {/* Pass a column class to HeaderNav; it forwards className in your project */}
+                  <HeaderNav data={data} className="flex flex-col gap-4 w-full" />
 
-                  {/* Mobile CTA */}
+                  {/* Mobile CTA (full width) */}
                   {cta?.text && (
-                    <div className="mt-4">
+                    <div className="mt-2 w-full">
                       <Button
                         size="lg"
                         asChild
@@ -234,12 +236,11 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
                     </div>
                   )}
 
-                  <div className="mt-4 text-sm text-center text-muted-foreground">
-                    <Link href="/privacy" onClick={() => setMenuOpen(false)}>
+                  <div className="mt-4 text-sm text-center text-muted-foreground flex flex-col items-center gap-2">
+                    <Link href="/privacy" onClick={() => setMenuOpen(false)} className="w-full text-center">
                       Privacy
                     </Link>
-                    <span className="mx-2">·</span>
-                    <Link href="/terms" onClick={() => setMenuOpen(false)}>
+                    <Link href="/terms" onClick={() => setMenuOpen(false)} className="w-full text-center">
                       Terms
                     </Link>
                   </div>
