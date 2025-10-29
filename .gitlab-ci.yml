@@ -28,7 +28,8 @@ build-and-push:
   script:
     - echo "Building image: $IMAGE"
     # Build with optional build-time args for SSG (provide BUILD_DATABASE_URL and BUILD_PAYLOAD_SECRET as CI variables if needed)
-    - docker build --progress=plain \
+    - |
+      docker build --progress=plain \
         ${BUILD_DATABASE_URL:+--build-arg DATABASE_URL="$BUILD_DATABASE_URL"} \
         ${BUILD_PAYLOAD_SECRET:+--build-arg PAYLOAD_SECRET="$BUILD_PAYLOAD_SECRET"} \
         -t "$IMAGE" .
