@@ -1,3 +1,68 @@
+# GitLab CI pipeline: build Docker image and push to GitLab Container Registry
+# Protect BUILD_DATABASE_URL and BUILD_PAYLOAD_SECRET in GitLab CI variables (protected, masked)
+stages:
+  - build
+  - deploy
+
+variables:
+  # This will tag the image with branch name (or tag when using CI_COMMIT_TAG)
+  IMAGE: "$CI_REGISTRY_IMAGE:${CI_COMMIT_REF_SLUG:-latest}"
+
+build-and-push:
+  image: docker:24.0.0
+  services:
+    - docker:dind
+  stage: build
+  only:
+    - main
+    - /^release\/.*$/
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+  script:
+    - echo "Building image: $IMAGE"
+    # Use build args to allow the build to access a DB and PAYLOAD_SECRET if needed for SSG
+    - docker build --progress=plain \
+        --build-arg DATABASE_URL="$BUILD_DATABASE_URL" \
+        --build-arg PAYLOAD_SECRET="$BUILD_PAYLOAD_SECRET" \
+        -t "$IMAGE" .
+    - docker push "$IMAGE"
+  tags:
+    - docker
+
+deploy-to-vps:
+  image: alpine:3.19
+  stage: deploy
+  only:
+    - main
+  needs:
+    - build-and-push
+  before_script:
+    - apk add --no-cache openssh-client bash
+    # configure SSH key from CI variable DEPLOY_SSH_PRIVATE_KEY
+    - mkdir -p ~/.ssh
+    - echo "$DEPLOY_SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - if [ -n "${DEPLOY_SSH_PORT:-}" ]; then export SSH_PORT_ARG="-p $DEPLOY_SSH_PORT"; fi
+    - touch ~/.ssh/known_hosts
+    - ssh-keyscan -H "$DEPLOY_SSH_HOST" >> ~/.ssh/known_hosts || true
+  script:
+    - echo "Deploying image $IMAGE to $DEPLOY_SSH_USER@$DEPLOY_SSH_HOST"
+    - ssh $SSH_PORT_ARG -o StrictHostKeyChecking=yes "$DEPLOY_SSH_USER@$DEPLOY_SSH_HOST" <<'SSH'
+      set -e
+      cd ${DEPLOY_PATH:-/srv/nexus} || exit 1
+      # login to registry on the VPS (CI_REGISTRY_USER and CI_REGISTRY_PASSWORD are available in job env)
+      docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+      docker pull "$IMAGE"
+      IMAGE="$IMAGE" docker compose -f docker-compose.production.yml pull || true
+      IMAGE="$IMAGE" docker compose -f docker-compose.production.yml up -d
+      docker system prune -f --filter "until=24h"
+    SSH
+  environment:
+    name: production
+    url: https://$DEPLOY_SSH_HOST
+  when: manual
+  tags:
+    - docker
 stages:
   - build
   - deploy

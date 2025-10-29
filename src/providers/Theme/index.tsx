@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, use } from 'react'
+import React, { createContext, useContext } from 'react'
 
 import type { ThemeContextType } from './types'
 
@@ -17,7 +17,9 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     document.documentElement.setAttribute('data-theme', 'light')
   }, [])
   const setTheme = React.useCallback(() => {}, [])
-  return <ThemeContext value={{ setTheme, theme: 'light' }}>{children}</ThemeContext>
+  return (
+    <ThemeContext.Provider value={{ setTheme, theme: 'light' }}>{children}</ThemeContext.Provider>
+  )
 }
 
-export const useTheme = (): ThemeContextType => use(ThemeContext)
+export const useTheme = (): ThemeContextType => useContext(ThemeContext)
