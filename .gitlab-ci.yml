@@ -15,9 +15,12 @@ variables:
 
 build-and-push:
   image: docker:24.0.0
+  privileged: true
   services:
     - name: docker:24.0.0-dind
       alias: docker
+  variables:
+    SKIP_PAYLOAD_DURING_BUILD: "1"
   stage: build
   only:
     - main

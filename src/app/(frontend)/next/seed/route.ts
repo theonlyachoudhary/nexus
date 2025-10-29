@@ -1,4 +1,5 @@
-import { createLocalReq, getPayload } from 'payload'
+import { createLocalReq } from 'payload'
+import { getPayload } from '@/utilities/safePayload'
 import { seed } from '@/endpoints/seed'
 import config from '@payload-config'
 import { headers } from 'next/headers'

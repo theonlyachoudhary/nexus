@@ -1,5 +1,5 @@
 import { getServerSideSitemap } from 'next-sitemap'
-import { getPayload } from 'payload'
+import { getPayload } from '@/utilities/safePayload'
 import config from '@payload-config'
 import { unstable_cache } from 'next/cache'
 
