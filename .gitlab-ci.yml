@@ -1,0 +1,30 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  DOCKER_HOST: "unix:///var/run/docker.sock"
+
+build:
+  stage: build
+  tags:
+    - deployer
+  script:
+    - echo "Building docker image on runner host (optional)"
+    - docker build -t myorg/site1:$CI_COMMIT_SHORT_SHA .
+    - docker tag myorg/site1:$CI_COMMIT_SHORT_SHA myorg/site1:latest
+    # optional: push to registry if you use one
+
+deploy:
+  stage: deploy
+  tags:
+    - deployer
+  script:
+    - echo "Deploying to /srv/apps/site1"
+    - cd /srv/apps/site1
+    # If you build images in CI, you might push images and then:
+    - docker-compose pull || true
+    - docker-compose up -d --remove-orphans
+    - docker-compose ps
+  only:
+    - main
