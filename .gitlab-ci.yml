@@ -58,7 +58,8 @@ deploy-to-vps:
     - ssh-keyscan -H "$DEPLOY_SSH_HOST" >> ~/.ssh/known_hosts || true
   script:
     - echo "Deploying image $IMAGE to $DEPLOY_SSH_USER@$DEPLOY_SSH_HOST"
-    - ssh $SSH_PORT_ARG -o StrictHostKeyChecking=yes "$DEPLOY_SSH_USER@$DEPLOY_SSH_HOST" <<'SSH'
+    - |
+      ssh $SSH_PORT_ARG -o StrictHostKeyChecking=yes "$DEPLOY_SSH_USER@$DEPLOY_SSH_HOST" <<'SSH'
       set -e
       cd ${DEPLOY_PATH:-/srv/nexus} || exit 1
       # login to registry on the VPS (CI_REGISTRY_USER and CI_REGISTRY_PASSWORD are available in job env)
@@ -67,7 +68,7 @@ deploy-to-vps:
       IMAGE="$IMAGE" docker compose -f docker-compose.production.yml pull || true
       IMAGE="$IMAGE" docker compose -f docker-compose.production.yml up -d
       docker system prune -f --filter "until=24h"
-    SSH
+      SSH
   environment:
     name: production
     url: https://$DEPLOY_SSH_HOST
