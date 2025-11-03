@@ -53,12 +53,12 @@ export const AboutBlock: React.FC<AboutBlockProps> = ({
   const coreValuesHeadingToRender = coreValuesHeading || 'Our Core Values'
 
   return (
-    <section className="pb-12 bg-white">
+    <section className="my-12 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 mb-16">
           {missionCardsToRender.map(
             (card: { heading: string; text: string; color?: string }, idx: number) => (
-              <Card key={idx} className="p-8 bg-brand-neutral/25 border-gray-200">
+              <Card key={idx} className="px-4 py-8 bg-brand-neutral/25 border-gray-200">
                 <CardContent className="space-y-6">
                   <div className="flex items-center gap-4 mb-6">
                     <div
@@ -79,23 +79,34 @@ export const AboutBlock: React.FC<AboutBlockProps> = ({
         </div>
 
         <div className="rounded-lg p-5 pt-0">
-          <h3 className="text-2xl font-bold text-center text-foreground mb-8">
+          <h3 className="text-xl md:text-2xl font-bold text-center text-foreground mb-6 md:mb-8">
             {coreValuesHeadingToRender}
           </h3>
-          <div className="grid md:grid-cols-5 gap-6">
+
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
             {coreValuesToRender.map((value: { text: string; color?: string }, idx: number) => (
-              <div key={idx} className="text-center space-y-3">
+              <div key={idx} className="text-center space-y-2 md:space-y-3">
+                {/* Outer circle */}
                 <div
-                  className="w-16 h-16 rounded-full flex items-center justify-center mx-auto"
+                  className="flex items-center justify-center mx-auto rounded-full aspect-square
+                             w-10 md:w-16 shrink-0"
                   style={{ backgroundColor: value.color || brandPrimary }}
                 >
-                  <div className="w-8 h-8 bg-white rounded-full"></div>
+                  {/* Inner circle */}
+                  <div className="bg-white rounded-full aspect-square w-5 md:w-8 shrink-0"></div>
                 </div>
-                <h4 className="text-black/70">{value.text}</h4>
+
+                <h4 className="text-sm md:text-base text-black/70 leading-tight md:leading-normal">
+                  {value.text}
+                </h4>
               </div>
             ))}
           </div>
         </div>
+
+
+
+
       </div>
     </section>
   )

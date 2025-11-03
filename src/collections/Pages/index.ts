@@ -26,6 +26,7 @@ import { CaseStudyTeaser } from '@/blocks/CaseStudyTeaser'
 import { CoreStack } from '@/blocks/CoreStackBlock'
 import { ApplicationEcosystem } from '@/blocks/ApplicationEcosystemBlock'
 import { PartnersBanner } from '@/blocks/PartnersBanner'
+import { ServiceSummary } from '@/blocks/ServiceSummary'
 import {
   MetaDescriptionField,
   MetaImageField,
@@ -108,6 +109,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 CoreStack,
                 ApplicationEcosystem,
                 PartnersBanner,
+                ServiceSummary
               ],
               required: true,
               admin: {

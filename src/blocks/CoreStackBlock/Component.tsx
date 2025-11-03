@@ -18,7 +18,6 @@ export const CoreStackBlock: React.FC<CoreStackBlockProps> = ({ title, subtitle,
   return (
     <section className="py-12">
       <div className="px-4 w-full">
-        {/* SectionHeader on the left with margin, cards always below */}
         <div className="mb-8 flex">
           <SectionHeader
             heading={title ?? ''}
@@ -28,14 +27,17 @@ export const CoreStackBlock: React.FC<CoreStackBlockProps> = ({ title, subtitle,
             containerClassName="w-full ml-0"
           />
         </div>
-        <div className="flex flex-wrap justify-center items-center gap-8">
+
+        <div className="flex flex-wrap justify-center gap-4 md:gap-8">
           {cards.map((card, idx) => (
             <Card
               key={idx}
-              className="bg-white shadow-lg flex flex-col items-center justify-between transition-shadow duration-300 hover:shadow-[0_0_24px_4px_theme(colors.primary.DEFAULT)]"
+              className="
+                bg-white shadow-lg flex flex-col items-center justify-between
+                transition-shadow duration-300 hover:shadow-[0_0_24px_4px_theme(colors.primary.DEFAULT)]
+                w-[calc(50%-0.5rem)] md:w-[15rem]
+              "
               style={{
-                width: '15rem',
-                height: '15rem',
                 border: 'none',
                 borderRadius: '0.75rem',
                 overflow: 'hidden',
@@ -56,7 +58,7 @@ export const CoreStackBlock: React.FC<CoreStackBlockProps> = ({ title, subtitle,
                   'url' in card.image &&
                   (() => {
                     const scale = card.scale ?? 1
-                    const baseSize = 6 // 6rem default
+                    const baseSize = 6
                     const sizeRem = baseSize * scale
 
                     return (
@@ -84,12 +86,7 @@ export const CoreStackBlock: React.FC<CoreStackBlockProps> = ({ title, subtitle,
                   })()}
               </div>
               <CardContent
-                className="flex flex-col items-start pb-2 px-4"
-                style={{
-                  height: '25%',
-                  width: '100%',
-                  justifyContent: 'flex-start',
-                }}
+                className="flex flex-col items-start pb-2 px-4 flex-start"
               >
                 {card.summary && <p className="text-center w-full">{card.summary}</p>}
               </CardContent>

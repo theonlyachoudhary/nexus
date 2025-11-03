@@ -49,18 +49,9 @@ export const DesignHero: React.FC<Page['hero']> = ({
   return (
     <section className="relative h-[60vh]overflow-hidden lg:pt-0 my-0">
       {/* Background Images */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none z-10 overflow-hidden"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-      >
+      <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
         {/* Background PNG - Large screens only */}
-        <motion.div
-          initial={{ scale: 1.1, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.2, delay: 0.2 }}
-        >
+        <div>
           <Image
             src={
               typeof heroImage === 'object' &&
@@ -80,43 +71,46 @@ export const DesignHero: React.FC<Page['hero']> = ({
             className="hidden lg:block object-cover object-right"
             draggable={false}
             priority
+            placeholder="blur"
+            blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZmlsdGVyIGlkPSJibHVyIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI4Ii8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2Y1ZjVmNSIgZmlsdGVyPSJ1cmwoI2JsdXIpIi8+PC9zdmc+"
           />
-        </motion.div>
+        </div>
 
         {/* Background SVG - constrained to smaller width and height on large screens */}
-        <motion.div
-          className="hidden lg:block absolute left-0 top-0 w-[60vw] h-[60vh]"
-          initial={{ x: -80, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 1.1, delay: 0.4 }}
-        >
+        <div className="hidden lg:block absolute left-0 top-0 w-[60vw] h-[60vh]">
           <Image src="/hero.svg" alt="" fill className="w-full h-full" draggable={false} priority />
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
       {/* Content */}
-      <div className="relative z-20 lg:h-[60vh] lg:w-[50vw] flex items-center justify-center lg:justify-start">
-        <div className="mx-auto p-24 px-[10%] lg:pl-[5%] lg:pr-[15%] lg:w-[70rem] space-y-6 text-center md:text-center lg:text-left">
+      <div className="md:ml-[1rem] lg:ml-[2rem] relative z-20 lg:h-[60vh] lg:w-[50vw] flex items-center justify-center lg:justify-start">
+        <div className="mx-auto p-24 px-[10%] lg:pl-[5%] lg:pr-[15%] lg:w-[65rem] space-y-6 text-center md:text-center lg:text-left">
           {/* Title */}
           {title && (
             <motion.h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight"
+              className="font-bold text-foreground leading-tight"
+              style={{
+                fontSize: 'clamp(2rem, 6vh, 4rem)',
+              }}
               dangerouslySetInnerHTML={{
                 __html: renderHighlightedTitle(title, wordsToHighlight),
               }}
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.2}}
             />
           )}
 
           {/* Subtitle */}
           {subtitle && (
             <motion.h3
-              className="text-xl md:text-2xl text-black/60 font-medium"
+              className="text-black/60 font-medium"
+              style={{
+                fontSize: 'clamp(1.125rem, 2vh, 1.75rem)',
+              }}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.5 }}
+              transition={{ duration: 0.2}}
             >
               {subtitle}
             </motion.h3>
@@ -128,7 +122,7 @@ export const DesignHero: React.FC<Page['hero']> = ({
               className="pt-4 space-y-3"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.8 }}
+              transition={{ duration: 0.2}}
             >
               <Button asChild size="lg" className="font-semibold">
                 <a

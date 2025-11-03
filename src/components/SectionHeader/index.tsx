@@ -63,19 +63,22 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
         )}
       >
         <h2
-          className={cn(
-            'text-3xl md:text-4xl lg:text-5xl font-bold font-condensed mb-6',
-            headingClassName,
-          )}
+          className={cn('font-bold font-condensed mb-6 leading-snug', headingClassName)}
+          style={{
+            /* middle-ground clamp: smaller min, less-aggressive max than your earlier clamp,
+               but still responsive and smooth across viewports */
+            fontSize: 'clamp(1.875rem, 4.5vh, 3.5rem)',
+          }}
         >
           {heading}
         </h2>
         {subheading && (
           <p
-            className={cn(
-              'text-lg md:text-xl text-brand-text-secondary leading-relaxed',
-              subheadingClassName,
-            )}
+            className={cn('text-brand-text-secondary leading-relaxed', subheadingClassName)}
+            style={{
+              /* middle-ground subheading sizing between tight mobile and larger desktop sizes */
+              fontSize: 'clamp(1.0625rem, 1.9vh, 1.625rem)',
+            }}
           >
             {subheading}
           </p>

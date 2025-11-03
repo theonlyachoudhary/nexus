@@ -27,45 +27,42 @@ export const CTASectionBlock: React.FC<CTASectionProps> = ({
   primaryCta = { text: 'Book Your Free Consultation', link: '/book-consultation' },
 }) => {
   return (
-    <section className="py-24">
+    <section className="py-12">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
             <SectionHeader
               heading={heading}
               subheading={subheading}
-              containerClassName="max-w-7xl sm:px-6 lg:px-8"
-              headingClassName="text-4xl md:text-5xl font-semibold"
-              subheadingClassName="text-xl subtitle text-brand-text-secondary"
             />
 
-            <div className="grid sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 gap-6">
               <div className="flex flex-col items-center text-center gap-3 md:flex-col md:items-center md:text-center lg:flex-row lg:items-start lg:text-left">
-                <CheckCircle className="w-6 h-6 text-primary flex-shrink-0" />
+                <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-primary flex-shrink-0" />
                 <div>
-                  <h4 className="font-semibold text-foreground mb-1">Free Consultation</h4>
-                  <p className="text-sm">No commitment required</p>
+                  <h4 className="font-semibold text-foreground mb-1 text-sm md:text-base">Free Consultation</h4>
+                  <p className="text-xs md:text-sm">No commitment required</p>
                 </div>
               </div>
               <div className="flex flex-col items-center text-center gap-3 md:flex-col md:items-center md:text-center lg:flex-row lg:items-start lg:text-left">
-                <Clock className="w-6 h-6 text-accent flex-shrink-0" />
+                <Clock className="w-5 h-5 md:w-6 md:h-6 text-accent flex-shrink-0" />
                 <div>
-                  <h4 className="font-semibold text-foreground mb-1">Quick Assessment</h4>
-                  <p className="text-sm">30-minute discovery call</p>
+                  <h4 className="font-semibold text-foreground mb-1 text-sm md:text-base">Quick Assessment</h4>
+                  <p className="text-xs md:text-sm">30-minute discovery call</p>
                 </div>
               </div>
               <div className="flex flex-col items-center text-center gap-3 md:flex-col md:items-center md:text-center lg:flex-row lg:items-start lg:text-left">
-                <Users className="w-6 h-6 text-primary flex-shrink-0" />
+                <Users className="w-5 h-5 md:w-6 md:h-6 text-primary flex-shrink-0" />
                 <div>
-                  <h4 className="font-semibold text-foreground mb-1">Expert Guidance</h4>
-                  <p className="text-sm">Tailored recommendations</p>
+                  <h4 className="font-semibold text-foreground mb-1 text-sm md:text-base">Expert Guidance</h4>
+                  <p className="text-xs md:text-sm">Tailored recommendations</p>
                 </div>
               </div>
               <div className="flex flex-col items-center text-center gap-3 md:flex-col md:items-center md:text-center lg:flex-row lg:items-start lg:text-left">
-                <ArrowRight className="w-6 h-6 text-accent flex-shrink-0" />
+                <ArrowRight className="w-5 h-5 md:w-6 md:h-6 text-accent flex-shrink-0" />
                 <div>
-                  <h4 className="font-semibold text-foreground mb-1">Clear Roadmap</h4>
-                  <p className="text-sm">Actionable next steps</p>
+                  <h4 className="font-semibold text-foreground mb-1 text-sm md:text-base">Clear Roadmap</h4>
+                  <p className="text-xs md:text-sm">Actionable next steps</p>
                 </div>
               </div>
             </div>

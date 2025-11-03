@@ -1,0 +1,54 @@
+Console Error
+
+A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+See more info here: https://nextjs.org/docs/messages/react-hydration-error
+
+  ...
+    <RenderFromTemplateContext>
+      <ScrollAndFocusHandler segmentPath={[...]}>
+        <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+          <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+            <LoadingBoundary loading={null}>
+              <HTTPAccessFallbackBoundary notFound={[...]} forbidden={undefined} unauthorized={undefined}>
+                <HTTPAccessFallbackErrorBoundary pathname="/" notFound={[...]} forbidden={undefined} ...>
+                  <RedirectBoundary>
+                    <RedirectErrorBoundary router={{...}}>
+                      <InnerLayoutRouter url="/" tree={[...]} cacheNode={{lazyData:null, ...}} segmentPath={[...]}>
+                        <link>
+                        <RootLayout>
+                          <html className="__variable..." lang="en" suppressHydrationWarning={true}>
+                            <head>
+                              <InitTheme>
+                                <Script dangerouslySetInnerHTML={{__html:"\n..."}} id="theme-script" ...>
+                                  <script
+                                    nonce={undefined}
+                                    dangerouslySetInnerHTML={{
++                                     __html: "(self.__next_s=self.__next_s||[]).push([0,{\"children\":\"\\n  (functio..."
+-                                     __html: ""
+                                    }}
+-                                   src="/__replco/static/devtools/injected.js"
+-                                   onerror={"parent.postMessage({event:'error',payload:'script.onerror: Failed to lo..."}
+                                  >
+                              ...
+                            ...
+
+src/providers/Theme/InitTheme/index.tsx (7:5) @ InitTheme
+
+   5 |   return (
+   6 |     // eslint-disable-next-line @next/next/no-before-interactive-script-outside-document
+>  7 |     <Script
+     |     ^
+   8 |       dangerouslySetInnerHTML={{
+   9 |         __html: `
+  10 |   (function () {
+
+Call Stack 20

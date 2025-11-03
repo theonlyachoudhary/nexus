@@ -12,10 +12,8 @@ const initialContext: ThemeContextType = {
 const ThemeContext = createContext(initialContext)
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  // Always use light theme
-  React.useEffect(() => {
-    document.documentElement.setAttribute('data-theme', 'light')
-  }, [])
+  // Theme is set server-side via data-theme attribute on html element
+  // No client-side mutations needed since theme is always 'light'
   const setTheme = React.useCallback(() => {}, [])
   return (
     <ThemeContext.Provider value={{ setTheme, theme: 'light' }}>{children}</ThemeContext.Provider>
