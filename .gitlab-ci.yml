@@ -1,0 +1,84 @@
+# GitLab CI pipeline: build Docker image and push to GitLab Container Registry
+# - Ensure BUILD_DATABASE_URL and BUILD_PAYLOAD_SECRET are set as protected CI variables if your build needs DB access
+# - Runner must support Docker (dind) and be privileged. If you use a specific runner, add its tag to `tags:` below.
+
+stages:
+  - build
+  - deploy
+
+# IMAGE will be like: registry.gitlab.com/<namespace>/<project>:<branch-slug>
+variables:
+  IMAGE: "$CI_REGISTRY_IMAGE:${CI_COMMIT_REF_SLUG:-latest}"
+  # Docker-in-Docker settings
+  DOCKER_TLS_CERTDIR: ""  # disable TLS to allow docker:dind on many runners
+  DOCKER_HOST: "tcp://docker:2375"
+
+build-and-push:
+  image: docker:24.0.0
+  privileged: true
+  services:
+    - name: docker:24.0.0-dind
+      alias: docker
+  variables:
+    SKIP_PAYLOAD_DURING_BUILD: "1"
+  stage: build
+  only:
+    - main
+    - /^release\/.*$/
+  before_script:
+    - echo "Logging into registry $CI_REGISTRY"
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+  script: |
+    # Resolve tag (CI_COMMIT_REF_SLUG may be empty for manual runs). Prefer slug, then ref name, then 'latest'.
+    TAG="${CI_COMMIT_REF_SLUG:-${CI_COMMIT_REF_NAME:-latest}}"
+    if [ -z "$TAG" ]; then TAG=latest; fi
+    IMAGE="${CI_REGISTRY_IMAGE}:${TAG}"
+    echo "Building image: $IMAGE"
+    # Build with optional build-time args for SSG (provide BUILD_DATABASE_URL and BUILD_PAYLOAD_SECRET as CI variables if needed)
+    docker build --progress=plain \
+      ${BUILD_DATABASE_URL:+--build-arg DATABASE_URL="$BUILD_DATABASE_URL"} \
+      ${BUILD_PAYLOAD_SECRET:+--build-arg PAYLOAD_SECRET="$BUILD_PAYLOAD_SECRET"} \
+      -t "$IMAGE" .
+    # tag also as latest for convenience
+    docker tag "$IMAGE" "$CI_REGISTRY_IMAGE:latest" || true
+    docker push "$IMAGE"
+    docker push "$CI_REGISTRY_IMAGE:latest" || true
+  # If your runner requires a specific tag, set it here (e.g. 'docker')
+  # tags:
+  #   - docker
+
+deploy-to-vps:
+  image: alpine:3.19
+  stage: deploy
+  only:
+    - main
+  needs:
+    - build-and-push
+  before_script:
+    - apk add --no-cache openssh-client bash
+    # configure SSH key from CI variable DEPLOY_SSH_PRIVATE_KEY
+    - mkdir -p ~/.ssh
+    - echo "$DEPLOY_SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - if [ -n "${DEPLOY_SSH_PORT:-}" ]; then export SSH_PORT_ARG="-p $DEPLOY_SSH_PORT"; fi
+    - touch ~/.ssh/known_hosts
+    - ssh-keyscan -H "$DEPLOY_SSH_HOST" >> ~/.ssh/known_hosts || true
+  script: |
+    echo "Deploying image $IMAGE to $DEPLOY_SSH_USER@$DEPLOY_SSH_HOST"
+    ssh $SSH_PORT_ARG -o StrictHostKeyChecking=yes "$DEPLOY_SSH_USER@$DEPLOY_SSH_HOST" <<'SSH'
+    set -e
+    cd ${DEPLOY_PATH:-/srv/nexus} || exit 1
+    # login to registry on the VPS (CI_REGISTRY_USER and CI_REGISTRY_PASSWORD are available in job env)
+    docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    docker pull "$IMAGE"
+    IMAGE="$IMAGE" docker compose -f docker-compose.production.yml pull || true
+    IMAGE="$IMAGE" docker compose -f docker-compose.production.yml up -d
+    docker system prune -f --filter "until=24h"
+    SSH
+  environment:
+    name: production
+    url: https://$DEPLOY_SSH_HOST
+  when: manual
+  # If you need a specific runner tag for deploy, set it here
+  # tags:
+  #   - deployer

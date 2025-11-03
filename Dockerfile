@@ -1,3 +1,68 @@
+# Production multi-stage Dockerfile for Next.js + Payload project (pnpm, Node 22)
+# - Builder: installs deps, builds Next.js
+# - Runner: small runtime image with only production deps and build output
+
+FROM node:22-slim AS base
+WORKDIR /app
+
+FROM base AS builder
+# enable corepack/pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+# copy lockfile first for efficient cache
+COPY package.json pnpm-lock.yaml ./
+
+# Install system deps needed for sharp and building native modules
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+    build-essential \
+    python3 \
+    ca-certificates \
+    pkg-config \
+    libvips-dev \
+  && rm -rf /var/lib/apt/lists/*
+
+# install all deps (dev + prod) for build
+RUN pnpm install --frozen-lockfile
+
+# copy rest of the sources
+COPY . .
+
+# build the Next app
+ENV NODE_OPTIONS=--no-deprecation
+# provide harmless build-time defaults so Payload initialization during next build
+# (used for collecting page data) does not fail. These are overwritten at runtime
+# by real secrets passed via env files or docker-compose on the VPS.
+ENV PAYLOAD_SECRET=build_secret
+ENV NEXT_PUBLIC_SERVER_URL=http://localhost:5000
+RUN pnpm build
+
+# remove dev dependencies to shrink size
+RUN pnpm prune --prod
+
+FROM node:22-slim AS runner
+WORKDIR /app
+
+# create non-root user
+RUN addgroup --system app && adduser --system --ingroup app app
+
+ENV NODE_ENV=production
+
+# copy built assets and production node_modules
+COPY --from=builder /app/.next .next
+COPY --from=builder /app/public public
+COPY --from=builder /app/package.json package.json
+COPY --from=builder /app/node_modules node_modules
+COPY --from=builder /app/next.config.js next.config.js
+COPY --from=builder /app/payload.config.ts payload.config.ts
+
+# Expose the port the app will run on
+EXPOSE 5000
+
+USER app
+
+# Use the installed next binary to start
+CMD ["node_modules/.bin/next", "start", "-p", "5000", "-H", "0.0.0.0"]
 # To use this Dockerfile, you have to set `output: 'standalone'` in your next.config.js file.
 # From https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
 
