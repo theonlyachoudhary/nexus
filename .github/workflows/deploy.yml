@@ -1,0 +1,33 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: 🚀 Deploy to Production VM
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚀 Trigger deployment on production server
+        id: deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          command_timeout: 5m
+          script: |
+            cd ${{ secrets.APP_DIRECTORY }}
+            git fetch origin
+            git reset --hard origin/main
+            nohup ./deploy.sh "${{ secrets.DISCORD_WEBHOOK_URL }}" "${{ secrets.BETTERSTACK_KEY }}" "${{ secrets.BETTERSTACK_INGESTION_ENDPOINT }}" > deployment.log 2>&1 &
+            echo "Deployment triggered in background"
